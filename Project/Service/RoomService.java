@@ -3,11 +3,12 @@ package Service;
 import Dao.RoomDao;
 import Model.Guest;
 import Model.Room;
-import Resources.EnumStatus;
-import Resources.Prop;
+import Model.EnumStatus;
+import Properties.Prop;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.List;
 import java.util.stream.Stream;
 import org.apache.log4j.*;
 
@@ -180,7 +181,7 @@ public class RoomService implements IRoomService {
         return roomDao.getRooms().get(index);
     }
 
-    public ArrayList<Room> getRoom(){
+    public List<Room> getRoom(){
         return roomDao.getRooms();
     }
 

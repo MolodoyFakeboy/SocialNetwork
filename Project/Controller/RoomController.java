@@ -1,11 +1,11 @@
 package Controller;
 
-import Resources.EnumStatus;
+import Model.EnumStatus;
 import Model.Room;
 import Service.RoomService;
 
 import java.time.LocalDate;
-import java.util.Scanner;
+
 
 public class RoomController {
 
@@ -27,65 +27,52 @@ public class RoomController {
         roomService.removeRoom(getRoom(roomIndex));
     }
 
-    public void changeRoomCondition(int roomIndex) {
-        Scanner in = new Scanner(System.in);
-        int action = in.nextInt();
-        switch (action) {
-            case 1:
-                roomService.changeRoomStatus(getRoom(roomIndex), EnumStatus.ROOM_CLEANING);
-                break;
-            case 2:
-                double price = in.nextDouble();
-                roomService.changePriceonRoom(getRoom(roomIndex), price);
-                break;
-            default:
-                break;
-        }
+    public void changeRoomStatus(int Index) {
+        roomService.changeRoomStatus(getRoom(Index), EnumStatus.ROOM_CLEANING);
     }
 
-    public void sortActionRoom(){
-        Scanner in = new Scanner(System.in);
-        int action = in.nextInt();
-        switch (action) {
-            case 1 : roomService.sortRoomforPrice();
-            break;
-            case 2 : roomService.sortRoomforBed();
-            break;
-            case 3 : roomService.sortRoomforStars();
-            break;
-            default:
-                break;
-        }
+    public void changeRoomPrice(int Index, double price) {
+        roomService.changePriceonRoom(getRoom(Index), price);
     }
 
-    public void sortActionFreeRoom()  {
-        Scanner in = new Scanner(System.in);
-        int action = in.nextInt();
-        switch (action) {
-            case 1 : roomService.sortFreeRoomforPrice();
-                break;
-            case 2 : roomService.sortFreeRoomBed();
-                break;
-            case 3 : roomService.sortFreeRoomStars();
-                break;
-            case 4 : roomService.getAmountFreeRoom();
-            default:
-                break;
-        }
+    public void sortRoomforPrice() {
+        roomService.sortRoomforPrice();
+    }
+
+    public void sortRoomforBed() {
+        roomService.sortRoomforBed();
+    }
+
+    public void sortRoomforStars() {
+        roomService.sortRoomforBed();
+    }
+
+    public void sortFreeRoomforPrice() {
+        roomService.sortFreeRoomforPrice();
+    }
+
+    public void sortFreeRoomBed() {
+        roomService.sortFreeRoomBed();
+    }
+
+    public void sortFreeRoomStars() {
+        roomService.sortFreeRoomStars();
+    }
+
+    public void getAmountFreeRoom() {
+        roomService.getAmountFreeRoom();
     }
 
     public void sortRoomIsFree(LocalDate localDate) {
-            roomService.sortRoomIsFree(localDate);
+        roomService.sortRoomIsFree(localDate);
     }
 
-    public void getLastThreeGuest(int roomIndex){
+    public void getLastThreeGuest(int roomIndex) {
         roomService.getLastThreeGuest(getRoom(roomIndex));
     }
 
-    public void getInfoAbourRoom(int roomIndex){
+    public void getInfoAbourRoom(int roomIndex) {
         roomService.getInfoRoom(roomIndex);
     }
-
-
 
 }

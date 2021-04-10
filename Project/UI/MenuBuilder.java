@@ -68,25 +68,67 @@ public class MenuBuilder {
         getaBillForRoom.setNextMenu(allGuestMenu);
         allGuestMenu.getMenuItems().add(getaBillForRoom);
 
-        MenuItem sortGuest = new MenuItem("Отсортировать гостей");
-        sortGuest.setAction(new SortGuestActionImpl(guestController));
-        sortGuest.setNextMenu(allGuestMenu);
-        allGuestMenu.getMenuItems().add(sortGuest);
 
-        MenuItem changeRoomCondition = new MenuItem("Изменить информацию о комнате");
-        changeRoomCondition.setAction(new ChangeRoomConditionImpl(roomController));
-        changeRoomCondition.setNextMenu(allRoomMenu);
-        allRoomMenu.getMenuItems().add(changeRoomCondition);
+        MenuItem getNumberGuest = new MenuItem("Получить колличество гостей");
+        getNumberGuest.setAction(new getNumberGuestImpl(guestController));
+        getNumberGuest.setNextMenu(allGuestMenu);
+        allGuestMenu.getMenuItems().add(getNumberGuest);
 
-        MenuItem sortRoom = new MenuItem("Отсортировать комнаты");
-        sortRoom.setAction(new SortRoomActionImpl(roomController));
-        sortRoom.setNextMenu(allRoomMenu);
-        allRoomMenu.getMenuItems().add(sortRoom);
+        MenuItem sortUsingServicePrice = new MenuItem("Отсортировать использованный гостем услуги по цене");
+        sortUsingServicePrice.setAction(new sortUsingServicePriceImpl(guestController));
+        sortUsingServicePrice.setNextMenu(allGuestMenu);
+        allGuestMenu.getMenuItems().add(sortUsingServicePrice);
 
-        MenuItem sortFreeRoom = new MenuItem("Отсортировать свободные комнаты");
-        sortFreeRoom.setAction(new sortFreeRoomActionImpl(roomController));
-        sortFreeRoom.setNextMenu(allRoomMenu);
-        allRoomMenu.getMenuItems().add(sortFreeRoom);
+        MenuItem sortUsingServiceTime = new MenuItem("Отсортировать использованный гостем услуги по времени");
+        sortUsingServiceTime.setAction(new sortUsingServiceTimeImpl(guestController));
+        sortUsingServiceTime.setNextMenu(allGuestMenu);
+        allGuestMenu.getMenuItems().add(sortUsingServiceTime);
+
+        MenuItem changeRoomStatus = new MenuItem("Поменять статус у комнаты");
+        changeRoomStatus.setAction( new changeRoomStatusImpl(roomController));
+        changeRoomStatus.setNextMenu(allRoomMenu);
+        allRoomMenu.getMenuItems().add(changeRoomStatus);
+
+        MenuItem changeRoomPrice = new MenuItem("Поменять цену у комнаты");
+        changeRoomPrice.setAction( new changeRoomPriceImpl(roomController));
+        changeRoomPrice.setNextMenu(allRoomMenu);
+        allRoomMenu.getMenuItems().add(changeRoomPrice);
+
+        MenuItem sortRoomPrice = new MenuItem("Отсортировать комнаты по цене");
+        sortRoomPrice.setAction(new sortRoomforPriceActionImpl(roomController));
+        sortRoomPrice.setNextMenu(allRoomMenu);
+        allRoomMenu.getMenuItems().add(sortRoomPrice);
+
+        MenuItem sortRoomBed = new MenuItem("Отсортировать комнаты по кроватям");
+        sortRoomBed.setAction(new sortRoomforBedActionImpl(roomController));
+        sortRoomBed.setNextMenu(allRoomMenu);
+        allRoomMenu.getMenuItems().add(sortRoomBed);
+
+        MenuItem sortRoomStart = new MenuItem("Отсортировать комнаты по звездам");
+        sortRoomStart.setAction(new sortRoomforStarsActionImpl(roomController));
+        sortRoomStart.setNextMenu(allRoomMenu);
+        allRoomMenu.getMenuItems().add(sortRoomStart);
+
+
+        MenuItem sortFreeRoomforPrice = new MenuItem("Отсортировать свободные комнаты по цене");
+        sortFreeRoomforPrice.setAction(new sortFreeRoomforPriceActionImpl(roomController));
+        sortFreeRoomforPrice.setNextMenu(allRoomMenu);
+        allRoomMenu.getMenuItems().add(sortFreeRoomforPrice);
+
+        MenuItem sortFreeRoomBed = new MenuItem("Отсортировать свободные комнаты по кроватям");
+        sortFreeRoomBed.setAction(new sortFreeRoomBedActionImpl(roomController));
+        sortFreeRoomBed.setNextMenu(allRoomMenu);
+        allRoomMenu.getMenuItems().add(sortFreeRoomBed);
+
+        MenuItem sortFreeRoomStars = new MenuItem("Отсортировать свободные комнаты по звездам");
+        sortFreeRoomStars.setAction(new sortFreeRoomStarsActionImpl(roomController));
+        sortFreeRoomStars.setNextMenu(allRoomMenu);
+        allRoomMenu.getMenuItems().add(sortFreeRoomStars);
+
+        MenuItem getAmountFreeRoom = new MenuItem("Получить колличество свободных комнат");
+        getAmountFreeRoom.setAction(new getAmountFreeRoomActionImpl(roomController));
+        getAmountFreeRoom.setNextMenu(allRoomMenu);
+        allRoomMenu.getMenuItems().add(getAmountFreeRoom);
 
         MenuItem getInfoAboutRoom = new MenuItem("Получить информацию по комнате");
         getInfoAboutRoom.setAction(new GetInfoRoom(roomController));

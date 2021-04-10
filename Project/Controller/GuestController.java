@@ -1,15 +1,12 @@
 package Controller;
-
 import Model.Guest;
 import Model.Room;
 import Model.Service;
 import Service.GuestService;
 
-import java.util.Scanner;
-
 public class GuestController {
-    private final GuestService guestService;
 
+    private final GuestService guestService;
 
     public GuestController(GuestService guestService) {
         this.guestService = guestService;
@@ -35,22 +32,16 @@ public class GuestController {
         guestService.getaBill(getGuest(guestIndex), room);
     }
 
-    public void sortAction(Guest guest) {
-        Scanner in = new Scanner(System.in);
-        int action = in.nextInt();
-        switch (action) {
-            case 1:
-                guestService.getNumberGuest();
-                break;
-            case 2:
-                guestService.sortUsingServicePrice(guest);
-                break;
-            case 3:
-                guestService.sortUsingServiceTime(guest);
-            default:
-                break;
-        }
+    public void getNumberGuest(){
+        guestService.getNumberGuest();
     }
 
+    public void sortUsingServicePrice(Guest guest){
+        guestService.sortUsingServicePrice(guest);
+    }
+
+    public void sortUsingServiceTime(Guest guest){
+        guestService.sortUsingServiceTime(guest);
+    }
 
 }

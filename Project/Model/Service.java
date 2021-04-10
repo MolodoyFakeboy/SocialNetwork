@@ -7,7 +7,7 @@ public class Service implements Serializable {
    private String name;
    private double price;
    private String description;
-   Date date;
+   private Date date;
 
 
     public Service(String name, double price,String description) {

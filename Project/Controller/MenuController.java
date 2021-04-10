@@ -1,7 +1,8 @@
 package Controller;
+
 import UI.MenuBuilder;
 import UI.Navigator;
-import org.apache.log4j.Logger;
+
 
 import java.util.Scanner;
 
@@ -25,10 +26,10 @@ public class MenuController {
             navigator.printMenu();
             while (true) {
                 Integer index = in.nextInt();
-                if(index >= 1 ){
+                if (index >= 1) {
                     navigator.navigate(index);
                 } else {
-                   break;
+                    break;
                 }
 
             }

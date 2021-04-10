@@ -3,20 +3,19 @@ package Service;
 import Dao.ServiceDao;
 import Model.Service;
 import org.apache.log4j.Logger;
-
-import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.List;
 import java.util.stream.Stream;
 
 
 public class FunctionService implements IFunctionService {
 
-     private ServiceDao serviceDao;
+    private ServiceDao serviceDao;
+    private static final Logger log = Logger.getLogger(ServiceDao.class);
 
     public FunctionService(ServiceDao serviceDao) {
         this.serviceDao = serviceDao;
     }
-    private static final Logger log = Logger.getLogger(ServiceDao.class);
 
     @Override
     public ServiceDao createServiceDao(ServiceDao serviceDao){
@@ -38,8 +37,6 @@ public class FunctionService implements IFunctionService {
         return service;
     }
 
-
-
     @Override
     public Stream<Service> sortServicePrice() {
         Stream<Service> stream = serviceDao.getServices().stream();
@@ -47,8 +44,7 @@ public class FunctionService implements IFunctionService {
         return stream;
     }
 
-    public ArrayList<Service> getListService(){
+    public List<Service> getListService(){
         return serviceDao.getServices();
     }
-
 }

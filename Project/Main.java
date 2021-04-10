@@ -5,7 +5,7 @@ import Controller.ServiceController;
 import Dao.GuestDao;
 import Dao.RoomDao;
 import Dao.ServiceDao;
-import Resources.Prop;
+import Properties.Prop;
 import Service.FunctionService;
 import Service.GuestService;
 import Service.RoomService;
@@ -14,9 +14,7 @@ import UI.Navigator;
 import com.google.gson.Gson;
 import org.apache.log4j.PropertyConfigurator;
 
-
 import java.io.*;
-
 
 public class Main {
 
@@ -30,7 +28,7 @@ public class Main {
         objectInputStream.close();
 
         Prop.load();
-        String log4jConfPath = "src/Resources/log4j.properties";
+        String log4jConfPath = "src/Properties/log4j.properties";
         PropertyConfigurator.configure(log4jConfPath);
 
         RoomService roomService = new RoomService(roomDao1);
@@ -45,10 +43,14 @@ public class Main {
         menuController.run();
 
         Gson gson = new Gson();
+
         String json = gson.toJson(roomDao1);
         String json2 = gson.toJson(serviceDao1);
         String json3 = gson.toJson(guestDao1);
-        gson.fromJson(json,RoomDao.class);
+
+        gson.fromJson(json, RoomDao.class);
+        gson.fromJson(json2, ServiceDao.class);
+        gson.fromJson(json3, GuestDao.class);
 
         FileOutputStream fileOutputStream = new FileOutputStream("save.ser");
         ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
@@ -56,10 +58,6 @@ public class Main {
         objectOutputStream.writeObject(guestDao1);
         objectOutputStream.writeObject(serviceDao1);
         objectOutputStream.close();
-
-
-
-
 
     }
 

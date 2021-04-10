@@ -5,6 +5,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class Guest implements Serializable {
 
@@ -13,8 +14,8 @@ public class Guest implements Serializable {
     private String PhoneNumber;
     private int id;
     private LocalDate localDate;
-    ArrayList<Room> rooms;
-    ArrayList<Service> services;
+    private List<Room> rooms;
+    private List<Service> services;
 
     private static final Logger log = Logger.getLogger(Guest.class);
 
@@ -77,11 +78,11 @@ public class Guest implements Serializable {
         services.add(service);
     }
 
-    public ArrayList<Room> getRooms() {
+    public List<Room> getRooms() {
         return rooms;
     }
 
-    public ArrayList<Service> getServices() {
+    public List<Service> getServices() {
         return services;
     }
 

@@ -3,9 +3,10 @@ import Model.Service;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 public class ServiceDao implements IServiceDao, Serializable {
-    private ArrayList<Service>services;
+    private List<Service> services;
 
     public ServiceDao() {
         services = new ArrayList<>();
@@ -19,7 +20,7 @@ public class ServiceDao implements IServiceDao, Serializable {
         services.remove(service);
     }
 
-    public ArrayList<Service> getServices() {
+    public List<Service> getServices() {
         return services;
     }
 }

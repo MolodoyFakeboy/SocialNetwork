@@ -3,7 +3,6 @@ package Controller;
 import Model.Service;
 import Service.FunctionService;
 
-
 public class ServiceController {
 
     private FunctionService functionService;
@@ -28,7 +27,5 @@ public class ServiceController {
     public void sortServicePrice(){
         functionService.sortServicePrice();
     }
-
-
 
 }

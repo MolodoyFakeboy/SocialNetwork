@@ -1,20 +1,18 @@
-package Resources;
-
-import Resources.ExProperties;
+package Properties;
 
 import java.io.File;
 
 public final class Prop {
 
-    public static ExProperties properties;
-    public static ExProperties properties2;
+    private static ExProperties properties;
+    private static ExProperties properties2;
 
-    public static final void load() {
+    public static void load() {
         properties = initProperties("src/Resources/config.properties");
         properties2 = initProperties("src/Resources/log4j.properties");
     }
 
-    public static final ExProperties initProperties(String filename) {
+    public static ExProperties initProperties(String filename) {
         final ExProperties result = new ExProperties();
 
         try {
