@@ -1,7 +1,6 @@
 package Service;
 
-import Dao.RoomDao;
-import Resources.EnumStatus;
+import Model.EnumStatus;
 import Model.Guest;
 import Model.Room;
 

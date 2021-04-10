@@ -1,15 +1,14 @@
 package Service;
 
 import Dao.GuestDao;
-import Resources.EnumStatus;
+import Model.EnumStatus;
 import Model.Guest;
 import Model.Room;
 import Model.Service;
 import org.apache.log4j.Logger;
-
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.List;
 
 public class GuestService implements IGuestService {
 
@@ -73,13 +72,13 @@ public class GuestService implements IGuestService {
     }
 
     @Override
-    public ArrayList<Guest> getNumberGuest() {
+    public List<Guest> getNumberGuest() {
         System.out.println(" Колличество гостей в отеле " + guestDao.getGuests().size());
         return guestDao.getGuests();
     }
 
     @Override
-    public ArrayList<Service> sortUsingServicePrice(Guest guest) {
+    public List<Service> sortUsingServicePrice(Guest guest) {
        try {
            guest.getServices().sort(Comparator.comparing(Service::getPrice));
            for (int i = 0; i < guest.getServices().size(); i++) {
@@ -92,7 +91,7 @@ public class GuestService implements IGuestService {
     }
 
     @Override
-    public ArrayList<Service> sortUsingServiceTime(Guest guest) {
+    public List<Service> sortUsingServiceTime(Guest guest) {
         try {
             guest.getServices().sort(Comparator.comparing(Service::getDate));
             for (int i = 0; i < guest.getServices().size(); i++) {

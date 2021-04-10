@@ -2,12 +2,12 @@ package Dao;
 import Model.Room;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 public class RoomDao implements IRoomDao, Serializable {
 
-    private ArrayList<Room> rooms;
+    private List<Room> rooms;
     private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(RoomDao.class);
-
 
     public RoomDao() {
         rooms  = new ArrayList<>();
@@ -25,10 +25,7 @@ public class RoomDao implements IRoomDao, Serializable {
             rooms.remove(room);
         }
     }
-
-
-    public ArrayList<Room> getRooms() {
+    public List<Room> getRooms() {
         return rooms;
     }
-
 }

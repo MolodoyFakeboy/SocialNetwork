@@ -1,9 +1,8 @@
 package Model;
 
-import Resources.EnumStatus;
-
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Room implements Serializable {
 
@@ -14,8 +13,8 @@ public class Room implements Serializable {
     private EnumStatus status;
     private int numBed;
     private double basePrice;
-    ArrayList<Guest> guests;
-    ArrayList<Guest> lastGuests;
+    private List<Guest> guests;
+    private List<Guest> lastGuests;
 
     public Room(int roomNumber, int numberOfStars, int floor, int numBed, double basePrice) {
         this.roomNumber = roomNumber;
@@ -96,11 +95,11 @@ public class Room implements Serializable {
     }
 
 
-    public ArrayList<Guest> getGuests() {
+    public List<Guest> getGuests() {
         return guests;
     }
 
-    public ArrayList<Guest> getLastGuests() {
+    public List<Guest> getLastGuests() {
         return lastGuests;
     }
 

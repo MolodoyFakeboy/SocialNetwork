@@ -3,13 +3,11 @@ package UI.impl;
 import Controller.GuestController;
 import Controller.RoomController;
 import Model.Guest;
-import Service.RoomService;
 import UI.IAction;
-import Resources.MyException;
+import Exeception.MyException;
 
 import java.time.LocalDate;
 import java.util.Scanner;
-import java.util.logging.Logger;
 
 public class BookRoomActionImpl implements IAction {
 
