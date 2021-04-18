@@ -29,7 +29,7 @@ public class MenuBuilder {
         Menu allGuestMenu = new Menu("allGuestMenu", new ArrayList<>());
 
         MenuItem exit = new MenuItem("Выход");
-        exit.setAction(new ExitActionImpl());
+        exit.setAction(new ExitActionImpl(guestController,roomController,serviceController));
         exit.setNextMenu(null);
         rootMenu.getMenuItems().add(exit);
         allRoomMenu.getMenuItems().add(exit);

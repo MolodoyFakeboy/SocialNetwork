@@ -1,25 +1,31 @@
 package Service;
 
+import Annotations.InjectByType;
+import Annotations.Singleton;
 import Dao.RoomDao;
+import Model.EnumStatus;
 import Model.Guest;
 import Model.Room;
-import Model.EnumStatus;
-import Properties.Prop;
+import Util.Prop;
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Stream;
-import org.apache.log4j.*;
 
+@Singleton
 public class RoomService implements IRoomService {
 
-    private final RoomDao roomDao;
+    @InjectByType
+    private RoomDao roomDao;
 
-    private static final Logger log = Logger.getLogger(RoomService.class);
+    private  Logger log;
 
-    public RoomService(RoomDao roomDao) {
-        this.roomDao = roomDao;
+    public RoomService() {
+        log = Logger.getLogger(RoomService.class);
     }
 
     @Override
@@ -179,6 +185,10 @@ public class RoomService implements IRoomService {
             log.info("В данный момент комната занята");
         }
         return roomDao.getRooms().get(index);
+    }
+
+    public RoomDao getRoomDao() {
+        return roomDao;
     }
 
     public List<Room> getRoom(){

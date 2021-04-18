@@ -26,15 +26,11 @@ public class MenuController {
             navigator.printMenu();
             while (true) {
                 Integer index = in.nextInt();
-                if (index >= 1) {
-                    navigator.navigate(index);
-                } else {
-                    break;
-                }
-
+                navigator.navigate(index);
             }
         } catch (Exception exception) {
-            log.error("Неверно указанный формат");
+            //log.error("Неверно указанный формат");
+            exception.printStackTrace();
         }
 
     }

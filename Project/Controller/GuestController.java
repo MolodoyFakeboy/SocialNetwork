@@ -1,16 +1,21 @@
 package Controller;
+import Annotations.InjectByType;
+import Annotations.Singleton;
+import Dao.GuestDao;
 import Model.Guest;
 import Model.Room;
 import Model.Service;
 import Service.GuestService;
 
+@Singleton
 public class GuestController {
 
-    private final GuestService guestService;
+    @InjectByType
+    private GuestService guestService;
 
-    public GuestController(GuestService guestService) {
-        this.guestService = guestService;
-    }
+    //public GuestController(GuestService guestService) {
+        //this.guestService = guestService;
+    //}
 
     public Guest getGuest(int index) {
         return guestService.getGuest(index);
@@ -44,4 +49,7 @@ public class GuestController {
         guestService.sortUsingServiceTime(guest);
     }
 
+    public GuestDao getGuestDao() {
+        return guestService.getGuestDao();
+    }
 }

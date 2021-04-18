@@ -1,15 +1,28 @@
-package Properties;
+package Util;
+
+import Annotations.ConfigProperty;
+import Annotations.InjectProperty;
+import org.apache.log4j.PropertyConfigurator;
 
 import java.io.File;
 
-public final class Prop {
+public class Prop {
 
     private static ExProperties properties;
     private static ExProperties properties2;
 
-    public static void load() {
+
+    @InjectProperty
+    private String log4jConfPath;
+
+    @ConfigProperty
+    public void load() {
         properties = initProperties("src/Resources/config.properties");
         properties2 = initProperties("src/Resources/log4j.properties");
+    }
+
+    public void configLog4j(){
+        PropertyConfigurator.configure(log4jConfPath);
     }
 
     public static ExProperties initProperties(String filename) {
@@ -31,4 +44,6 @@ public final class Prop {
     public static ExProperties getProperties2() {
         return properties2;
     }
+
+
 }

@@ -1,19 +1,18 @@
 package Dao;
 
+import Annotations.AddArrayList;
+import Annotations.Singleton;
 import Model.Guest;
 
-
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
+@Singleton
 public class GuestDao implements IGuestDao, Serializable {
 
+    @AddArrayList
     private List<Guest> guests;
 
-    public GuestDao() {
-        guests = new ArrayList<>();
-    }
 
     @Override
     public void addGuest(Guest guest) {

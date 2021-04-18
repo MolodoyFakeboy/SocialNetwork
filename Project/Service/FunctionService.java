@@ -1,5 +1,7 @@
 package Service;
 
+import Annotations.InjectByType;
+import Annotations.Singleton;
 import Dao.ServiceDao;
 import Model.Service;
 import org.apache.log4j.Logger;
@@ -8,13 +10,16 @@ import java.util.List;
 import java.util.stream.Stream;
 
 
+@Singleton
 public class FunctionService implements IFunctionService {
 
+    @InjectByType
     private ServiceDao serviceDao;
-    private static final Logger log = Logger.getLogger(ServiceDao.class);
 
-    public FunctionService(ServiceDao serviceDao) {
-        this.serviceDao = serviceDao;
+    private Logger log;
+
+    public FunctionService() {
+          log = Logger.getLogger(ServiceDao.class);
     }
 
     @Override
@@ -46,5 +51,9 @@ public class FunctionService implements IFunctionService {
 
     public List<Service> getListService(){
         return serviceDao.getServices();
+    }
+
+    public ServiceDao getServiceDao() {
+        return serviceDao;
     }
 }

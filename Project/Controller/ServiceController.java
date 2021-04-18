@@ -1,15 +1,20 @@
 package Controller;
 
+import Annotations.InjectByType;
+import Annotations.Singleton;
+import Dao.ServiceDao;
 import Model.Service;
 import Service.FunctionService;
 
+@Singleton
 public class ServiceController {
 
+    @InjectByType
     private FunctionService functionService;
 
-    public ServiceController(FunctionService functionService) {
-        this.functionService = functionService;
-    }
+    //public ServiceController(FunctionService functionService) {
+        //this.functionService = functionService;
+    //}
 
     public Service getService(int index){
        return functionService.getListService().get(index);
@@ -28,4 +33,7 @@ public class ServiceController {
         functionService.sortServicePrice();
     }
 
+    public ServiceDao getServiceDao() {
+        return functionService.getServiceDao();
+    }
 }

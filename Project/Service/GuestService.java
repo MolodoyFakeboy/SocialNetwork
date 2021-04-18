@@ -1,5 +1,7 @@
 package Service;
 
+import Annotations.InjectByType;
+import Annotations.Singleton;
 import Dao.GuestDao;
 import Model.EnumStatus;
 import Model.Guest;
@@ -10,13 +12,16 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
+@Singleton
 public class GuestService implements IGuestService {
 
+    @InjectByType
     private GuestDao guestDao;
-    private static final Logger log = Logger.getLogger(GuestService.class);
 
-    public GuestService(GuestDao guestDao) {
-        this.guestDao = guestDao;
+    private Logger log;
+
+    public GuestService() {
+        log = Logger.getLogger(GuestService.class);
     }
 
     @Override
@@ -109,6 +114,10 @@ public class GuestService implements IGuestService {
 
     public Room getGuestRoom(int index){
         return guestDao.getGuests().get(index).getRooms().get(0);
+    }
+
+    public GuestDao getGuestDao(){
+        return guestDao;
     }
 
 }
