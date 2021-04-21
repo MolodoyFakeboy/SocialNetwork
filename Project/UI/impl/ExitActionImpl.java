@@ -1,8 +1,6 @@
 package UI.impl;
 
-import Controller.GuestController;
-import Controller.RoomController;
-import Controller.ServiceController;
+import Modules.ApplicationContext;
 import Dao.GuestDao;
 import Dao.RoomDao;
 import Dao.ServiceDao;
@@ -13,26 +11,20 @@ import java.io.IOException;
 
 public class ExitActionImpl implements IAction {
 
-    private GuestController guestController;
-    private RoomController roomController;
-    private ServiceController serviceController;
-    private JsonSaver jsonSaver;
+    private ApplicationContext context;
     private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ExitActionImpl.class);
 
-    public ExitActionImpl(GuestController guestController, RoomController roomController, ServiceController serviceController) {
-         jsonSaver = new JsonSaver();
-        this.guestController = guestController;
-        this.roomController = roomController;
-        this.serviceController = serviceController;
+    public ExitActionImpl(ApplicationContext context) {
+        this.context = context;
     }
 
     @Override
     public void execute() {
         try {
-            RoomDao roomDao = roomController.getRoomDao();
-            GuestDao guestDao = guestController.getGuestDao();
-            ServiceDao serviceDao = serviceController.getServiceDao();
-            jsonSaver.searilization(roomDao,guestDao,serviceDao);
+            RoomDao roomDao = context.getObject(RoomDao.class);
+            GuestDao guestDao = context.getObject(GuestDao.class);
+            ServiceDao serviceDao = context.getObject(ServiceDao.class);
+            context.getObject(JsonSaver.class).searilization(roomDao,guestDao,serviceDao);
             System.exit(0);
         } catch (IOException e) {
             log.error("Ошибка сереализации");

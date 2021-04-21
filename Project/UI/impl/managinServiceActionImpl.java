@@ -1,17 +1,14 @@
 package UI.impl;
 
-import Controller.ServiceController;
+import Controller.IServiceController;
 import UI.IAction;
-
-import java.time.LocalDate;
-import java.util.Scanner;
 
 public class managinServiceActionImpl implements IAction {
 
-    private ServiceController serviceController;
+    private IServiceController serviceController;
     private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(managinServiceActionImpl.class);
 
-    public managinServiceActionImpl(ServiceController serviceController) {
+    public managinServiceActionImpl(IServiceController serviceController) {
         this.serviceController = serviceController;
     }
 

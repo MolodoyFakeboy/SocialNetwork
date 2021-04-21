@@ -1,22 +1,22 @@
 package UI.impl;
 
-import Controller.GuestController;
-import Controller.RoomController;
+import Controller.IGuestController;
+import Controller.IRoomController;
+import Exeception.MyException;
 import Model.Guest;
 import UI.IAction;
-import Exeception.MyException;
 
 import java.time.LocalDate;
 import java.util.Scanner;
 
 public class BookRoomActionImpl implements IAction {
 
-    private final GuestController guestController;
-    private final RoomController roomController;
+    private final IGuestController guestController;
+    private final IRoomController roomController;
     private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(BookRoomActionImpl.class);
 
 
-    public BookRoomActionImpl(GuestController guestController, RoomController roomController) {
+    public BookRoomActionImpl(IGuestController guestController, IRoomController roomController) {
         this.guestController = guestController;
         this.roomController = roomController;
     }
@@ -29,8 +29,8 @@ public class BookRoomActionImpl implements IAction {
             int index = in.nextInt();
             log.info("Укажите данные о себе");
             log.info("Напишите ваше имя");
-            String name = in.nextLine();
             in.nextLine();
+            String name = in.nextLine();
             log.info("Напишите вашу фамилию");
             String surname = in.nextLine();
             if(surname.equals("")) {

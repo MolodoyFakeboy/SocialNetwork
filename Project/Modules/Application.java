@@ -1,4 +1,4 @@
-package Annotations;
+package Modules;
 
 import Controller.GuestController;
 import Controller.MenuController;
@@ -17,12 +17,10 @@ import Util.Prop;
 
 public class Application {
 
-    private CommandListner commandListner;
-    private JsonSaver jsonSaver;
+    private ICommandListner commandListner;
 
-    public Application(CommandListner commandListner) {
+    public Application(ICommandListner commandListner) {
         this.commandListner = commandListner;
-        jsonSaver = new JsonSaver();
     }
 
     public void run() {
@@ -36,6 +34,7 @@ public class Application {
         commandListner.inject(prop);
         commandListner.injectPropertyAnnotation(prop);
 
+        JsonSaver jsonSaver = context.getObject(JsonSaver.class);
 
         commandListner.initDao("Dao",context);
 
@@ -43,18 +42,23 @@ public class Application {
         context.update(jsonSaver.deserializationGuest());
         context.update(jsonSaver.deserializationService());
 
-        commandListner.initDependency("Service",context);
+        RoomService roomService = new RoomService(context.getObject(RoomDao.class));
+        FunctionService functionService = new FunctionService(context.getObject(ServiceDao.class));
+        GuestService guestService = new GuestService(context.getObject(GuestDao.class));
 
-        context.getObject(RoomService.class).setRoomDao(context.getObject(RoomDao.class));
-        context.getObject(FunctionService.class).setServiceDao(context.getObject(ServiceDao.class));
-        context.getObject(GuestService.class).setGuestDao(context.getObject(GuestDao.class));
+        context.put(RoomService.class,roomService);
+        context.put(FunctionService.class,functionService);
+        context.put(GuestService.class,guestService);
 
         RoomController roomController = new RoomController(context.getObject(RoomService.class));
         ServiceController serviceController = new ServiceController(context.getObject(FunctionService.class));
         GuestController guestController = new GuestController(context.getObject(GuestService.class));
 
+        context.put(RoomController.class,roomController);
+        context.put(ServiceController.class,serviceController);
+        context.put(GuestController.class, guestController);
 
-        MenuBuilder menuBuilder = new MenuBuilder(roomController, serviceController, guestController);
+        MenuBuilder menuBuilder = new MenuBuilder(roomController, serviceController, guestController,context);
         Navigator navigator = new Navigator(menuBuilder.getRootMenu());
         MenuController menuController = new MenuController(menuBuilder, navigator);
 

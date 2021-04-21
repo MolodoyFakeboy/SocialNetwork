@@ -1,8 +1,7 @@
 package UI;
 
-import Controller.GuestController;
-import Controller.RoomController;
-import Controller.ServiceController;
+import Modules.ApplicationContext;
+import Controller.*;
 import UI.impl.*;
 
 
@@ -11,15 +10,17 @@ import java.util.ArrayList;
 public class MenuBuilder {
 
     private final Menu rootMenu;
-    private final RoomController roomController;
-    private final ServiceController serviceController;
-    private final GuestController guestController;
+    private IRoomController roomController;
+    private IServiceController serviceController;
+    private IGuestController guestController;
+    private ApplicationContext context;
 
-    public MenuBuilder(RoomController roomController, ServiceController serviceController, GuestController guestController) {
+    public MenuBuilder(IRoomController roomController, IServiceController serviceController, IGuestController guestController, ApplicationContext context) {
         rootMenu = new Menu("Root Menu", new ArrayList<>());
         this.roomController = roomController;
         this.serviceController = serviceController;
         this.guestController = guestController;
+        this.context = context;
     }
 
 
@@ -29,7 +30,7 @@ public class MenuBuilder {
         Menu allGuestMenu = new Menu("allGuestMenu", new ArrayList<>());
 
         MenuItem exit = new MenuItem("Выход");
-        exit.setAction(new ExitActionImpl(guestController,roomController,serviceController));
+        exit.setAction(new ExitActionImpl(context));
         exit.setNextMenu(null);
         rootMenu.getMenuItems().add(exit);
         allRoomMenu.getMenuItems().add(exit);

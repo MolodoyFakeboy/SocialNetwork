@@ -1,6 +1,6 @@
 package UI.impl;
 
-import Controller.RoomController;
+import Controller.IRoomController;
 import Model.Room;
 import UI.IAction;
 
@@ -8,10 +8,10 @@ import UI.IAction;
 public class AddRoomActionImpl implements IAction {
 
 
-    private RoomController roomController;
+    private IRoomController roomController;
 
 
-    public AddRoomActionImpl(RoomController roomController) {
+    public AddRoomActionImpl(IRoomController roomController) {
         this.roomController = roomController;
     }
 

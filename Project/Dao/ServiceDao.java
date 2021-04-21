@@ -12,15 +12,17 @@ public class ServiceDao implements IServiceDao, Serializable {
     @AddArrayList
     private List<Service> services;
 
-
+    @Override
     public void addService(Service service){
         services.add(service);
     }
 
+    @Override
     public void removeService(Service service){
         services.remove(service);
     }
 
+    @Override
     public List<Service> getServices() {
         return services;
     }

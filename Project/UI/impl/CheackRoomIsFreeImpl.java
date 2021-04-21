@@ -1,16 +1,18 @@
 package UI.impl;
-import Controller.RoomController;
-import UI.IAction;
+
+import Controller.IRoomController;
 import Exeception.MyException;
+import UI.IAction;
 
 import java.time.LocalDate;
 import java.util.Scanner;
 
 public class CheackRoomIsFreeImpl implements IAction {
-    private RoomController roomController;
+
+    private IRoomController roomController;
     private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ChangePriceServiceImpl.class);
 
-    public CheackRoomIsFreeImpl(RoomController roomController) {
+    public CheackRoomIsFreeImpl(IRoomController roomController) {
         this.roomController = roomController;
     }
 

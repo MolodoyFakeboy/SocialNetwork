@@ -2,10 +2,12 @@ package Service;
 
 import Annotations.InjectByType;
 import Annotations.Singleton;
+import Dao.IServiceDao;
 import Dao.ServiceDao;
 import Model.Service;
 import org.apache.log4j.Logger;
 
+import javax.inject.Inject;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Stream;
@@ -15,24 +17,17 @@ import java.util.stream.Stream;
 public class FunctionService implements IFunctionService {
 
     @InjectByType
-    private ServiceDao serviceDao;
+    private IServiceDao serviceDao;
 
     private Logger log;
 
 
-    public FunctionService() {
+    @Inject
+    public FunctionService(IServiceDao serviceDao) {
+        this.serviceDao = serviceDao;
         log = Logger.getLogger(ServiceDao.class);
     }
 
-    public void setServiceDao(ServiceDao serviceDao) {
-        this.serviceDao = serviceDao;
-    }
-
-    @Override
-    public ServiceDao createServiceDao(ServiceDao serviceDao){
-        this.serviceDao = serviceDao;
-        return serviceDao;
-    }
 
     @Override
     public Service changeServicePrice(Service service, double price) {
@@ -55,11 +50,18 @@ public class FunctionService implements IFunctionService {
         return stream;
     }
 
+    @Override
+    public Service getService(int index){
+        return serviceDao.getServices().get(index);
+    }
+
+    @Override
+    public IServiceDao getServiceDao() {
+        return serviceDao;
+    }
+
     public List<Service> getListService(){
         return serviceDao.getServices();
     }
 
-    public ServiceDao getServiceDao() {
-        return serviceDao;
-    }
 }

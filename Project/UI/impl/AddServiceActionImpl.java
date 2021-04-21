@@ -1,5 +1,6 @@
 package UI.impl;
-import Controller.ServiceController;
+
+import Controller.IServiceController;
 import Model.Service;
 import UI.IAction;
 
@@ -7,9 +8,9 @@ import UI.IAction;
 public class AddServiceActionImpl implements IAction {
 
 
-    private ServiceController serviceController;
+    private IServiceController serviceController;
 
-    public AddServiceActionImpl(ServiceController serviceController) {
+    public AddServiceActionImpl(IServiceController serviceController) {
         this.serviceController = serviceController;
     }
 

@@ -1,17 +1,15 @@
 package UI.impl;
 
-import Controller.RoomController;
+import Controller.IRoomController;
 import UI.IAction;
 
-import java.time.LocalDate;
 import java.util.Scanner;
-import java.util.logging.Logger;
 
 public class GetInfoRoom implements IAction {
-    private RoomController roomController;
+    private IRoomController roomController;
     private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(GetInfoRoom.class);
 
-    public GetInfoRoom(RoomController roomController) {
+    public GetInfoRoom(IRoomController roomController) {
         this.roomController = roomController;
     }
 

@@ -2,7 +2,7 @@ package Service;
 
 import Annotations.InjectByType;
 import Annotations.Singleton;
-import Dao.RoomDao;
+import Dao.IRoomDao;
 import Model.EnumStatus;
 import Model.Guest;
 import Model.Room;
@@ -19,19 +19,18 @@ import java.util.stream.Stream;
 @Singleton
 public class RoomService implements IRoomService {
 
+
     @InjectByType
-    private RoomDao roomDao;
+    private IRoomDao roomDao;
 
     private  Logger log;
 
-    public RoomService() {
+    public RoomService(IRoomDao roomDao)
+    {
+        this.roomDao = roomDao;
         log = Logger.getLogger(RoomService.class);
     }
 
-
-    public void setRoomDao(RoomDao roomDao) {
-        this.roomDao = roomDao;
-    }
 
     @Override
     public Room addNewRoom(Room room) {
@@ -184,17 +183,28 @@ public class RoomService implements IRoomService {
         log.info(" Количество кроватей в комнате " + roomDao.getRooms().get(index).getNumBed());
         log.info(" Стоиость комнаты составит" + roomDao.getRooms().get(index).getBasePrice());
         log.info("Количество звезд у комнаты: " + roomDao.getRooms().get(index).getNumberOfStars());
-        if (roomDao.getRooms().get(index).getGuests().isEmpty()) {
-            log.info("В комнате не проживают гости");
-        } else {
-            log.info("В данный момент комната занята");
+        try {
+            if (roomDao.getRooms().get(index).getGuests().isEmpty()) {
+                log.info("В комнате не проживают гости");
+            } else {
+                log.info("В данный момент комната занята");
+            }
+        } catch (Exception exception) {
+            log.error("Нет гостей");
         }
         return roomDao.getRooms().get(index);
     }
 
-    public RoomDao getRoomDao() {
+    @Override
+    public Room getRoom(int index) {
+        return roomDao.getRooms().get(index);
+    }
+
+    @Override
+    public IRoomDao getRoomDao() {
         return roomDao;
     }
+
 
     public List<Room> getRoom(){
         return roomDao.getRooms();

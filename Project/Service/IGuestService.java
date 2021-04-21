@@ -1,5 +1,6 @@
 package Service;
 
+import Dao.IGuestDao;
 import Model.Guest;
 import Model.Room;
 import Model.Service;
@@ -14,4 +15,7 @@ public interface IGuestService {
     List<Guest> getNumberGuest();
     List<Service> sortUsingServicePrice(Guest guest);
     List<Service> sortUsingServiceTime(Guest guest);
+    Guest getGuest(int index);
+    Room getGuestRoom(int index);
+    IGuestDao getGuestDao();
 }

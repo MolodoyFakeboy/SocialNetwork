@@ -27,6 +27,8 @@ public class RoomDao implements IRoomDao, Serializable {
             rooms.remove(room);
         }
     }
+
+    @Override
     public List<Room> getRooms() {
         return rooms;
     }

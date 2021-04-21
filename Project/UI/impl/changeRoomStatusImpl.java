@@ -1,16 +1,16 @@
 package UI.impl;
 
-import Controller.RoomController;
+import Controller.IRoomController;
 import UI.IAction;
 
 import java.util.Scanner;
 
 public class changeRoomStatusImpl implements IAction {
 
-    private RoomController roomController;
+    private IRoomController roomController;
     private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(changeRoomStatusImpl.class);
 
-    public changeRoomStatusImpl(RoomController roomController) {
+    public changeRoomStatusImpl(IRoomController roomController) {
         this.roomController = roomController;
     }
 

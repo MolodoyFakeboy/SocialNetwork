@@ -1,16 +1,15 @@
 package UI.impl;
 
-import Controller.ServiceController;
+import Controller.IServiceController;
 import UI.IAction;
 
 import java.util.Scanner;
-import java.util.logging.Logger;
 
 public class ChangePriceServiceImpl implements IAction {
-    private ServiceController serviceController;
+    private IServiceController serviceController;
     private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ChangePriceServiceImpl.class);
 
-    public ChangePriceServiceImpl(ServiceController serviceController) {
+    public ChangePriceServiceImpl(IServiceController serviceController) {
         this.serviceController = serviceController;
     }
 

@@ -1,14 +1,14 @@
 package UI.impl;
 
-import Controller.GuestController;
+import Controller.IGuestController;
 import UI.IAction;
 
 public class getNumberGuestImpl implements IAction {
 
-    private GuestController guestController;
+    private IGuestController guestController;
     private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(getNumberGuestImpl.class);
 
-    public getNumberGuestImpl(GuestController guestController) {
+    public getNumberGuestImpl(IGuestController guestController) {
         this.guestController = guestController;
     }
 

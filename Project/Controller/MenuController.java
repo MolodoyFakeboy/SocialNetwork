@@ -8,6 +8,7 @@ import java.util.Scanner;
 
 
 public class MenuController {
+
     private final MenuBuilder builder;
     private final Navigator navigator;
 

@@ -1,6 +1,8 @@
-package Annotations;
+package Modules;
 
 
+
+import Annotations.Singleton;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -31,6 +33,10 @@ public class ApplicationContext {
         return a;
     }
 
+    public Object put(Class a, Object object){
+        cache.put(a, object);
+        return object;
+    }
 
     public void setFactory(ObjectFactory factory) {
         this.factory = factory;

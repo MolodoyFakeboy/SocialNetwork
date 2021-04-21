@@ -1,16 +1,16 @@
 package UI.impl;
 
-import Controller.GuestController;
+import Controller.IGuestController;
 import UI.IAction;
 
 import java.util.Scanner;
 
 public class sortUsingServicePriceImpl implements IAction {
 
-    private final GuestController guestController;
+    private  IGuestController guestController;
     private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(sortUsingServicePriceImpl.class);
 
-    public sortUsingServicePriceImpl(GuestController guestController) {
+    public sortUsingServicePriceImpl(IGuestController guestController) {
         this.guestController = guestController;
     }
 

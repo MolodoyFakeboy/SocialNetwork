@@ -1,39 +1,43 @@
 package Controller;
 
-import Annotations.InjectByType;
-import Annotations.Singleton;
-import Dao.ServiceDao;
+import Dao.IServiceDao;
 import Model.Service;
-import Service.FunctionService;
+import Service.IFunctionService;
 
-@Singleton
-public class ServiceController {
+public class ServiceController implements IServiceController {
 
-    @InjectByType
-    private FunctionService functionService;
 
-    public ServiceController(FunctionService functionService) {
+    private IFunctionService functionService;
+
+    public ServiceController(IFunctionService functionService) {
         this.functionService = functionService;
     }
 
+    @Override
     public Service getService(int index){
-       return functionService.getListService().get(index);
+       return functionService.getService(index);
+
     }
 
+    @Override
     public Service uppdateService(Service service){
         functionService.addService(service);
         return service;
     }
 
+    @Override
     public void changeServicePrice(int indexService,double price){
         functionService.changeServicePrice(getService(indexService),price);
     }
 
+    @Override
     public void sortServicePrice(){
         functionService.sortServicePrice();
     }
 
-    public ServiceDao getServiceDao() {
+    @Override
+    public IServiceDao getServiceDao() {
         return functionService.getServiceDao();
     }
+
 }

@@ -13,7 +13,6 @@ public class GuestDao implements IGuestDao, Serializable {
     @AddArrayList
     private List<Guest> guests;
 
-
     @Override
     public void addGuest(Guest guest) {
         guests.add(guest);
@@ -25,6 +24,8 @@ public class GuestDao implements IGuestDao, Serializable {
             guests.remove(guest);
         }
     }
+
+    @Override
     public List<Guest> getGuests() {
         return guests;
     }

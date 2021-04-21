@@ -3,8 +3,11 @@ package Dao;
 
 import Model.Room;
 
+import java.util.List;
+
 public interface IRoomDao {
-    public void addRoom(Room room);
+     void addRoom(Room room);
     void removeRoom(Room room);
+    List<Room> getRooms();
 
 }

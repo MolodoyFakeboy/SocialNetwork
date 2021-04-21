@@ -1,5 +1,6 @@
-package Annotations;
+package Modules;
 
+import Annotations.*;
 import Util.Prop;
 import org.apache.log4j.BasicConfigurator;
 import org.reflections.Reflections;
@@ -12,9 +13,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class CommandListner {
+public class CommandListner implements ICommandListner{
 
 
+    @Override
     public void inject(Object a) {
         try {
             Method[] methods = a.getClass().getMethods();
@@ -30,6 +32,7 @@ public class CommandListner {
         }
     }
 
+    @Override
     public void injectPropertyAnnotation(Object a) {
         try {
             for (Field field : a.getClass().getDeclaredFields()) {
@@ -46,6 +49,7 @@ public class CommandListner {
 
     }
 
+    @Override
     public void initializationValues(Object a) {
         try {
             for (Field field : a.getClass().getDeclaredFields()) {
@@ -62,6 +66,7 @@ public class CommandListner {
     }
 
 
+    @Override
     public void configure(Object a, ApplicationContext context) {
         for (Field field : a.getClass().getDeclaredFields()) {
             if (field.isAnnotationPresent(InjectByType.class)) {
@@ -79,6 +84,7 @@ public class CommandListner {
     }
 
 
+    @Override
     public List<Class<?>> getAllClassesFrom(String packageName) {
         return new Reflections(packageName, new SubTypesScanner(false))
                 .getAllTypes()
@@ -95,6 +101,7 @@ public class CommandListner {
 
     }
 
+    @Override
     public void initDependency(String packageName, ApplicationContext context) {
         List<Class<?>> classes = getAllClassesFrom(packageName);
         for (Class cls : classes) {
@@ -104,6 +111,7 @@ public class CommandListner {
 
     }
 
+    @Override
     public void initDao(String packageName, ApplicationContext context) {
         List<Class<?>> classes = getAllClassesFrom(packageName);
         for (Class cls : classes) {

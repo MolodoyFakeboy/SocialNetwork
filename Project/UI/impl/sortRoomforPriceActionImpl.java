@@ -1,13 +1,13 @@
 package UI.impl;
 
-import Controller.RoomController;
+import Controller.IRoomController;
 import UI.IAction;
 
 public class sortRoomforPriceActionImpl implements IAction {
 
-    private RoomController roomController;
+    private IRoomController roomController;
 
-    public sortRoomforPriceActionImpl(RoomController roomController) {
+    public sortRoomforPriceActionImpl(IRoomController roomController) {
         this.roomController = roomController;
     }
 

@@ -1,5 +1,6 @@
 package Service;
 
+import Dao.IRoomDao;
 import Model.EnumStatus;
 import Model.Guest;
 import Model.Room;
@@ -24,4 +25,6 @@ public interface IRoomService {
     ArrayList<Guest>getLastThreeGuest(Room room);
     ArrayList<Room> sortRoomPrice();
     Room getInfoRoom(int index);
+    Room getRoom(int index);
+    IRoomDao getRoomDao();
 }

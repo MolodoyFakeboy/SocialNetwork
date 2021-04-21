@@ -1,18 +1,17 @@
 package UI.impl;
 
-import Controller.GuestController;
-import Controller.RoomController;
+import Controller.IGuestController;
+import Controller.IRoomController;
 import UI.IAction;
 
 import java.util.Scanner;
-import java.util.logging.Logger;
 
 public class LeaveHotelActionImpl implements IAction {
-    private GuestController guestController;
-    private RoomController roomController;
+    private IGuestController guestController;
+    private IRoomController roomController;
     private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LeaveHotelActionImpl.class);
 
-    public LeaveHotelActionImpl(GuestController guestController, RoomController roomController) {
+    public LeaveHotelActionImpl(IGuestController guestController, IRoomController roomController) {
         this.guestController = guestController;
         this.roomController = roomController;
     }

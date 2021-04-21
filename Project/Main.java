@@ -1,5 +1,5 @@
-import Annotations.Application;
-import Annotations.CommandListner;
+import Modules.Application;
+import Modules.CommandListner;
 
 
 public class Main {
