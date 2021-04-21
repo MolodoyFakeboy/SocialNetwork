@@ -32,7 +32,6 @@ public class ApplicationContext {
     }
 
 
-
     public void setFactory(ObjectFactory factory) {
         this.factory = factory;
     }

@@ -13,9 +13,9 @@ public class GuestController {
     @InjectByType
     private GuestService guestService;
 
-    //public GuestController(GuestService guestService) {
-        //this.guestService = guestService;
-    //}
+    public GuestController(GuestService guestService) {
+        this.guestService = guestService;
+    }
 
     public Guest getGuest(int index) {
         return guestService.getGuest(index);

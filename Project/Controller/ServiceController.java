@@ -12,9 +12,9 @@ public class ServiceController {
     @InjectByType
     private FunctionService functionService;
 
-    //public ServiceController(FunctionService functionService) {
-        //this.functionService = functionService;
-    //}
+    public ServiceController(FunctionService functionService) {
+        this.functionService = functionService;
+    }
 
     public Service getService(int index){
        return functionService.getListService().get(index);

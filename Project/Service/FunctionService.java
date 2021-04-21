@@ -5,6 +5,7 @@ import Annotations.Singleton;
 import Dao.ServiceDao;
 import Model.Service;
 import org.apache.log4j.Logger;
+
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Stream;
@@ -18,13 +19,18 @@ public class FunctionService implements IFunctionService {
 
     private Logger log;
 
+
     public FunctionService() {
-          log = Logger.getLogger(ServiceDao.class);
+        log = Logger.getLogger(ServiceDao.class);
+    }
+
+    public void setServiceDao(ServiceDao serviceDao) {
+        this.serviceDao = serviceDao;
     }
 
     @Override
     public ServiceDao createServiceDao(ServiceDao serviceDao){
-        this.serviceDao = new ServiceDao();
+        this.serviceDao = serviceDao;
         return serviceDao;
     }
 

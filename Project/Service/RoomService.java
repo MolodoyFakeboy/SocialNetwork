@@ -28,6 +28,11 @@ public class RoomService implements IRoomService {
         log = Logger.getLogger(RoomService.class);
     }
 
+
+    public void setRoomDao(RoomDao roomDao) {
+        this.roomDao = roomDao;
+    }
+
     @Override
     public Room addNewRoom(Room room) {
         roomDao.addRoom(room);

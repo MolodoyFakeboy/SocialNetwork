@@ -8,6 +8,7 @@ import Model.Guest;
 import Model.Room;
 import Model.Service;
 import org.apache.log4j.Logger;
+
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
@@ -24,10 +25,9 @@ public class GuestService implements IGuestService {
         log = Logger.getLogger(GuestService.class);
     }
 
-    @Override
-    public GuestDao createGuestDao(GuestDao guestDao){
+
+    public void setGuestDao(GuestDao guestDao) {
         this.guestDao = guestDao;
-        return guestDao;
     }
 
     @Override

@@ -4,6 +4,12 @@ import Controller.GuestController;
 import Controller.MenuController;
 import Controller.RoomController;
 import Controller.ServiceController;
+import Dao.GuestDao;
+import Dao.RoomDao;
+import Dao.ServiceDao;
+import Service.FunctionService;
+import Service.GuestService;
+import Service.RoomService;
 import UI.MenuBuilder;
 import UI.Navigator;
 import Util.JsonSaver;
@@ -30,6 +36,7 @@ public class Application {
         commandListner.inject(prop);
         commandListner.injectPropertyAnnotation(prop);
 
+
         commandListner.initDao("Dao",context);
 
         context.update(jsonSaver.deserializationRoom());
@@ -38,13 +45,14 @@ public class Application {
 
         commandListner.initDependency("Service",context);
 
-        RoomController roomController = new RoomController();
-        ServiceController serviceController = new ServiceController();
-        GuestController guestController = new GuestController();
+        context.getObject(RoomService.class).setRoomDao(context.getObject(RoomDao.class));
+        context.getObject(FunctionService.class).setServiceDao(context.getObject(ServiceDao.class));
+        context.getObject(GuestService.class).setGuestDao(context.getObject(GuestDao.class));
 
-        commandListner.configure(roomController,context);
-        commandListner.configure(serviceController,context);
-        commandListner.configure(guestController,context);
+        RoomController roomController = new RoomController(context.getObject(RoomService.class));
+        ServiceController serviceController = new ServiceController(context.getObject(FunctionService.class));
+        GuestController guestController = new GuestController(context.getObject(GuestService.class));
+
 
         MenuBuilder menuBuilder = new MenuBuilder(roomController, serviceController, guestController);
         Navigator navigator = new Navigator(menuBuilder.getRootMenu());

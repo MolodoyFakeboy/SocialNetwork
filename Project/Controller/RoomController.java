@@ -16,9 +16,9 @@ public class RoomController {
     @InjectByType
     private RoomService roomService;
 
-   // public RoomController(RoomService roomService) {
-       // this.roomService = roomService;
-   // }
+    public RoomController(RoomService roomService) {
+        this.roomService = roomService;
+    }
 
     public Room getRoom(int index) {
         return roomService.getRoom().get(index);

@@ -22,7 +22,7 @@ public class CommandListner {
                 if (method.isAnnotationPresent(ConfigProperty.class)) {
                     method.invoke(a);
                     BasicConfigurator.configure();
-                    System.out.println("Удачная инекция");
+//                    System.out.println("Удачная инекция");
                 }
             }
         } catch (SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
@@ -36,6 +36,7 @@ public class CommandListner {
                 if (field.isAnnotationPresent(InjectProperty.class)) {
                     field.setAccessible(true);
                     field.set(a, Prop.getProperties().get("Path"));
+//                    System.out.println("Удачно");
                 }
             }
 
@@ -72,7 +73,9 @@ public class CommandListner {
                     e.printStackTrace();
                 }
             }
+
         }
+
     }
 
 
@@ -97,6 +100,8 @@ public class CommandListner {
         for (Class cls : classes) {
             configure(context.getObject(cls), context);
         }
+
+
     }
 
     public void initDao(String packageName, ApplicationContext context) {
