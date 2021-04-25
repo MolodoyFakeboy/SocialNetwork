@@ -30,9 +30,9 @@ public class JsonSaver {
         String jsonService = gson.toJson(serviceDao);
         String jsonGuest = gsonGuestDao.toJson(guestDao);
 
-        FileWriter fileWriterRoom = new FileWriter("roomDao.json");
-        FileWriter fileWriterGuest = new FileWriter("guestDao.json");
-        FileWriter fileWriterService = new FileWriter("serviceDao.json");
+        FileWriter fileWriterRoom = new FileWriter("Project/roomDao.json");
+        FileWriter fileWriterGuest = new FileWriter("Project/guestDao.json");
+        FileWriter fileWriterService = new FileWriter("Project/serviceDao.json");
         try {
             fileWriterRoom.write(jsonRoom);
             fileWriterService.write(jsonService);
