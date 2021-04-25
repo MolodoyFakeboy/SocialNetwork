@@ -53,7 +53,7 @@ public class JsonSaver {
     public  RoomDao deserializationRoom() {
         RoomDao roomDao = null;
         try {
-            FileReader fileReaderRoom = new FileReader("roomDao.json");
+            FileReader fileReaderRoom = new FileReader("Project/roomDao.json");
             roomDao = gson.fromJson(fileReaderRoom, RoomDao.class);
             fileReaderRoom.close();
             log.info("Все прошло успешно");
@@ -66,7 +66,7 @@ public class JsonSaver {
     public  GuestDao deserializationGuest() {
         GuestDao guestDao = null;
         try {
-            FileReader fileReaderGuest = new FileReader("guestDao.json");
+            FileReader fileReaderGuest = new FileReader("Project/guestDao.json");
             guestDao = gson.fromJson(fileReaderGuest, GuestDao.class);
             fileReaderGuest.close();
         } catch (JsonSyntaxException | JsonIOException | IOException e) {
@@ -78,7 +78,7 @@ public class JsonSaver {
     public  ServiceDao deserializationService() {
         ServiceDao serviceDao = null;
         try {
-            FileReader fileReaderService = new FileReader("serviceDao.json");
+            FileReader fileReaderService = new FileReader("Project/serviceDao.json");
             serviceDao = gson.fromJson(fileReaderService, ServiceDao.class);
             fileReaderService.close();
         } catch (JsonSyntaxException | JsonIOException | IOException e) {

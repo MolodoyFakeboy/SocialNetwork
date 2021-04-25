@@ -24,7 +24,6 @@ public class CommandListner implements ICommandListner{
                 if (method.isAnnotationPresent(ConfigProperty.class)) {
                     method.invoke(a);
                     BasicConfigurator.configure();
-//                    System.out.println("Удачная инекция");
                 }
             }
         } catch (SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
@@ -39,7 +38,6 @@ public class CommandListner implements ICommandListner{
                 if (field.isAnnotationPresent(InjectProperty.class)) {
                     field.setAccessible(true);
                     field.set(a, Prop.getProperties().get("Path"));
-//                    System.out.println("Удачно");
                 }
             }
 

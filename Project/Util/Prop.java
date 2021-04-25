@@ -17,8 +17,8 @@ public class Prop {
 
     @ConfigProperty
     public void load() {
-        properties = initProperties("src/Resources/config.properties");
-        properties2 = initProperties("src/Resources/log4j.properties");
+        properties = initProperties("Project/Resources/config.properties");
+        properties2 = initProperties("Project/Resources/log4j.properties");
     }
 
     public void configLog4j(){
