@@ -1,0 +1,19 @@
+package src.main.java.UI.impl;
+
+
+import src.main.java.Controller.IRoomController;
+import src.main.java.UI.IAction;
+
+public class sortRoomforStarsActionImpl implements IAction {
+
+    private IRoomController roomController;
+
+    public sortRoomforStarsActionImpl(IRoomController roomController) {
+        this.roomController = roomController;
+    }
+
+    @Override
+    public void execute() throws Exception {
+        roomController.sortRoomforStars();
+    }
+}
