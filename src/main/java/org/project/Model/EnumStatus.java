@@ -1,4 +1,4 @@
-package Model;
+package org.project.Model;
 
 public enum EnumStatus  {
     BOOK_ROOM,

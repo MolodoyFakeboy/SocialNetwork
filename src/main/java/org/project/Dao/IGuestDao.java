@@ -1,6 +1,6 @@
-package Dao;
+package org.project.Dao;
 
-import Model.Guest;
+import org.project.Model.Guest;
 
 import java.util.List;
 

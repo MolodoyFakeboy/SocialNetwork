@@ -1,6 +1,6 @@
-package Util;
+package org.project.Util;
 
-import Annotations.InjectProperty;
+import org.project.Annotations.InjectProperty;
 
 import java.io.File;
 

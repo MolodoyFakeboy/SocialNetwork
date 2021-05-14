@@ -1,9 +1,8 @@
-package AnnotationHandler;
+package org.project.AnnotationHandler;
 
 import javax.annotation.PostConstruct;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-
 
 public class ObjectFactory {
 
@@ -29,8 +28,6 @@ public class ObjectFactory {
 
     }
 
-
-
     private <T> void invokeInit(Class<T> implClass, T t) throws IllegalAccessException, InvocationTargetException {
         for (Method method : implClass.getMethods()) {
             if (method.isAnnotationPresent(PostConstruct.class)) {
@@ -43,8 +40,6 @@ public class ObjectFactory {
     private <T> T create(Class<T> implClass) throws InstantiationException, IllegalAccessException, java.lang.reflect.InvocationTargetException, NoSuchMethodException {
         return implClass.getDeclaredConstructor().newInstance();
     }
-
-
 
 }
 

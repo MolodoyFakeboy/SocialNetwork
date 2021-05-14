@@ -1,4 +1,4 @@
-package AnnotationHandler;
+package org.project.AnnotationHandler;
 
 import java.util.List;
 

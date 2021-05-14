@@ -1,13 +1,11 @@
-package UI;
+package org.project.UI;
 
 
-
-
-import Controller.*;
-import AnnotationHandler.ApplicationContext;
-
-import UI.impl.*;
-
+import org.project.AnnotationHandler.ApplicationContext;
+import org.project.Controller.GuestController;
+import org.project.Controller.RoomController;
+import org.project.Controller.ServiceController;
+import org.project.UI.impl.*;
 
 import java.util.ArrayList;
 

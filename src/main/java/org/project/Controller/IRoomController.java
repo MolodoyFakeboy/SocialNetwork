@@ -1,6 +1,6 @@
-package Controller;
+package org.project.Controller;
 
-import Model.Room;
+import org.project.Model.Room;
 
 import java.time.LocalDate;
 

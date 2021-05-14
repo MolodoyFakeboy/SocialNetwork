@@ -1,8 +1,7 @@
-package UI.impl;
+package org.project.UI.impl;
 
-
-import Controller.IGuestController;
-import UI.IAction;
+import org.project.Controller.IGuestController;
+import org.project.UI.IAction;
 
 import java.util.Scanner;
 

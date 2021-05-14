@@ -1,11 +1,11 @@
-package AnnotationHandler;
+package org.project.AnnotationHandler;
 
-import Controller.MenuController;
-import Dao.RoomDao;
-import UI.MenuBuilder;
-import UI.Navigator;
-import Util.JsonSaver;
-import Util.Prop;
+import org.project.Controller.MenuController;
+import org.project.Dao.RoomDao;
+import org.project.UI.MenuBuilder;
+import org.project.UI.Navigator;
+import org.project.Util.JsonSaver;
+import org.project.Util.Prop;
 
 
 public class Application {
@@ -31,17 +31,17 @@ public class Application {
         JsonSaver jsonSaver = context.getObject(JsonSaver.class);
 
         //создает даошки и добавляет АрейЛист(Не знаю зачем сделал так)
-        commandListner.createDao("Dao", context);
+        commandListner.createDao("org/project/Dao", context);
 
-        commandListner.setPackagetoScan("Dao");
+        commandListner.setPackagetoScan("org/project/Dao");
 
         //создает Сервиса и внедряет за висимость
-        commandListner.initDependency("Service", context);
+        commandListner.initDependency("org/project/Service", context);
 
-        commandListner.setPackagetoScan("Service");
+        commandListner.setPackagetoScan("org/project/Service");
 
         //Создает контролеры и внедряет за висимость
-        commandListner.initDependency("Controller", context);
+        commandListner.initDependency("org/project/Controller", context);
 
         MenuBuilder menuBuilder = new MenuBuilder(context);
         Navigator navigator = new Navigator(menuBuilder.getRootMenu());

@@ -1,6 +1,6 @@
-package Util;
+package org.project.Util;
 
-import Annotations.GsonExclude;
+import org.project.Annotations.GsonExclude;
 import com.google.gson.ExclusionStrategy;
 import com.google.gson.FieldAttributes;
 import com.google.gson.Gson;

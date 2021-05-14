@@ -1,6 +1,6 @@
-package Model;
+package org.project.Model;
 
-import Annotations.GsonExclude;
+import org.project.Annotations.GsonExclude;
 import org.apache.log4j.Logger;
 
 import java.io.Serializable;

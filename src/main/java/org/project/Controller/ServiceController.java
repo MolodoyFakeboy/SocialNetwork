@@ -1,9 +1,9 @@
-package Controller;
+package org.project.Controller;
 
-import Annotations.InjectByType;
-import Annotations.Singleton;
-import Model.Service;
-import Service.IFunctionService;
+import org.project.Annotations.InjectByType;
+import org.project.Annotations.Singleton;
+import org.project.Model.Service;
+import org.project.Service.IFunctionService;
 
 
 @Singleton

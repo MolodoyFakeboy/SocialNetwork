@@ -1,12 +1,10 @@
-package UI.impl;
+package org.project.UI.impl;
 
-
-
-import Controller.IGuestController;
-import Controller.IRoomController;
-import Exeception.MyException;
-import Model.Guest;
-import UI.IAction;
+import org.project.Controller.IGuestController;
+import org.project.Controller.IRoomController;
+import org.project.Exeception.MyException;
+import org.project.Model.Guest;
+import org.project.UI.IAction;
 
 import java.time.LocalDate;
 import java.util.Scanner;
@@ -16,7 +14,6 @@ public class BookRoomActionImpl implements IAction {
     private final IGuestController guestController;
     private final IRoomController roomController;
     private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(BookRoomActionImpl.class);
-
 
     public BookRoomActionImpl(IGuestController guestController, IRoomController roomController) {
         this.guestController = guestController;

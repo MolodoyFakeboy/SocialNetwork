@@ -1,8 +1,8 @@
-package Controller;
+package org.project.Controller;
 
-import Model.Guest;
-import Model.Room;
-import Model.Service;
+import org.project.Model.Guest;
+import org.project.Model.Room;
+import org.project.Model.Service;
 
 public interface IGuestController {
     Guest getGuest(int index);

@@ -1,7 +1,6 @@
-package Service;
+package org.project.Service;
 
-
-import Model.Service;
+import org.project.Model.Service;
 
 import java.util.stream.Stream;
 

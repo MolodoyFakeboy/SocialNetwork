@@ -1,16 +1,11 @@
-package UI.impl;
+package org.project.UI.impl;
 
-
-import Controller.IRoomController;
-import Model.Room;
-import UI.IAction;
-
+import org.project.Controller.IRoomController;
+import org.project.Model.Room;
+import org.project.UI.IAction;
 public class AddRoomActionImpl implements IAction {
 
-
     private IRoomController roomController;
-
-
     public AddRoomActionImpl(IRoomController roomController) {
         this.roomController = roomController;
     }

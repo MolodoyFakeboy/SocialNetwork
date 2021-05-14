@@ -1,15 +1,13 @@
-package UI.impl;
+package org.project.UI.impl;
 
 
-import Controller.IServiceController;
-import Model.Service;
-import UI.IAction;
+import org.project.Controller.IServiceController;
+import org.project.Model.Service;
+import org.project.UI.IAction;
 
 public class AddServiceActionImpl implements IAction {
 
-
     private IServiceController serviceController;
-
     public AddServiceActionImpl(IServiceController serviceController) {
         this.serviceController = serviceController;
     }

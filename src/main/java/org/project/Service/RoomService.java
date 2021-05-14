@@ -1,14 +1,14 @@
-package Service;
+package org.project.Service;
 
 
-import Annotations.InjectByType;
-import Annotations.Singleton;
-import Dao.IRoomDao;
-import Model.EnumStatus;
-import Model.Guest;
-import Model.Room;
+import org.project.Annotations.InjectByType;
+import org.project.Annotations.Singleton;
+import org.project.Dao.IRoomDao;
+import org.project.Model.EnumStatus;
+import org.project.Model.Guest;
+import org.project.Model.Room;
 
-import Util.Prop;
+import org.project.Util.Prop;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
@@ -22,7 +22,6 @@ import java.util.stream.Stream;
 @Singleton
 public class RoomService implements IRoomService {
 
-
     @InjectByType
     private IRoomDao roomDao;
 
@@ -31,7 +30,6 @@ public class RoomService implements IRoomService {
     public RoomService() {
         log = Logger.getLogger(RoomService.class);
     }
-
 
     @Override
     public Room addNewRoom(Room room) {

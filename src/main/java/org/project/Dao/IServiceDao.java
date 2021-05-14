@@ -1,6 +1,7 @@
-package Dao;
+package org.project.Dao;
 
-import Model.Service;
+
+import org.project.Model.Service;
 
 import java.util.List;
 

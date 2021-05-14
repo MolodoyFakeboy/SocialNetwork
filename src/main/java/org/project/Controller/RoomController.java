@@ -1,10 +1,10 @@
-package Controller;
+package org.project.Controller;
 
-import Annotations.InjectByType;
-import Annotations.Singleton;
-import Model.EnumStatus;
-import Model.Room;
-import Service.IRoomService;
+import org.project.Annotations.InjectByType;
+import org.project.Annotations.Singleton;
+import org.project.Model.EnumStatus;
+import org.project.Model.Room;
+import org.project.Service.IRoomService;
 
 import java.time.LocalDate;
 

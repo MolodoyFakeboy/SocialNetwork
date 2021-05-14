@@ -1,10 +1,10 @@
-package Controller;
-import Annotations.InjectByType;
-import Annotations.Singleton;
-import Model.Guest;
-import Model.Room;
-import Model.Service;
-import Service.IGuestService;
+package org.project.Controller;
+import org.project.Annotations.InjectByType;
+import org.project.Annotations.Singleton;
+import org.project.Model.Guest;
+import org.project.Model.Room;
+import org.project.Model.Service;
+import org.project.Service.IGuestService;
 
 @Singleton
 public class GuestController implements IGuestController {

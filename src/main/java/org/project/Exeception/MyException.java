@@ -1,4 +1,4 @@
-package Exeception;
+package org.project.Exeception;
 
 public class MyException extends Exception {
     public MyException(String message) {

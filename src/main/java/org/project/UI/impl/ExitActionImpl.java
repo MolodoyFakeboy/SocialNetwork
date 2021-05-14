@@ -1,13 +1,11 @@
-package UI.impl;
+package org.project.UI.impl;
 
-
-
-import Dao.GuestDao;
-import Dao.RoomDao;
-import Dao.ServiceDao;
-import AnnotationHandler.ApplicationContext;
-import UI.IAction;
-import Util.JsonSaver;
+import org.project.AnnotationHandler.ApplicationContext;
+import org.project.Dao.GuestDao;
+import org.project.Dao.RoomDao;
+import org.project.Dao.ServiceDao;
+import org.project.UI.IAction;
+import org.project.Util.JsonSaver;
 
 import java.io.IOException;
 

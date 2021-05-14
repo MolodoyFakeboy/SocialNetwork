@@ -1,6 +1,6 @@
-package Controller;
+package org.project.Controller;
 
-import Model.Service;
+import org.project.Model.Service;
 
 public interface IServiceController {
     Service getService(int index);

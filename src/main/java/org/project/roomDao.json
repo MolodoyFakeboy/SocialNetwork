@@ -1,1 +1,49 @@
-{"rooms":[{"roomID":1,"roomNumber":101,"numberOfStars":1,"floor":2,"status":null,"numBed":4,"basePrice":3000.0,"guests":[],"lastGuests":[]},{"roomID":0,"roomNumber":102,"numberOfStars":2,"floor":2,"status":"BOOK_ROOM","numBed":5,"basePrice":3500.0,"guests":[{"name":"zaha","surname":"stud","PhoneNumber":"+1111","id":1,"localDate":{"year":2021,"month":3,"day":27}}],"lastGuests":[]},{"roomID":0,"roomNumber":103,"numberOfStars":1,"floor":2,"status":null,"numBed":3,"basePrice":1500.0,"guests":[],"lastGuests":[]}]}
+{
+  "rooms": [
+    {
+      "roomID": 1,
+      "roomNumber": 101,
+      "numberOfStars": 1,
+      "floor": 2,
+      "status": null,
+      "numBed": 4,
+      "basePrice": 3000.0,
+      "guests": [],
+      "lastGuests": []
+    },
+    {
+      "roomID": 0,
+      "roomNumber": 102,
+      "numberOfStars": 2,
+      "floor": 2,
+      "status": "BOOK_ROOM",
+      "numBed": 5,
+      "basePrice": 3500.0,
+      "guests": [
+        {
+          "name": "zaha",
+          "surname": "stud",
+          "PhoneNumber": "+1111",
+          "id": 1,
+          "localDate": {
+            "year": 2021,
+            "month": 3,
+            "day": 27
+          }
+        }
+      ],
+      "lastGuests": []
+    },
+    {
+      "roomID": 0,
+      "roomNumber": 103,
+      "numberOfStars": 1,
+      "floor": 2,
+      "status": null,
+      "numBed": 3,
+      "basePrice": 1500.0,
+      "guests": [],
+      "lastGuests": []
+    }
+  ]
+}

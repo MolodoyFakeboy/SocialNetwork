@@ -1,9 +1,8 @@
-package UI.impl;
+package org.project.UI.impl;
 
-
-import Controller.IRoomController;
-import Exeception.MyException;
-import UI.IAction;
+import org.project.Controller.IRoomController;
+import org.project.Exeception.MyException;
+import org.project.UI.IAction;
 
 import java.time.LocalDate;
 import java.util.Scanner;

@@ -1,12 +1,12 @@
-package Service;
+package org.project.Service;
 
-import Annotations.InjectByType;
-import Annotations.Singleton;
-import Dao.IGuestDao;
-import Model.EnumStatus;
-import Model.Guest;
-import Model.Room;
-import Model.Service;
+import org.project.Annotations.InjectByType;
+import org.project.Annotations.Singleton;
+import org.project.Dao.IGuestDao;
+import org.project.Model.EnumStatus;
+import org.project.Model.Guest;
+import org.project.Model.Room;
+import org.project.Model.Service;
 import org.apache.log4j.Logger;
 
 import java.util.Comparator;

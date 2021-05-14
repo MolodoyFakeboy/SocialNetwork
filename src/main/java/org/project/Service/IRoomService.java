@@ -1,9 +1,9 @@
-package Service;
+package org.project.Service;
 
-import Dao.IRoomDao;
-import Model.EnumStatus;
-import Model.Guest;
-import Model.Room;
+import org.project.Dao.IRoomDao;
+import org.project.Model.EnumStatus;
+import org.project.Model.Guest;
+import org.project.Model.Room;
 
 import java.time.LocalDate;
 import java.util.ArrayList;

@@ -1,8 +1,8 @@
-package Service;
+package org.project.Service;
 
-import Model.Guest;
-import Model.Room;
-import Model.Service;
+import org.project.Model.Guest;
+import org.project.Model.Room;
+import org.project.Model.Service;
 
 import java.util.List;
 

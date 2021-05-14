@@ -1,6 +1,6 @@
-package Model;
+package org.project.Model;
 
-import Annotations.ConfigProperty;
+import org.project.Annotations.ConfigProperty;
 
 import java.io.Serializable;
 import java.util.ArrayList;

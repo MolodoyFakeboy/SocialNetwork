@@ -1,14 +1,11 @@
-package AnnotationHandler;
+package org.project.AnnotationHandler;
 
-import Annotations.*;
-
-import Util.Prop;
+import org.project.Annotations.*;
+import org.project.Util.Prop;
 import org.apache.log4j.BasicConfigurator;
-
 import org.apache.log4j.Logger;
 import org.reflections.Reflections;
 import org.reflections.scanners.SubTypesScanner;
-
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;

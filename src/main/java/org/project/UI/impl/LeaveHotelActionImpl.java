@@ -1,9 +1,8 @@
-package UI.impl;
+package org.project.UI.impl;
 
-
-import Controller.IGuestController;
-import Controller.IRoomController;
-import UI.IAction;
+import org.project.Controller.IGuestController;
+import org.project.Controller.IRoomController;
+import org.project.UI.IAction;
 
 import java.util.Scanner;
 
@@ -17,7 +16,6 @@ public class LeaveHotelActionImpl implements IAction {
         this.roomController = roomController;
     }
 
-
     @Override
     public void execute() {
         try {
@@ -27,7 +25,7 @@ public class LeaveHotelActionImpl implements IAction {
             log.info("Укажите ваш индекс");
             int guestIndex = in.nextInt();
             guestController.leaveHotel(roomController.getRoom(index), guestIndex);
-        } catch (Exception exception){
+        } catch (Exception exception) {
             log.error("Неверно указанный индекс");
         }
 

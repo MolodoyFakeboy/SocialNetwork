@@ -1,8 +1,8 @@
-package Dao;
+package org.project.Dao;
 
-import Annotations.AddArrayList;
-import Annotations.Singleton;
-import Model.Room;
+import org.project.Annotations.AddArrayList;
+import org.project.Annotations.Singleton;
+import org.project.Model.Room;
 
 import java.io.Serializable;
 import java.util.List;

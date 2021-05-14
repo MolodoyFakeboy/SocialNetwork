@@ -1,4 +1,4 @@
-package UI;
+package org.project.UI;
 
 public class MenuItem {
 

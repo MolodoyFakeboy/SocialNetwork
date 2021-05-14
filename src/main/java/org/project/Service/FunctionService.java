@@ -1,16 +1,13 @@
-package Service;
+package org.project.Service;
 
-import Annotations.InjectByType;
-import Annotations.Singleton;
-import Dao.IServiceDao;
-import Dao.ServiceDao;
-import Model.Service;
+import org.project.Annotations.InjectByType;
+import org.project.Annotations.Singleton;
+import org.project.Dao.IServiceDao;
+import org.project.Dao.ServiceDao;
+import org.project.Model.Service;
 import org.apache.log4j.Logger;
-
 import java.util.Comparator;
-import java.util.List;
 import java.util.stream.Stream;
-
 
 @Singleton
 public class FunctionService implements IFunctionService {
@@ -23,7 +20,6 @@ public class FunctionService implements IFunctionService {
     public FunctionService() {
         log = Logger.getLogger(ServiceDao.class);
     }
-
 
     @Override
     public Service changeServicePrice(Service service, double price) {

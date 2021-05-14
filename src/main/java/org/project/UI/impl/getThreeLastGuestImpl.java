@@ -1,11 +1,9 @@
-package UI.impl;
+package org.project.UI.impl;
 
-import Controller.IRoomController;
-import UI.IAction;
+import org.project.Controller.IRoomController;
+import org.project.UI.IAction;
 
 import java.util.Scanner;
-
-
 public class getThreeLastGuestImpl implements IAction {
     private IRoomController roomController;
     private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(getThreeLastGuestImpl.class);

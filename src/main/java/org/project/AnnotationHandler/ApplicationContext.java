@@ -1,8 +1,6 @@
-package AnnotationHandler;
+package org.project.AnnotationHandler;
 
-
-
-import Annotations.Singleton;
+import org.project.Annotations.Singleton;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;

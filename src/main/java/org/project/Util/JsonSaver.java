@@ -1,10 +1,9 @@
-package Util;
+package org.project.Util;
 
-
-import Dao.GuestDao;
-import Dao.RoomDao;
-import Dao.ServiceDao;
-import Annotations.Singleton;
+import org.project.Dao.GuestDao;
+import org.project.Dao.RoomDao;
+import org.project.Dao.ServiceDao;
+import org.project.Annotations.Singleton;
 import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
@@ -33,9 +32,9 @@ public class JsonSaver {
         String jsonService = gson.toJson(serviceDao);
         String jsonGuest = gsonGuestDao.toJson(guestDao);
 
-        FileWriter fileWriterRoom = new FileWriter("src/main/java/roomDao.json");
-        FileWriter fileWriterGuest = new FileWriter("src/main/java/guestDao.json");
-        FileWriter fileWriterService = new FileWriter("src/main/java/serviceDao.json");
+        FileWriter fileWriterRoom = new FileWriter("src/main/java/org/project/roomDao.json");
+        FileWriter fileWriterGuest = new FileWriter("src/main/java/org/project/guestDao.json");
+        FileWriter fileWriterService = new FileWriter("src/main/java/org/project/serviceDao.json");
         try {
             fileWriterRoom.write(jsonRoom);
             fileWriterService.write(jsonService);
@@ -56,7 +55,7 @@ public class JsonSaver {
     public  RoomDao deserializationRoom() {
         RoomDao roomDao = null;
         try {
-            FileReader fileReaderRoom = new FileReader("src/main/java/roomDao.json");
+            FileReader fileReaderRoom = new FileReader("src/main/java/org/project/roomDao.json");
             roomDao = gson.fromJson(fileReaderRoom, RoomDao.class);
             fileReaderRoom.close();
             log.info("Все прошло успешно");
@@ -69,7 +68,7 @@ public class JsonSaver {
     public  GuestDao deserializationGuest() {
         GuestDao guestDao = null;
         try {
-            FileReader fileReaderGuest = new FileReader("src/main/java/guestDao.json");
+            FileReader fileReaderGuest = new FileReader("src/main/java/org/project/guestDao.json");
             guestDao = gson.fromJson(fileReaderGuest, GuestDao.class);
             fileReaderGuest.close();
         } catch (JsonSyntaxException | JsonIOException | IOException e) {
@@ -81,7 +80,7 @@ public class JsonSaver {
     public  ServiceDao deserializationService() {
         ServiceDao serviceDao = null;
         try {
-            FileReader fileReaderService = new FileReader("src/main/java/serviceDao.json");
+            FileReader fileReaderService = new FileReader("src/main/java/org/project/serviceDao.json");
             serviceDao = gson.fromJson(fileReaderService, ServiceDao.class);
             fileReaderService.close();
         } catch (JsonSyntaxException | JsonIOException | IOException e) {

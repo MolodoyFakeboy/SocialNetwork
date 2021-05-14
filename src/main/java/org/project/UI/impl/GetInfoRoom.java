@@ -1,9 +1,7 @@
-package UI.impl;
+package org.project.UI.impl;
 
-
-
-import Controller.IRoomController;
-import UI.IAction;
+import org.project.Controller.IRoomController;
+import org.project.UI.IAction;
 
 import java.util.Scanner;
 
@@ -29,6 +27,5 @@ public class GetInfoRoom implements IAction {
         }
 
     }
-
 }
 

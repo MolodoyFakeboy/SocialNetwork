@@ -1,7 +1,7 @@
-package Controller;
+package org.project.Controller;
 
-import UI.MenuBuilder;
-import UI.Navigator;
+import org.project.UI.MenuBuilder;
+import org.project.UI.Navigator;
 
 import java.util.Scanner;
 

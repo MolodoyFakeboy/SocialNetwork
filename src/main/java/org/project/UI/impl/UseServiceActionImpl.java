@@ -1,10 +1,8 @@
-package UI.impl;
+package org.project.UI.impl;
 
-
-
-import Controller.IGuestController;
-import Controller.IServiceController;
-import UI.IAction;
+import org.project.Controller.IGuestController;
+import org.project.Controller.IServiceController;
+import org.project.UI.IAction;
 
 import java.util.Scanner;
 
@@ -14,7 +12,6 @@ public class UseServiceActionImpl implements IAction {
     private IGuestController guestController;
     private IServiceController serviceController;
     private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(UseServiceActionImpl.class);
-
 
     public UseServiceActionImpl(IGuestController guestController, IServiceController serviceController) {
         this.guestController = guestController;
