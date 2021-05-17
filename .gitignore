@@ -8,9 +8,9 @@
 *.nar
 hs_err_pid*
 
-##############################
-## Maven
-##############################
+#############################
+# Maven
+#############################
 target/
 pom.xml.tag
 pom.xml.releaseBackup
@@ -39,6 +39,6 @@ gradle-app.setting
 out/
 .idea/
 .idea_modules/
-*.iml
+
 *.ipr
 *.iws
