@@ -6,8 +6,9 @@ import java.util.concurrent.LinkedBlockingQueue;
 public class Main {
     public static void main(String[] args) {
         BlockingQueue blockingQueue = new LinkedBlockingQueue<>();
-        Producer producer = new Producer(blockingQueue);
-        Consumer consumer = new Consumer(blockingQueue);
+        final Object monitor = new Object();
+        Producer producer = new Producer(blockingQueue,monitor);
+        Consumer consumer = new Consumer(blockingQueue,monitor);
         producer.start();
         consumer.start();
     }

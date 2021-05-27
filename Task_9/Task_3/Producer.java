@@ -4,10 +4,13 @@ import java.util.concurrent.BlockingQueue;
 
 public class Producer extends Thread {
 
-    private BlockingQueue blockingDeque;
+    private final BlockingQueue blockingDeque;
 
-    public Producer(BlockingQueue blockingDeque) {
+    private final Object object;
+
+    public Producer(BlockingQueue blockingDeque, Object object) {
         this.blockingDeque = blockingDeque;
+        this.object = object;
     }
 
     @Override
@@ -15,12 +18,20 @@ public class Producer extends Thread {
         while (true) {
             int element = (int) (Math.random() * 100);
             try {
+                int timeForSleep = (int) (Math.random() * 500);
                 blockingDeque.put(element);
-                System.out.println("Producer " + element);
-                Thread.sleep(300);
+                System.out.print(" Producer ");
+                System.out.print(element);
+                Thread.sleep(timeForSleep);
+                if (blockingDeque.size() >= 10) {
+                    synchronized (object) {
+                        object.wait();
+                    }
+                }
             } catch (InterruptedException e) {
                 System.out.println("Неудачно");
             }
+
         }
 
     }
