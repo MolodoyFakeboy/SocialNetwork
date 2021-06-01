@@ -6,11 +6,21 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- Schema Hotel
 -- -----------------------------------------------------
 
--- -----------------------------------------------------
--- Schema Hotel
--- -----------------------------------------------------
 CREATE SCHEMA IF NOT EXISTS `Hotel` DEFAULT CHARACTER SET utf8 ;
 USE `Hotel` ;
+
+-- -----------------------------------------------------
+-- Table `Hotel`.`Guest`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `Hotel`.`Guest` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(30) NOT NULL,
+  `surname` VARCHAR(30) NOT NULL,
+  `PhoneNumber` VARCHAR(20) NOT NULL,
+  `LocalDate` TIMESTAMP NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
+
 
 -- -----------------------------------------------------
 -- Table `Hotel`.`Room`
@@ -23,14 +33,7 @@ CREATE TABLE IF NOT EXISTS `Hotel`.`Room` (
   `status` ENUM('BOOK_ROOM', 'FREE_ROOM', 'ROOM_CLEANING') NULL DEFAULT NULL,
   `numBed` TINYINT NOT NULL,
   `basePrice` DECIMAL(10,2) NOT NULL,
-  `Guest_id` INT NULL DEFAULT NULL,
-  PRIMARY KEY (`roomID`),
-  INDEX `fk_Room_Guest_idx` (`Guest_id` ASC) VISIBLE,
-  CONSTRAINT `fk_Room_Guest`
-    FOREIGN KEY (`Guest_id`)
-    REFERENCES `Hotel`.`Guest` (`id`)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE)
+  PRIMARY KEY (`roomID`))
 ENGINE = InnoDB;
 
 
@@ -46,29 +49,45 @@ CREATE TABLE IF NOT EXISTS `Hotel`.`Service` (
   PRIMARY KEY (`idService`))
 ENGINE = InnoDB;
 
-
 -- -----------------------------------------------------
--- Table `Hotel`.`Guest`
+-- Table `Hotel`.`Guest_has_Service`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `Hotel`.`Guest` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(30) NOT NULL,
-  `surname` VARCHAR(30) NOT NULL,
-  `PhoneNumber` VARCHAR(20) NOT NULL,
-  `LocalDate` TIMESTAMP NULL,
-  `Room_roomID` INT NOT NULL,
-  `Service_idService` INT NULL DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  INDEX `fk_Guest_Room1_idx` (`Room_roomID` ASC) VISIBLE,
-  INDEX `fk_Guest_Service1_idx` (`Service_idService` ASC) VISIBLE,
-  CONSTRAINT `fk_Guest_Room1`
-    FOREIGN KEY (`Room_roomID`)
-    REFERENCES `Hotel`.`Room` (`roomID`)
+CREATE TABLE IF NOT EXISTS `Hotel`.`Guest_has_Service` (
+  `Guest_id` INT NOT NULL,
+  `Service_idService` INT NOT NULL,
+  PRIMARY KEY (`Guest_id`, `Service_idService`),
+  INDEX `fk_Guest_has_Service_Service1_idx` (`Service_idService` ASC) VISIBLE,
+  INDEX `fk_Guest_has_Service_Guest_idx` (`Guest_id` ASC) VISIBLE,
+  CONSTRAINT `fk_Guest_has_Service_Guest`
+    FOREIGN KEY (`Guest_id`)
+    REFERENCES `Hotel`.`Guest` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Guest_Service1`
+  CONSTRAINT `fk_Guest_has_Service_Service1`
     FOREIGN KEY (`Service_idService`)
     REFERENCES `Hotel`.`Service` (`idService`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Hotel`.`Guest_has_Room`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `Hotel`.`Guest_has_Room` (
+  `Guest_id` INT NOT NULL,
+  `Room_roomID` INT NOT NULL,
+  PRIMARY KEY (`Guest_id`, `Room_roomID`),
+  INDEX `fk_Guest_has_Room_Room1_idx` (`Room_roomID` ASC) VISIBLE,
+  INDEX `fk_Guest_has_Room_Guest1_idx` (`Guest_id` ASC) VISIBLE,
+  CONSTRAINT `fk_Guest_has_Room_Guest1`
+    FOREIGN KEY (`Guest_id`)
+    REFERENCES `Hotel`.`Guest` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Guest_has_Room_Room1`
+    FOREIGN KEY (`Room_roomID`)
+    REFERENCES `Hotel`.`Room` (`roomID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
