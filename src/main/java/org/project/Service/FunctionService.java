@@ -1,11 +1,12 @@
 package org.project.Service;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.project.Annotations.InjectByType;
 import org.project.Annotations.Singleton;
 import org.project.Dao.IServiceDao;
 import org.project.Dao.ServiceDao;
 import org.project.Model.Service;
-import org.apache.log4j.Logger;
 import java.util.Comparator;
 import java.util.stream.Stream;
 
@@ -18,7 +19,7 @@ public class FunctionService implements IFunctionService {
     private Logger log;
 
     public FunctionService() {
-        log = Logger.getLogger(ServiceDao.class);
+        log = LogManager.getLogger(ServiceDao.class);
     }
 
     @Override

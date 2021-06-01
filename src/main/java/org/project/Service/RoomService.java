@@ -1,17 +1,15 @@
 package org.project.Service;
 
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.project.Annotations.InjectByType;
 import org.project.Annotations.Singleton;
 import org.project.Dao.IRoomDao;
 import org.project.Model.EnumStatus;
 import org.project.Model.Guest;
 import org.project.Model.Room;
-
 import org.project.Util.Prop;
-import org.apache.log4j.Level;
-import org.apache.log4j.Logger;
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -25,10 +23,10 @@ public class RoomService implements IRoomService {
     @InjectByType
     private IRoomDao roomDao;
 
-    private  Logger log;
+    private Logger log;
 
     public RoomService() {
-        log = Logger.getLogger(RoomService.class);
+        log = LogManager.getLogger(RoomService.class);
     }
 
     @Override
@@ -160,7 +158,7 @@ public class RoomService implements IRoomService {
                 return null;
             }
         } catch (Exception e) {
-            log.log(Level.ERROR,"В этом номере не было 3 гостей");
+            log.error("В этом номере не было 3 гостей");
         }
         return guests;
     }

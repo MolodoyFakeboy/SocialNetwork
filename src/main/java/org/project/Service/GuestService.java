@@ -1,5 +1,7 @@
 package org.project.Service;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.project.Annotations.InjectByType;
 import org.project.Annotations.Singleton;
 import org.project.Dao.IGuestDao;
@@ -7,8 +9,6 @@ import org.project.Model.EnumStatus;
 import org.project.Model.Guest;
 import org.project.Model.Room;
 import org.project.Model.Service;
-import org.apache.log4j.Logger;
-
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
@@ -23,7 +23,7 @@ public class GuestService implements IGuestService {
     private Logger log;
 
     public GuestService() {
-        log = Logger.getLogger(GuestService.class);
+        log = LogManager.getLogger(GuestService.class);
     }
 
     @Override

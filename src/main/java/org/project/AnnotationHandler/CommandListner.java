@@ -1,9 +1,9 @@
 package org.project.AnnotationHandler;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.project.Annotations.*;
 import org.project.Util.Prop;
-import org.apache.log4j.BasicConfigurator;
-import org.apache.log4j.Logger;
 import org.reflections.Reflections;
 import org.reflections.scanners.SubTypesScanner;
 import java.lang.reflect.Field;
@@ -20,7 +20,7 @@ public class CommandListner implements ICommandListner {
     private final Logger log;
 
     public CommandListner() {
-        log = Logger.getLogger(CommandListner.class);
+        log = LogManager.getLogger(CommandListner.class);
     }
 
     @Override
@@ -35,7 +35,6 @@ public class CommandListner implements ICommandListner {
             for (Method method : methods) {
                 if (method.isAnnotationPresent(InjectProperty.class)) {
                     method.invoke(a);
-                    BasicConfigurator.configure();
                     log.info("Проперти закунфигурировано");
                 }
             }

@@ -1,5 +1,7 @@
 package org.project.UI.impl;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.project.Controller.IGuestController;
 import org.project.Controller.IServiceController;
 import org.project.UI.IAction;
@@ -11,7 +13,7 @@ public class UseServiceActionImpl implements IAction {
 
     private IGuestController guestController;
     private IServiceController serviceController;
-    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(UseServiceActionImpl.class);
+    private static final Logger log = LogManager.getLogger(UseServiceActionImpl.class);
 
     public UseServiceActionImpl(IGuestController guestController, IServiceController serviceController) {
         this.guestController = guestController;

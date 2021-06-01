@@ -1,5 +1,7 @@
 package org.project.UI.impl;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.project.Controller.IGuestController;
 import org.project.UI.IAction;
 
@@ -8,7 +10,7 @@ import java.util.Scanner;
 public class sortUsingServiceTimeImpl implements IAction {
 
     private IGuestController guestController;
-    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(sortUsingServiceTimeImpl.class);
+    private static final Logger log = LogManager.getLogger(sortUsingServiceTimeImpl.class);
     public sortUsingServiceTimeImpl(IGuestController guestController) {
         this.guestController = guestController;
     }

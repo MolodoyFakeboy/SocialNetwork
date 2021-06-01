@@ -1,5 +1,7 @@
 package org.project.UI.impl;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.project.Controller.IGuestController;
 import org.project.Controller.IRoomController;
 import org.project.Exeception.MyException;
@@ -13,7 +15,7 @@ public class BookRoomActionImpl implements IAction {
 
     private final IGuestController guestController;
     private final IRoomController roomController;
-    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(BookRoomActionImpl.class);
+    private static final Logger log = LogManager.getLogger(BookRoomActionImpl.class);
 
     public BookRoomActionImpl(IGuestController guestController, IRoomController roomController) {
         this.guestController = guestController;

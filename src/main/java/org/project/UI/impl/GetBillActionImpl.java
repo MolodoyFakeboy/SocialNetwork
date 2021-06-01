@@ -1,5 +1,7 @@
 package org.project.UI.impl;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.project.Controller.IGuestController;
 import org.project.Controller.IRoomController;
 import org.project.UI.IAction;
@@ -10,7 +12,7 @@ public class GetBillActionImpl implements IAction {
     private IGuestController guestController;
     private IRoomController roomController;
 
-    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(GetBillActionImpl.class);
+    private static final Logger log = LogManager.getLogger(GetBillActionImpl.class);
 
     public GetBillActionImpl(IGuestController guestController, IRoomController roomController) {
         this.guestController = guestController;
