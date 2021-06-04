@@ -1,5 +1,7 @@
 package org.project.Util;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.project.Dao.GuestDao;
 import org.project.Dao.RoomDao;
 import org.project.Dao.ServiceDao;
@@ -7,8 +9,6 @@ import org.project.Annotations.Singleton;
 import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
-import org.apache.log4j.Logger;
-
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -19,7 +19,7 @@ public class JsonSaver {
     private final Gson gson;
     private Gson gsonRoomDao;
     private Gson gsonGuestDao;
-    final Logger log = org.apache.log4j.Logger.getLogger(JsonSaver.class);
+    private final Logger log = LogManager.getLogger(JsonSaver.class);
 
     public JsonSaver() {
         gsonRoomDao = GsonExclusionStrategy.createGsonFromBuilder( new GsonExclusionStrategy(null) );
@@ -32,9 +32,9 @@ public class JsonSaver {
         String jsonService = gson.toJson(serviceDao);
         String jsonGuest = gsonGuestDao.toJson(guestDao);
 
-        FileWriter fileWriterRoom = new FileWriter("src/main/java/org/project/roomDao.json");
-        FileWriter fileWriterGuest = new FileWriter("src/main/java/org/project/guestDao.json");
-        FileWriter fileWriterService = new FileWriter("src/main/java/org/project/serviceDao.json");
+        FileWriter fileWriterRoom = new FileWriter("src/main/resources/roomDao.json");
+        FileWriter fileWriterGuest = new FileWriter("src/main/resources/guestDao.json");
+        FileWriter fileWriterService = new FileWriter("src/main/resources/serviceDao.json");
         try {
             fileWriterRoom.write(jsonRoom);
             fileWriterService.write(jsonService);

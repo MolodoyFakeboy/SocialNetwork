@@ -1,5 +1,7 @@
 package org.project.UI.impl;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.project.Controller.IRoomController;
 import org.project.Exeception.MyException;
 import org.project.UI.IAction;
@@ -10,7 +12,7 @@ import java.util.Scanner;
 public class CheackRoomIsFreeImpl implements IAction {
 
     private IRoomController roomController;
-    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ChangePriceServiceImpl.class);
+    private static final Logger log = LogManager.getLogger(ChangePriceServiceImpl.class);
 
     public CheackRoomIsFreeImpl(IRoomController roomController) {
         this.roomController = roomController;

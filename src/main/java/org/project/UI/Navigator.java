@@ -1,13 +1,14 @@
 package org.project.UI;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.List;
-
 
 public class Navigator {
 
   private Menu currentMenu;
-  private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Navigator.class);
+  private static final Logger log = LogManager.getLogger(Navigator.class);
 
   public Navigator(Menu currentMenu) {
     this.currentMenu = currentMenu;

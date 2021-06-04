@@ -1,5 +1,7 @@
 package org.project.Controller;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.project.UI.MenuBuilder;
 import org.project.UI.Navigator;
 
@@ -11,7 +13,7 @@ public class MenuController {
     private final MenuBuilder builder;
     private final Navigator navigator;
 
-    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(MenuController.class);
+    private static final Logger log = LogManager.getLogger(MenuController.class);
 
 
     public MenuController(MenuBuilder builder, Navigator navigator) {
@@ -29,7 +31,7 @@ public class MenuController {
                 navigator.navigate(index);
             }
         } catch (Exception exception) {
-          log.error("Ошибка меню");
+            log.error("Ошибка меню");
         }
 
     }

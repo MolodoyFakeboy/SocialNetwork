@@ -1,12 +1,12 @@
 package org.project.Dao;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.project.Annotations.AddArrayList;
 import org.project.Annotations.Singleton;
 import org.project.Model.Room;
-
 import java.io.Serializable;
 import java.util.List;
-
 
 @Singleton
 public class RoomDao implements IRoomDao, Serializable {
@@ -14,10 +14,10 @@ public class RoomDao implements IRoomDao, Serializable {
     @AddArrayList
     private List<Room> rooms;
 
+    private static final Logger log = LogManager.getLogger(RoomDao.class);
 
     @Override
     public void addRoom(Room room) {
-        org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(RoomDao.class);
         rooms.add(room);
         log.info(" Добавлена новая комната " + room.toString());
     }

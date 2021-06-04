@@ -1,5 +1,7 @@
 package org.project.UI.impl;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.project.AnnotationHandler.ApplicationContext;
 import org.project.Dao.GuestDao;
 import org.project.Dao.RoomDao;
@@ -12,7 +14,7 @@ import java.io.IOException;
 public class ExitActionImpl implements IAction {
 
     private ApplicationContext context;
-    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ExitActionImpl.class);
+    private static final Logger log = LogManager.getLogger(ExitActionImpl.class);
 
     public ExitActionImpl(ApplicationContext context) {
         this.context = context;

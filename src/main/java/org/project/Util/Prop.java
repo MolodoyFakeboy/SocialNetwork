@@ -7,12 +7,11 @@ import java.io.File;
 public class Prop {
 
     private static ExProperties properties;
-    private static ExProperties properties2;
+
 
     @InjectProperty
     public void load() {
         properties = initProperties("src/main/resources/config.properties");
-        properties2 = initProperties("src/main/resources/log4j.properties");
     }
 
 

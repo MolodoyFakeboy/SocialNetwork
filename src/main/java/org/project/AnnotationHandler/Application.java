@@ -7,7 +7,6 @@ import org.project.UI.Navigator;
 import org.project.Util.JsonSaver;
 import org.project.Util.Prop;
 
-
 public class Application {
 
     private ICommandListner commandListner;

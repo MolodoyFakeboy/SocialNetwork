@@ -1,8 +1,8 @@
 package org.project.Model;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.project.Annotations.GsonExclude;
-import org.apache.log4j.Logger;
-
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -21,7 +21,7 @@ public class Guest implements Serializable {
     @GsonExclude
     private List<Service> services;
 
-    private static final Logger log = Logger.getLogger(Guest.class);
+    private static final Logger log = LogManager.getLogger(Guest.class);
 
     public Guest( String name, String surname, String phoneNumber,int id, LocalDate localDate) {
         this.name = name;
