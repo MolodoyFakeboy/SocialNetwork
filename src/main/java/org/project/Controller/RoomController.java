@@ -6,8 +6,8 @@ import org.project.Model.EnumStatus;
 import org.project.Model.Room;
 import org.project.Service.IRoomService;
 
-import java.time.LocalDate;
-
+import java.sql.Date;
+import java.text.ParseException;
 
 @Singleton
 public class RoomController implements IRoomController {
@@ -27,12 +27,12 @@ public class RoomController implements IRoomController {
 
     @Override
     public void deleatRoom(int roomIndex) {
-        roomService.removeRoom(getRoom(roomIndex));
+        roomService.removeRoom(roomIndex);
     }
 
     @Override
-    public void changeRoomStatus(int Index) {
-        roomService.changeRoomStatus(getRoom(Index), EnumStatus.ROOM_CLEANING);
+    public void changeRoomStatus(int Index, EnumStatus status) {
+        roomService.changeRoomStatus(getRoom(Index), status);
     }
 
     @Override
@@ -76,13 +76,13 @@ public class RoomController implements IRoomController {
     }
 
     @Override
-    public void sortRoomIsFree(LocalDate localDate) {
-        roomService.sortRoomIsFree(localDate);
+    public void sortRoomIsFree(Date date) throws ParseException {
+        roomService.sortRoomIsFree(date);
     }
 
     @Override
     public void getLastThreeGuest(int roomIndex) {
-        roomService.getLastThreeGuest(getRoom(roomIndex));
+        roomService.getLastThreeGuest(roomIndex);
     }
 
     @Override

@@ -1,10 +1,13 @@
 package org.project.Controller;
+
 import org.project.Annotations.InjectByType;
 import org.project.Annotations.Singleton;
 import org.project.Model.Guest;
 import org.project.Model.Room;
 import org.project.Model.Service;
 import org.project.Service.IGuestService;
+
+import java.sql.Timestamp;
 
 @Singleton
 public class GuestController implements IGuestController {
@@ -18,8 +21,8 @@ public class GuestController implements IGuestController {
     }
 
     @Override
-    public void bookRoom(Room room, Guest guest) {
-        guestService.bookRoom(room, guest);
+    public void bookRoom(Room room, Guest guest, Timestamp departurelDate) {
+        guestService.bookRoom(room, guest, departurelDate);
     }
 
     @Override
@@ -33,23 +36,23 @@ public class GuestController implements IGuestController {
     }
 
     @Override
-    public void getaBill(int guestIndex, Room room) {
-        guestService.getaBill(getGuest(guestIndex), room);
+    public void getaBill(int roomIndex) {
+        guestService.getaBill(roomIndex);
     }
 
     @Override
-    public void getNumberGuest(){
+    public void getNumberGuest() {
         guestService.getNumberGuest();
     }
 
     @Override
-    public void sortUsingServicePrice(Guest guest){
-        guestService.sortUsingServicePrice(guest);
+    public void sortUsingServicePrice(int guestIndex) {
+        guestService.sortUsingServicePrice(guestIndex);
     }
 
     @Override
-    public void sortUsingServiceTime(Guest guest){
-        guestService.sortUsingServiceTime(guest);
+    public void sortUsingServiceTime(int guestIndex) {
+        guestService.sortUsingServiceTime(guestIndex);
     }
 
 }

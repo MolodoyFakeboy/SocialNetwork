@@ -2,11 +2,11 @@ package org.project.Service;
 
 import org.project.Model.Service;
 
-import java.util.stream.Stream;
+import java.util.List;
 
 public interface IFunctionService {
     Service changeServicePrice(Service service, double price);
     Service addService(Service service);
-    Stream<Service> sortServicePrice();
+    List<Service> sortServicePrice();
     Service getService(int index);
 }

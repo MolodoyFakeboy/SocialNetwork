@@ -4,39 +4,44 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.project.Annotations.InjectByType;
 import org.project.Annotations.Singleton;
-import org.project.Dao.IGuestDao;
+import org.project.Dao.GenericDao;
 import org.project.Model.EnumStatus;
 import org.project.Model.Guest;
 import org.project.Model.Room;
 import org.project.Model.Service;
-import java.util.Comparator;
-import java.util.Date;
+import org.project.Util.JPAUtility;
+
+import javax.persistence.EntityManager;
+import javax.persistence.criteria.*;
+import java.sql.Timestamp;
 import java.util.List;
+import java.util.stream.Stream;
 
 
 @Singleton
 public class GuestService implements IGuestService {
 
     @InjectByType
-    private IGuestDao guestDao;
+    private GenericDao <Guest> genericDao;
 
     private Logger log;
+
+    private EntityManager em;
 
     public GuestService() {
         log = LogManager.getLogger(GuestService.class);
     }
 
     @Override
-    public Room bookRoom(Room room, Guest guest) {
+    public Room bookRoom(Room room, Guest guest, Timestamp departurelDate) {
         try {
-            Date date = new Date();
-            guestDao.addGuest(guest);
-            guest.setArrivalDate(date);
-            room.addGuestRoom(guest);
-            room.setStatus(EnumStatus.BOOK_ROOM);
-            guest.addRoom(room);
+            genericDao.add(guest);
+            guest.setLocalDate(departurelDate);
+            room.getGuests().add(guest);
+            guest.getRooms().add(room);
+            genericDao.update(guest);
         } catch (Exception exception) {
-            log.error("Не получилось выполнить действие");
+            exception.printStackTrace();
         }
         return room;
     }
@@ -44,12 +49,12 @@ public class GuestService implements IGuestService {
     @Override
     public Boolean leaveHotel(Room room, Guest guest) {
         try {
-            guestDao.deletGuest(guest);
-            room.deletGuest(guest);
+            room.getGuests().remove(guest);
             room.setStatus(EnumStatus.FREE_ROOM);
-            room.addLastGuest(guest);
+            genericDao.update(guest);
+            log.info("Приезжайте к нам еще");
         } catch (Exception e) {
-            log.error("Не удалось выполнить действие");
+            e.printStackTrace();
         }
 
         return true;
@@ -57,56 +62,85 @@ public class GuestService implements IGuestService {
 
     @Override
     public Service useService(Guest guest, Service service) {
-        guest.addService(service);
-        Date date = new Date();
-        service.setDate(date);
+        guest.getServices().add(service);
+        service.setDate(new Timestamp(System.currentTimeMillis()));
+        genericDao.update(guest);
         log.info(" Гость воспользовался услугой " + service.getName());
         return service;
     }
 
     @Override
-    public double getaBill(Guest guest, Room room) {
-        double BillForNumber;
-        BillForNumber = guest.getRooms().get(guest.getRooms().indexOf(room)).getBasePrice();
-        System.out.println("Оплата за номер составит" + BillForNumber);
-        return BillForNumber;
+    public void getaBill(int guestIndex) {
+        em = getEntityManager();
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Room> query = cb.createQuery(Room.class);
+        Root<Room> rooms = query.from(Room.class);
+        Join<Guest, Room> guestRoomJoin = rooms.join("guests");
+        Predicate guestPredicate = cb.equal(guestRoomJoin.get("id"), guestIndex);
+        query.select(rooms).where(guestPredicate);
+        List<Room> list =  em.createQuery(query).getResultList();
+        Stream<Room> stream = list.stream();
+        stream.forEach(room -> System.out.println("Сумма к оплате за номер " + room.getBasePrice()));
     }
 
     @Override
     public List<Guest> getNumberGuest() {
-        System.out.println(" Колличество гостей в отеле " + guestDao.getGuests().size());
-        return guestDao.getGuests();
+        em = getEntityManager();
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Guest> query = cb.createQuery(Guest.class);
+        Root<Guest> guests = query.from(Guest.class);
+        Join<Guest, Room> guestRoomJoin = guests.join("rooms");
+        query.select(guests).where(guestRoomJoin.get("roomId").isNotNull());
+        List<Guest> list = em.createQuery(query).getResultList();
+        log.info(" Колличество гостей в отеле: " + list.size());
+        return list;
     }
 
     @Override
-    public List<Service> sortUsingServicePrice(Guest guest) {
-        try {
-            guest.getServices().sort(Comparator.comparing(Service::getPrice));
-            for (int i = 0; i < guest.getServices().size(); i++) {
-                log.info(" Гость воспользовался услугами " + guest.getServices().get(i) + " в " + guest.getServices().get(i).getDate());
-            }
-        } catch (Exception e) {
-            log.error("Не удалось выполнить действие");
-        }
-        return guest.getServices();
+    public List<Service> sortUsingServicePrice(int guestIndex) {
+        em = getEntityManager();
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Service> query = cb.createQuery(Service.class);
+        Root<Service> services = query.from(Service.class);
+        Join<Guest, Service> guestServiceJoin = services.join("guests");
+        Predicate guestPredicate = cb.equal(guestServiceJoin.get("id"), guestIndex);
+        query.select(services).where(guestPredicate);
+        query.orderBy(cb.asc(services.get("price")));
+        List<Service> list = em.createQuery(query).getResultList();
+        Stream<Service> stream = list.stream();
+        stream.forEach(System.out::println);
+        return list;
+
     }
 
     @Override
-    public List<Service> sortUsingServiceTime(Guest guest) {
-        try {
-            guest.getServices().sort(Comparator.comparing(Service::getDate));
-            for (int i = 0; i < guest.getServices().size(); i++) {
-                log.info(" в " + guest.getServices().get(i).getDate() + " Гость воспользовался услугами " + guest.getServices().get(i));
-            }
-        } catch (Exception exception) {
-            log.error("Не удалось выполнить действие");
-        }
-        return guest.getServices();
+    public List<Service> sortUsingServiceTime(int guestIndex) {
+        em = getEntityManager();
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Service> query = cb.createQuery(Service.class);
+        Root<Service> services = query.from(Service.class);
+        Join<Guest, Service> guestServiceJoin = services.join("guests");
+        Predicate guestPredicate = cb.equal(guestServiceJoin.get("id"), guestIndex);
+        query.select(services).where(guestPredicate);
+        query.orderBy(cb.asc(services.get("date")));
+        List<Service> list = em.createQuery(query).getResultList();
+        Stream<Service> stream = list.stream();
+        stream.forEach(log::info);
+        return list;
     }
 
     @Override
     public Guest getGuest(int index) {
-        return guestDao.getGuests().get(index);
+        return (Guest) genericDao.find(index);
+    }
+
+    @Override
+    public EntityManager getEntityManager() {
+        return JPAUtility.getEntityManager();
+    }
+
+    public void setGenericDao(GenericDao genericDao) {
+        this.genericDao = genericDao;
     }
 
 }

@@ -1,31 +1,29 @@
 package org.project.Service;
 
-import org.project.Dao.IRoomDao;
 import org.project.Model.EnumStatus;
 import org.project.Model.Guest;
 import org.project.Model.Room;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.stream.Stream;
-
+import javax.persistence.EntityManager;
+import java.sql.Date;
+import java.text.ParseException;
+import java.util.List;
 
 public interface IRoomService {
     Room addNewRoom(Room room);
-    Boolean removeRoom(Room room);
+    Boolean removeRoom(int id);
     Room changeRoomStatus(Room room, EnumStatus status);
     Room changePriceonRoom(Room room, double price);
-    Stream<Room>sortRoomforPrice();
-    Stream<Room> sortRoomforBed();
-    Stream<Room>sortRoomforStars();
-    Stream<Room> sortFreeRoomforPrice() ;
-    Stream<Room> sortFreeRoomBed() ;
-    Stream<Room> sortFreeRoomStars() throws Exception;
-    ArrayList<Room> getAmountFreeRoom() throws Exception;
-    ArrayList<Room>sortRoomIsFree(LocalDate date);
-    ArrayList<Guest>getLastThreeGuest(Room room);
-    ArrayList<Room> sortRoomPrice();
+    List<Room> sortRoomforPrice();
+    List<Room> sortRoomforBed();
+    List<Room>sortRoomforStars();
+    List<Room> sortFreeRoomforPrice() ;
+    List<Room> sortFreeRoomBed() ;
+    List<Room> sortFreeRoomStars() throws Exception;
+    List<Room> getAmountFreeRoom() throws Exception;
+    List<Room>sortRoomIsFree(Date date) throws ParseException;
+    List<Guest>getLastThreeGuest(int index);
     Room getInfoRoom(int index);
     Room getRoom(int index);
-
+    EntityManager getEntityManager();
 }

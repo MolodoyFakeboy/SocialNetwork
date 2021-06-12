@@ -2,68 +2,130 @@ package org.project.Model;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.project.Annotations.GsonExclude;
+
+import javax.persistence.*;
 import java.io.Serializable;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.sql.Timestamp;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
 
+@Entity
 public class Guest implements Serializable {
-
+    private int id;
     private String name;
     private String surname;
-    private String PhoneNumber;
-    private int id;
-    private LocalDate localDate;
-    @GsonExclude
-    private List<Room> rooms;
-    @GsonExclude
-    private List<Service> services;
+    private String phoneNumber;
+    private Timestamp localDate;
+    private Set<Room> rooms;
+    private Set<Service> services;
 
     private static final Logger log = LogManager.getLogger(Guest.class);
 
-    public Guest( String name, String surname, String phoneNumber,int id, LocalDate localDate) {
-        this.name = name;
-        this.surname = surname;
-        this.PhoneNumber = phoneNumber;
-        this.id = id;
-        this.localDate = localDate;
-        rooms = new ArrayList<>();
-        services = new ArrayList<>();
+    public Guest() {
+
     }
 
+    public Guest(String name, String surname, String phoneNumber) {
+        this.name = name;
+        this.surname = surname;
+        this.phoneNumber = phoneNumber;
+        this.localDate = new Timestamp(System.currentTimeMillis());
+        rooms = new HashSet<>();
+        services = new HashSet<>();
+    }
+
+
+    @Id
+    @Column(name = "id")
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    @Basic
+    @Column(name = "name")
     public String getName() {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @Basic
+    @Column(name = "surname")
     public String getSurname() {
         return surname;
     }
 
-    public LocalDate getLocalDate() {
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
+    @Basic
+    @Column(name = "PhoneNumber")
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    @Basic
+    @Column(name = "LocalDate")
+    public Timestamp getLocalDate() {
         return localDate;
     }
 
-    public void setArrivalDate(Date date)
-    {
-        log.info(" Гость прибыл в " + date);
+    public void setLocalDate(Timestamp localDate) {
+        this.localDate = localDate;
     }
 
-    public void addRoom(Room room){
-        rooms.add(room);
-    }
-
-    public void addService(Service service){
-        services.add(service);
-    }
-
-    public List<Room> getRooms() {
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "room_has_guest",
+            joinColumns = {@JoinColumn(name = "Guest_id")},
+            inverseJoinColumns = {@JoinColumn(name = "Room_roomID")}
+    )
+    public Set<Room> getRooms() {
         return rooms;
     }
 
-    public List<Service> getServices() {
+    public void setRooms(Set<Room> rooms) {
+        this.rooms = rooms;
+    }
+
+    public void setServices(Set<Service> services) {
+        this.services = services;
+    }
+
+    @ManyToMany
+    @JoinTable(name = "guest_has_service",
+            joinColumns = @JoinColumn(name = "Guest_id"),
+            inverseJoinColumns = @JoinColumn(name = "Service_idService"))
+    public Set<Service> getServices() {
         return services;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Guest guest = (Guest) o;
+        return id == guest.id &&
+                Objects.equals(name, guest.name) &&
+                Objects.equals(surname, guest.surname) &&
+                Objects.equals(phoneNumber, guest.phoneNumber) &&
+                Objects.equals(localDate, guest.localDate);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, surname, phoneNumber, localDate);
     }
 
     @Override

@@ -22,7 +22,7 @@ public class sortUsingServicePriceImpl implements IAction {
             Scanner in = new Scanner(System.in);
             log.info("Укажите индекс гостя");
             int guestIndex = in.nextInt();
-            guestController.sortUsingServicePrice(guestController.getGuest(guestIndex));
+            guestController.sortUsingServicePrice(guestIndex);
         } catch (Exception exception) {
             log.error("Неверный индекс");
         }

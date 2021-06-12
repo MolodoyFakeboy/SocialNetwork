@@ -1,23 +1,29 @@
 package org.project.Model;
 
-import org.project.Annotations.ConfigProperty;
-
+import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
 
 
+@Entity
 public class Room implements Serializable {
-    @ConfigProperty(propertyName = "RoomID",type = "Integer")
-    private int roomID;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int roomId;
     private int roomNumber;
     private int numberOfStars;
     private int floor;
     private EnumStatus status;
     private int numBed;
     private double basePrice;
-    private List<Guest> guests;
-    private List<Guest> lastGuests;
+    private Set<Guest> guests;
+
+
+    public Room() {
+
+    }
 
     public Room(int roomNumber, int numberOfStars, int floor, int numBed, double basePrice) {
         this.roomNumber = roomNumber;
@@ -25,18 +31,25 @@ public class Room implements Serializable {
         this.floor = floor;
         this.numBed = numBed;
         this.basePrice = basePrice;
-        guests = new ArrayList<>();
-        lastGuests = new ArrayList<>();
+        guests = new HashSet<>();
     }
 
-    public int getRoomID() {
-        return roomID;
+    public void setGuests(Set<Guest> guests) {
+        this.guests = guests;
     }
 
-    public void setRoomID(int roomID) {
-        this.roomID = roomID;
+    @Id
+    @Column(name = "roomID")
+    public int getRoomId() {
+        return roomId;
     }
 
+    public void setRoomId(int roomId) {
+        this.roomId = roomId;
+    }
+
+    @Basic
+    @Column(name = "roomNumber")
     public int getRoomNumber() {
         return roomNumber;
     }
@@ -45,6 +58,8 @@ public class Room implements Serializable {
         this.roomNumber = roomNumber;
     }
 
+    @Basic
+    @Column(name = "numberOfStars")
     public int getNumberOfStars() {
         return numberOfStars;
     }
@@ -53,6 +68,8 @@ public class Room implements Serializable {
         this.numberOfStars = numberOfStars;
     }
 
+    @Basic
+    @Column(name = "floor")
     public int getFloor() {
         return floor;
     }
@@ -61,14 +78,8 @@ public class Room implements Serializable {
         this.floor = floor;
     }
 
-    public int getNumBed() {
-        return numBed;
-    }
-
-    public void setNumBed(int numBed) {
-        this.numBed = numBed;
-    }
-
+    @Basic
+    @Column(name = "status")
     public EnumStatus getStatus() {
         return status;
     }
@@ -77,6 +88,18 @@ public class Room implements Serializable {
         this.status = status;
     }
 
+    @Basic
+    @Column(name = "numBed")
+    public int getNumBed() {
+        return numBed;
+    }
+
+    public void setNumBed(int numBed) {
+        this.numBed = numBed;
+    }
+
+    @Basic
+    @Column(name = "basePrice")
     public double getBasePrice() {
         return basePrice;
     }
@@ -85,28 +108,33 @@ public class Room implements Serializable {
         this.basePrice = basePrice;
     }
 
-    public void addGuestRoom(Guest guest){
-        guests.add(guest);
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Room room = (Room) o;
+        return roomId == room.roomId &&
+                roomNumber == room.roomNumber &&
+                numberOfStars == room.numberOfStars &&
+                floor == room.floor &&
+                numBed == room.numBed &&
+                Objects.equals(status, room.status) &&
+                Objects.equals(basePrice, room.basePrice);
     }
 
-    public void deletGuest(Guest guest){
-        guests.remove(guest);
+    @Override
+    public int hashCode() {
+        return Objects.hash(roomId, roomNumber, numberOfStars, floor, status, numBed, basePrice);
     }
 
-    public void addLastGuest(Guest guest) {
-        lastGuests.add(guest);
-    }
-
-    public List<Guest> getGuests() {
+    @ManyToMany(mappedBy = "rooms", fetch = FetchType.EAGER)
+    public Set<Guest> getGuests() {
         return guests;
-    }
-
-    public List<Guest> getLastGuests() {
-        return lastGuests;
     }
 
     @Override
     public String toString() {
-        return  " номер комнаты " + roomNumber + " количество звезд " + numberOfStars + " на этаже " +  floor + " количество кроватей " + numBed + " Цена " + basePrice;
+        return " номер комнаты " + roomNumber + " количество звезд " + numberOfStars + " на этаже " + floor + " количество кроватей " + numBed + " Цена " + basePrice;
     }
+
 }

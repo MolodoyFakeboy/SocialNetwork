@@ -1,18 +1,21 @@
 package org.project.Service;
 
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.project.Annotations.InjectByType;
 import org.project.Annotations.Singleton;
-import org.project.Dao.IRoomDao;
+import org.project.Dao.GenericDao;
 import org.project.Model.EnumStatus;
 import org.project.Model.Guest;
 import org.project.Model.Room;
+import org.project.Util.JPAUtility;
 import org.project.Util.Prop;
-import java.time.LocalDate;
+
+import javax.persistence.EntityManager;
+import javax.persistence.criteria.*;
+import java.sql.Date;
+import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -21,7 +24,9 @@ import java.util.stream.Stream;
 public class RoomService implements IRoomService {
 
     @InjectByType
-    private IRoomDao roomDao;
+    private GenericDao <Room> genericDao;
+
+    private EntityManager em;
 
     private Logger log;
 
@@ -31,14 +36,15 @@ public class RoomService implements IRoomService {
 
     @Override
     public Room addNewRoom(Room room) {
-        roomDao.addRoom(room);
+        genericDao.add(room);
+        log.info("Комната добавлена");
         return room;
     }
 
 
     @Override
-    public Boolean removeRoom(Room room) {
-        roomDao.removeRoom(room);
+    public Boolean removeRoom(int id) {
+        genericDao.delete(id);
         log.info("Комната удалена");
         return true;
     }
@@ -47,14 +53,15 @@ public class RoomService implements IRoomService {
     @Override
     public Room changeRoomStatus(Room room, EnumStatus status) {
         try {
-            if(Prop.getProperties().getBoolean("status", true)){
+            if (Prop.getProperties().getBoolean("status", true)) {
                 room.setStatus(status);
-                System.out.println(room.getStatus());
+                genericDao.update(room);
+                log.info(room.getStatus());
                 return room;
             } else {
                 log.info("Сейчас нельзя выполнить это действие");
             }
-        } catch (Exception e){
+        } catch (Exception e) {
             log.error("Не удалось выполнить действие");
         }
         return room;
@@ -63,125 +70,169 @@ public class RoomService implements IRoomService {
     @Override
     public Room changePriceonRoom(Room room, double price) {
         room.setBasePrice(price);
+        genericDao.update(room);
         log.info(room.getBasePrice());
         return room;
     }
 
     @Override
-    public Stream<Room> sortRoomforPrice() {
-        Stream<Room> stream = roomDao.getRooms().stream();
-        stream.sorted(Comparator.comparing(Room::getBasePrice)).forEach(log::info);
-        return stream;
+    public List<Room> sortRoomforPrice() {
+        em = getEntityManager();
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Room> query = cb.createQuery(Room.class);
+        Root<Room> root = query.from(Room.class);
+        query.select(root);
+        query.orderBy(cb.asc(root.get("basePrice")));
+        List<Room> list = em.createQuery(query).getResultList();
+        Stream<Room> stream = list.stream();
+        stream.forEach(System.out::println);
+        return list;
     }
 
     @Override
-    public Stream<Room> sortRoomforBed() {
-        Stream<Room> stream = roomDao.getRooms().stream();
-        stream.sorted(Comparator.comparing(Room::getNumBed)).forEach(log::info);
-        return stream;
+    public List<Room> sortRoomforBed() {
+        em = getEntityManager();
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Room> query = cb.createQuery(Room.class);
+        Root<Room> root = query.from(Room.class);
+        query.select(root);
+        query.orderBy(cb.asc(root.get("numBed")));
+        List<Room> list = em.createQuery(query).getResultList();
+        Stream<Room> stream = list.stream();
+        stream.forEach(log::info);
+        return list;
     }
 
     @Override
-    public Stream<Room> sortRoomforStars() {
-        Stream<Room> streamFromCollection = roomDao.getRooms().stream();
-        streamFromCollection.sorted(Comparator.comparing(Room::getNumberOfStars)).forEach(log::info);
-        return streamFromCollection;
-
+    public List<Room> sortRoomforStars() {
+        em = getEntityManager();
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Room> query = cb.createQuery(Room.class);
+        Root<Room> root = query.from(Room.class);
+        query.select(root).orderBy(cb.asc(root.get("numberOfStars")));
+        List<Room> list = em.createQuery(query).getResultList();
+        Stream<Room> stream = list.stream();
+        stream.forEach(System.out::println);
+        return list;
     }
 
     @Override
-    public Stream<Room> sortFreeRoomforPrice() {
-        Stream<Room> stream = roomDao.getRooms().stream();
-        stream.sorted(Comparator.comparing(Room::getBasePrice)).filter(room -> room.getGuests().isEmpty()).forEach(log::info);
-        return  stream;
+    public List<Room> sortFreeRoomforPrice() {
+        em = getEntityManager();
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Room> query = cb.createQuery(Room.class);
+        Root<Room> room = query.from(Room.class);
+        Join<Room, Guest> roomGuestJoin = room.join("guests", JoinType.LEFT);
+        query.select(room).where(roomGuestJoin.get("id").isNull()).orderBy(cb.asc(room.get("basePrice")));
+        List<Room> list = em.createQuery(query).getResultList();
+        Stream<Room> stream = list.stream();
+        stream.forEach(System.out::println);
+        return list;
     }
 
     @Override
-    public Stream<Room> sortFreeRoomBed() {
-        Stream<Room> stream = roomDao.getRooms().stream();
-        stream.sorted(Comparator.comparing(Room::getNumBed)).filter(room -> room.getGuests().isEmpty()).forEach(log::info);
-        return  stream;
+    public List<Room> sortFreeRoomBed() {
+        em = getEntityManager();
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Room> query = cb.createQuery(Room.class);
+        Root<Room> room = query.from(Room.class);
+        Join<Room, Guest> roomGuestJoin = room.join("guests", JoinType.LEFT);
+        query.select(room).where(roomGuestJoin.get("id").isNull()).orderBy(cb.asc(room.get("numBed")));
+        List<Room> list = em.createQuery(query).getResultList();
+        Stream<Room> stream = list.stream();
+        stream.forEach(System.out::println);
+        return list;
     }
 
     @Override
-    public Stream<Room> sortFreeRoomStars()  {
-        Stream<Room> stream = roomDao.getRooms().stream();
-        stream.sorted(Comparator.comparing(Room::getNumberOfStars)).filter(room -> room.getGuests().isEmpty()).forEach(log::info);
-        return  stream;
+    public List<Room> sortFreeRoomStars() {
+        em = getEntityManager();
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Room> query = cb.createQuery(Room.class);
+        Root<Room> room = query.from(Room.class);
+        Join<Room, Guest> roomGuestJoin = room.join("guests", JoinType.LEFT);
+        query.select(room).where(roomGuestJoin.get("id").isNull()).orderBy(cb.asc(room.get("numberOfStars")));
+        List<Room> list = em.createQuery(query).getResultList();
+        Stream<Room> stream = list.stream();
+        stream.forEach(System.out::println);
+        return list;
     }
 
     @Override
-    public ArrayList<Room> getAmountFreeRoom()  {
-        ArrayList<Room> freeRoom = new ArrayList<>();
-        for (int i = 0; i < roomDao.getRooms().size(); i++) {
-            if (roomDao.getRooms().get(i).getGuests().isEmpty()) {
-                freeRoom.add(roomDao.getRooms().get(i));
-            }
-        }
-        log.info(" Колличество свободных комнат: " + freeRoom.size());
-        return  freeRoom;
+    public List<Room> getAmountFreeRoom() {
+        em = getEntityManager();
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Room> query = cb.createQuery(Room.class);
+        Root<Room> room = query.from(Room.class);
+        Join<Room, Guest> roomGuestJoin = room.join("guests", JoinType.LEFT);
+        query.select(room).where(roomGuestJoin.get("id").isNull());
+        List<Room> list = em.createQuery(query).getResultList();
+        log.info(" Колличество свободных комнат: " + list.size());
+        return list;
     }
 
     @Override
-    public ArrayList<Room> sortRoomIsFree(LocalDate date) {
-        ArrayList<Room> freeRoom = new ArrayList<>();
-        try {
-            for (int i = 0; i < roomDao.getRooms().size(); i++) {
-                if (roomDao.getRooms().get(i).getGuests().isEmpty()) {
-                    freeRoom.add(roomDao.getRooms().get(i));
-                    log.info(" Свободные комнаты на " + date + " " + roomDao.getRooms().get(i).getRoomNumber());
-                } else if (roomDao.getRooms().get(i).getGuests().get(0).getLocalDate().isBefore(date)) {
-                    log.info(" Свободные комнаты на " + date + " " + roomDao.getRooms().get(i).getRoomNumber());
-                    freeRoom.add(roomDao.getRooms().get(i));
-                }
-            }
-        } catch (Exception exception){
-            log.error("Не удалось выполнить действие");
-        }
+    public List<Room> sortRoomIsFree(Date date) throws ParseException {
+        em = getEntityManager();
+        CriteriaBuilder cb = em.getCriteriaBuilder();
 
-        return freeRoom;
+        //Запрос номер 1
+        CriteriaQuery<Room> query = cb.createQuery(Room.class);
+        Root<Room> room = query.from(Room.class);
+        Join<Room, Guest> roomGuestJoin = room.join("guests", JoinType.LEFT);
+        query.select(room).where(roomGuestJoin.get("id").isNull());
+        List<Room> list = em.createQuery(query).getResultList();
+
+        //Запрос номер 2
+        CriteriaQuery<Room> query1 = cb.createQuery(Room.class);
+        Root<Room> room1 = query1.from(Room.class);
+        Join<Room, Guest> roomGuestJoin1 = room1.join("guests", JoinType.LEFT);
+        Predicate localDatePredicate = cb.lessThan(roomGuestJoin1.get("localDate"), cb.currentDate());
+        query1.select(room1).where(localDatePredicate);
+        List<Room> list1 = em.createQuery(query1).getResultList();
+
+        //union
+        list.addAll(list1);
+        Stream<Room> stream = list.stream();
+        stream.forEach(System.out::println);
+        return list;
     }
 
     @Override
-    public ArrayList<Guest> getLastThreeGuest(Room room) {
-        ArrayList<Guest> guests = new ArrayList<>();
+    public List<Guest> getLastThreeGuest(int index) {
+        List<Guest> list = new ArrayList<>();
         try {
             if (Prop.getProperties().getBoolean("history", true)) {
-                int GuestIndex = room.getLastGuests().size() - 1;
-                for (int i = room.getLastGuests().size(); i > room.getLastGuests().size() - 3; i--) {
-                    guests.add(room.getLastGuests().get(GuestIndex));
-                    log.info(" Последние гости " + room.getLastGuests().get(GuestIndex).getName());
-                    GuestIndex--;
-                }
+                em = getEntityManager();
+                CriteriaBuilder cb = em.getCriteriaBuilder();
+                CriteriaQuery<Guest> query = cb.createQuery(Guest.class);
+                Root<Guest> guests = query.from(Guest.class);
+                Join<Guest, Room> guestRoomJoin = guests.join("rooms",JoinType.LEFT);
+                Predicate guestPredicate = cb.equal(guestRoomJoin.get("roomId"), index);
+                Predicate guestPredicate2 = cb.lessThan(guests.get("localDate"), cb.currentDate());
+                query.select(guests).where(guestPredicate, guestPredicate2);
+                list = em.createQuery(query).setMaxResults(3).getResultList();
+                Stream<Guest> stream = list.stream();
+                stream.forEach(System.out::println);
             } else {
-                log.info("Пока нельзя выполнить данное действие");
-                return null;
+                System.out.println("Пока нельзя выполнить это действие измините настройки property");
             }
         } catch (Exception e) {
-            log.error("В этом номере не было 3 гостей");
+            System.out.println("Ошибка в поиске 3 последних гостей");
         }
-        return guests;
+        return list;
     }
 
-    @Override
-    public ArrayList<Room> sortRoomPrice() {
-        ArrayList<Room> sortRooms = new ArrayList<>();
-        roomDao.getRooms().sort(Comparator.comparing(Room::getBasePrice));
-        for (int i = 0; i < roomDao.getRooms().size(); i++) {
-            sortRooms.add(roomDao.getRooms().get(i));
-            log.info("Цена на номер:  " + roomDao.getRooms().get(i).getRoomNumber() + " " + roomDao.getRooms().get(i).getBasePrice());
-        }
-        return sortRooms;
-    }
 
     @Override
     public Room getInfoRoom(int index) {
-        log.info(" Комнатан находится " + roomDao.getRooms().get(index).getFloor() + " этаже ");
-        log.info(" Количество кроватей в комнате " + roomDao.getRooms().get(index).getNumBed());
-        log.info(" Стоиость комнаты составит" + roomDao.getRooms().get(index).getBasePrice());
-        log.info("Количество звезд у комнаты: " + roomDao.getRooms().get(index).getNumberOfStars());
+        Room room = (Room) genericDao.find(index);
+        log.info(" Комнатан находится " + room.getFloor() + " этаже ");
+        log.info(" Количество кроватей в комнате " + room.getNumBed());
+        log.info(" Стоиость комнаты составит " + room.getBasePrice());
+        log.info("Количество звезд у комнаты: " + room.getNumberOfStars());
         try {
-            if (roomDao.getRooms().get(index).getGuests().isEmpty()) {
+            if (room.getGuests().isEmpty()) {
                 log.info("В комнате не проживают гости");
             } else {
                 log.info("В данный момент комната занята");
@@ -189,16 +240,22 @@ public class RoomService implements IRoomService {
         } catch (Exception exception) {
             log.error("Нет гостей");
         }
-        return roomDao.getRooms().get(index);
+        return room;
     }
 
     @Override
     public Room getRoom(int index) {
-        return roomDao.getRooms().get(index);
+        return genericDao.find(index);
     }
 
-    public List<Room> getRoom(){
-        return roomDao.getRooms();
+    @Override
+    public EntityManager getEntityManager() {
+        return JPAUtility.getEntityManager();
+    }
+
+
+    public void setGenericDao(GenericDao genericDao) {
+        this.genericDao = genericDao;
     }
 
 }
