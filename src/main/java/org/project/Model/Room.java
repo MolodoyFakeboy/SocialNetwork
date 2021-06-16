@@ -82,6 +82,7 @@ public class Room implements Serializable {
 
     @Basic
     @Column(name = "status")
+    @Enumerated(EnumType.STRING)
     public EnumStatus getStatus() {
         return status;
     }
