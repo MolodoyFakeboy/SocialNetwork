@@ -18,6 +18,7 @@ public abstract class HibernateAbstractDao<T extends Serializable> implements Ge
         entityManager.getTransaction().begin();
         entityManager.persist(enity);
         entityManager.getTransaction().commit();
+        entityManager.close();
     }
 
     @Override
@@ -27,6 +28,7 @@ public abstract class HibernateAbstractDao<T extends Serializable> implements Ge
         entityManager.getTransaction().begin();
         entityManager.merge(enity);
         entityManager.getTransaction().commit();
+        entityManager.close();
         return enity;
     }
 
@@ -37,6 +39,7 @@ public abstract class HibernateAbstractDao<T extends Serializable> implements Ge
         Object object = entityManager.find(type, id);
         entityManager.remove(object);
         entityManager.getTransaction().commit();
+        entityManager.close();
     }
 
     @Override
@@ -50,6 +53,7 @@ public abstract class HibernateAbstractDao<T extends Serializable> implements Ge
         entityManager.getTransaction().begin();
         T t = entityManager.find(type, id);
         entityManager.detach(t);
+        entityManager.close();
         return t;
     }
 

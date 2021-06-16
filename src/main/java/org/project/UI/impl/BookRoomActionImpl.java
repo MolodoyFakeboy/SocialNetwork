@@ -8,7 +8,7 @@ import org.project.Exeception.MyException;
 import org.project.Model.Guest;
 import org.project.UI.IAction;
 
-import java.sql.Timestamp;
+import java.sql.Date;
 import java.time.LocalDate;
 import java.util.Scanner;
 
@@ -40,7 +40,10 @@ public class BookRoomActionImpl implements IAction {
             }
             log.info("Напишите ваш номер телефона");
             String phoneNumber = in.nextLine();
-            Guest guest = new Guest(name, surname, phoneNumber);
+            log.info("Напишите последние 4 цифры паспорта");
+            int id = in.nextInt();
+            Guest guest = new Guest("name", "surname", "111-111-111");
+            guest.setId(4354);
             log.info("Напишите дату вашего отъезда");
             log.info("Укажите день");
             int day = in.nextInt();
@@ -57,9 +60,10 @@ public class BookRoomActionImpl implements IAction {
             if (year == 0){
                 throw new MyException("String can not be empty!");
             }
-            LocalDate localDate = LocalDate.of(year, month, day);
-            Timestamp timestamp = Timestamp.valueOf(localDate.toString());
-            guestController.bookRoom(roomController.getRoom(index), guest,timestamp);
+            LocalDate localDate = LocalDate.of(2021, 6, 21);
+            Date date = Date.valueOf(localDate);
+            guest.setLocalDate(date);
+            guestController.bookRoom(roomController.getRoom(index), guest);
         } catch (IndexOutOfBoundsException e) {
             log.error("Нет номера под таким индексом");
         }

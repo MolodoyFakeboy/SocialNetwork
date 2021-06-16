@@ -140,7 +140,7 @@ public class RoomService implements IRoomService {
         query.select(room).where(roomGuestJoin.get("id").isNull()).orderBy(cb.asc(room.get("numBed")));
         List<Room> list = em.createQuery(query).getResultList();
         Stream<Room> stream = list.stream();
-        stream.forEach(System.out::println);
+        stream.forEach(log::info);
         return list;
     }
 
@@ -154,7 +154,7 @@ public class RoomService implements IRoomService {
         query.select(room).where(roomGuestJoin.get("id").isNull()).orderBy(cb.asc(room.get("numberOfStars")));
         List<Room> list = em.createQuery(query).getResultList();
         Stream<Room> stream = list.stream();
-        stream.forEach(System.out::println);
+        stream.forEach(log::info);
         return list;
     }
 
@@ -187,7 +187,7 @@ public class RoomService implements IRoomService {
         CriteriaQuery<Room> query1 = cb.createQuery(Room.class);
         Root<Room> room1 = query1.from(Room.class);
         Join<Room, Guest> roomGuestJoin1 = room1.join("guests", JoinType.LEFT);
-        Predicate localDatePredicate = cb.lessThan(roomGuestJoin1.get("localDate"), cb.currentDate());
+        Predicate localDatePredicate = cb.lessThan(roomGuestJoin1.get("localDate"), date);
         query1.select(room1).where(localDatePredicate);
         List<Room> list1 = em.createQuery(query1).getResultList();
 
@@ -207,10 +207,9 @@ public class RoomService implements IRoomService {
                 CriteriaBuilder cb = em.getCriteriaBuilder();
                 CriteriaQuery<Guest> query = cb.createQuery(Guest.class);
                 Root<Guest> guests = query.from(Guest.class);
-                Join<Guest, Room> guestRoomJoin = guests.join("rooms",JoinType.LEFT);
+                Join<Guest, Room> guestRoomJoin = guests.join("lastRooms",JoinType.LEFT);
                 Predicate guestPredicate = cb.equal(guestRoomJoin.get("roomId"), index);
-                Predicate guestPredicate2 = cb.lessThan(guests.get("localDate"), cb.currentDate());
-                query.select(guests).where(guestPredicate, guestPredicate2);
+                query.select(guests).where(guestPredicate);
                 list = em.createQuery(query).setMaxResults(3).getResultList();
                 Stream<Guest> stream = list.stream();
                 stream.forEach(System.out::println);

@@ -5,12 +5,11 @@ import org.project.Model.Room;
 import org.project.Model.Service;
 
 import javax.persistence.EntityManager;
-import java.sql.Timestamp;
 import java.util.List;
 
 public interface IGuestService {
-    Room bookRoom(Room room, Guest guest, Timestamp departurelDate);
-    Boolean leaveHotel(Room room, Guest guest);
+    Room bookRoom(Room room, Guest guest);
+    Boolean leaveHotel(Room room, int guestId);
     Service useService(Guest guest, Service service);
     void getaBill(int guestIndex);
     List<Guest> getNumberGuest();

@@ -5,7 +5,6 @@ import org.apache.logging.log4j.Logger;
 import org.project.Annotations.InjectByType;
 import org.project.Annotations.Singleton;
 import org.project.Dao.GenericDao;
-import org.project.Model.EnumStatus;
 import org.project.Model.Guest;
 import org.project.Model.Room;
 import org.project.Model.Service;
@@ -33,11 +32,9 @@ public class GuestService implements IGuestService {
     }
 
     @Override
-    public Room bookRoom(Room room, Guest guest, Timestamp departurelDate) {
+    public Room bookRoom(Room room, Guest guest) {
         try {
             genericDao.add(guest);
-            guest.setLocalDate(departurelDate);
-            room.getGuests().add(guest);
             guest.getRooms().add(room);
             genericDao.update(guest);
         } catch (Exception exception) {
@@ -47,10 +44,11 @@ public class GuestService implements IGuestService {
     }
 
     @Override
-    public Boolean leaveHotel(Room room, Guest guest) {
+    public Boolean leaveHotel(Room room, int id) {
         try {
-            room.getGuests().remove(guest);
-            room.setStatus(EnumStatus.FREE_ROOM);
+            Guest guest = genericDao.find(id);
+            guest.getRooms().remove(room);
+            guest.getLastRooms().add(room);
             genericDao.update(guest);
             log.info("Приезжайте к нам еще");
         } catch (Exception e) {

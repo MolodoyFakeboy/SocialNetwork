@@ -5,7 +5,7 @@ import org.apache.logging.log4j.Logger;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.sql.Timestamp;
+import java.sql.Date;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -16,9 +16,10 @@ public class Guest implements Serializable {
     private String name;
     private String surname;
     private String phoneNumber;
-    private Timestamp localDate;
+    private Date localDate;
     private Set<Room> rooms;
     private Set<Service> services;
+    private Set<Room>lastRooms;
 
     private static final Logger log = LogManager.getLogger(Guest.class);
 
@@ -30,9 +31,9 @@ public class Guest implements Serializable {
         this.name = name;
         this.surname = surname;
         this.phoneNumber = phoneNumber;
-        this.localDate = new Timestamp(System.currentTimeMillis());
         rooms = new HashSet<>();
         services = new HashSet<>();
+        lastRooms = new HashSet<>();
     }
 
 
@@ -78,15 +79,15 @@ public class Guest implements Serializable {
 
     @Basic
     @Column(name = "LocalDate")
-    public Timestamp getLocalDate() {
+    public Date getLocalDate() {
         return localDate;
     }
 
-    public void setLocalDate(Timestamp localDate) {
+    public void setLocalDate(Date localDate) {
         this.localDate = localDate;
     }
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     @JoinTable(name = "room_has_guest",
             joinColumns = {@JoinColumn(name = "Guest_id")},
             inverseJoinColumns = {@JoinColumn(name = "Room_roomID")}
@@ -103,12 +104,25 @@ public class Guest implements Serializable {
         this.services = services;
     }
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "guest_has_service",
             joinColumns = @JoinColumn(name = "Guest_id"),
             inverseJoinColumns = @JoinColumn(name = "Service_idService"))
     public Set<Service> getServices() {
         return services;
+    }
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "lastguests_room",
+            joinColumns = { @JoinColumn(name = "Guest_id")},
+            inverseJoinColumns = { @JoinColumn(name = "Room_roomID")}
+    )
+    public Set<Room> getLastRooms() {
+        return lastRooms;
+    }
+
+    public void setLastRooms(Set<Room> lastRooms) {
+        this.lastRooms = lastRooms;
     }
 
     @Override
@@ -130,6 +144,6 @@ public class Guest implements Serializable {
 
     @Override
     public String toString() {
-        return " Гость " + getName() + " " + getSurname() + " уезжает " + getLocalDate();
+        return " Гость " + getName() + " " + getSurname();
     }
 }

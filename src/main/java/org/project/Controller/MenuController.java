@@ -30,6 +30,7 @@ public class MenuController {
             }
         } catch (Exception exception) {
             log.error("Ошибка меню");
+            exception.printStackTrace();
         }
 
     }

@@ -30,7 +30,8 @@ public class UseServiceActionImpl implements IAction {
             int guestIndex = in.nextInt();
             guestController.useService(serviceController.getService(index), guestIndex);
         }catch (Exception e){
-            log.error("Нет такого индекса");
+//            log.error("Нет такого индекса");
+            e.printStackTrace();
         } finally {
             log.info("Попробуйте еще раз!");
         }

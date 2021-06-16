@@ -19,6 +19,7 @@ public class Room implements Serializable {
     private int numBed;
     private double basePrice;
     private Set<Guest> guests;
+    private Set<Guest> lastGuests;
 
 
     public Room() {
@@ -32,6 +33,7 @@ public class Room implements Serializable {
         this.numBed = numBed;
         this.basePrice = basePrice;
         guests = new HashSet<>();
+        lastGuests = new HashSet<>();
     }
 
     public void setGuests(Set<Guest> guests) {
@@ -130,6 +132,15 @@ public class Room implements Serializable {
     @ManyToMany(mappedBy = "rooms", fetch = FetchType.EAGER)
     public Set<Guest> getGuests() {
         return guests;
+    }
+
+    @ManyToMany(mappedBy = "lastRooms",fetch = FetchType.EAGER)
+    public Set<Guest> getLastGuests() {
+        return lastGuests;
+    }
+
+    public void setLastGuests(Set<Guest> lastGuests) {
+        this.lastGuests = lastGuests;
     }
 
     @Override

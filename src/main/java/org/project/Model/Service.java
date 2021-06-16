@@ -28,7 +28,7 @@ public class Service implements Serializable {
         guests = new HashSet<>();
     }
 
-    @ManyToMany(mappedBy = "services")
+    @ManyToMany(mappedBy = "services",fetch = FetchType.EAGER)
     public Set<Guest> getGuests() {
         return guests;
     }

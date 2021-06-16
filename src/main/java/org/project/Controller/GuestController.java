@@ -7,7 +7,6 @@ import org.project.Model.Room;
 import org.project.Model.Service;
 import org.project.Service.IGuestService;
 
-import java.sql.Timestamp;
 
 @Singleton
 public class GuestController implements IGuestController {
@@ -21,13 +20,13 @@ public class GuestController implements IGuestController {
     }
 
     @Override
-    public void bookRoom(Room room, Guest guest, Timestamp departurelDate) {
-        guestService.bookRoom(room, guest, departurelDate);
+    public void bookRoom(Room room, Guest guest) {
+        guestService.bookRoom(room, guest);
     }
 
     @Override
     public void leaveHotel(Room room, int guestIndex) {
-        guestService.leaveHotel(room, getGuest(guestIndex));
+        guestService.leaveHotel(room, guestIndex);
     }
 
     @Override
