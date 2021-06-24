@@ -1,8 +1,11 @@
 package org.project.Dao;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.project.Util.JPAUtility;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 import java.io.Serializable;
 import java.util.List;
 
@@ -10,36 +13,59 @@ public abstract class HibernateAbstractDao<T extends Serializable> implements Ge
 
     private Class<T> type;
 
-    EntityManager entityManager;
+    private EntityManager entityManager;
+    private  final Logger log = LogManager.getLogger(HibernateAbstractDao.class);
 
     @Override
     public void add(T enity) {
         entityManager = getEntityManager();
-        entityManager.getTransaction().begin();
-        entityManager.persist(enity);
-        entityManager.getTransaction().commit();
-        entityManager.close();
+        EntityTransaction tx = entityManager.getTransaction();
+        try {
+            tx.begin();
+            entityManager.persist(enity);
+            tx.commit();
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            tx.rollback();
+        } finally {
+            entityManager.close();
+        }
     }
 
     @Override
     public T update(T enity) {
         entityManager = getEntityManager();
-        entityManager.detach(enity);
-        entityManager.getTransaction().begin();
-        entityManager.merge(enity);
-        entityManager.getTransaction().commit();
-        entityManager.close();
+        EntityTransaction tx = entityManager.getTransaction();
+        try {
+            tx.begin();
+            entityManager.detach(enity);
+            entityManager.merge(enity);
+            tx.commit();
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            tx.rollback();
+        }finally {
+            entityManager.close();
+        }
         return enity;
     }
 
     @Override
     public void delete(int id) {
         entityManager = getEntityManager();
-        entityManager.getTransaction().begin();
-        Object object = entityManager.find(type, id);
-        entityManager.remove(object);
-        entityManager.getTransaction().commit();
-        entityManager.close();
+        EntityTransaction tx = entityManager.getTransaction();
+        try {
+            tx.begin();
+            Object object = entityManager.find(type, id);
+            entityManager.remove(object);
+            tx.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.error(e.getMessage());
+        } finally {
+            entityManager.close();
+        }
+
     }
 
     @Override
@@ -50,13 +76,19 @@ public abstract class HibernateAbstractDao<T extends Serializable> implements Ge
     @Override
     public T find(int id) {
         entityManager = getEntityManager();
-        entityManager.getTransaction().begin();
-        T t = entityManager.find(type, id);
-        entityManager.detach(t);
-        entityManager.close();
+        EntityTransaction tx = entityManager.getTransaction();
+        T t = null;
+        try {
+            tx.begin();
+             t = entityManager.find(type, id);
+            entityManager.detach(t);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            entityManager.close();
+        }
         return t;
     }
-
 
     public void setType(Class<T> type) {
         this.type = type;

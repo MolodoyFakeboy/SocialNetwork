@@ -30,8 +30,6 @@ public class Application {
         context.setFactory(objectFactory);
         context.setCommandListner(commandListner);
 
-        JPAUtility.getEmFactory();
-
         //установка проперти
         commandListner.inject(prop);
 
@@ -39,7 +37,6 @@ public class Application {
 
         //создает даошки
         commandListner.createSingeltonClasses("org/project/Dao", context);
-
 
         //создает Сервиса и внедряет за висимость
         commandListner.createSingeltonClasses("org/project/Service", context);
@@ -56,6 +53,8 @@ public class Application {
         MenuBuilder menuBuilder = new MenuBuilder(context);
         Navigator navigator = new Navigator(menuBuilder.getRootMenu());
         MenuController menuController = new MenuController(menuBuilder, navigator);
+
+        JPAUtility.getEmFactory();
 
         menuController.run();
     }
