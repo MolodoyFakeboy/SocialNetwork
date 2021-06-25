@@ -1,12 +1,12 @@
 package org.project.Dao;
 
-import org.project.Annotations.Singleton;
 import org.project.Model.Room;
+import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import java.util.List;
 
-@Singleton
+@Repository
 public class RoomDao extends HibernateAbstractDao <Room> {
 
     public RoomDao() {

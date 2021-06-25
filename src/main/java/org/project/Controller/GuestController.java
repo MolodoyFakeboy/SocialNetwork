@@ -1,18 +1,22 @@
 package org.project.Controller;
 
-import org.project.Annotations.InjectByType;
-import org.project.Annotations.Singleton;
 import org.project.Model.Guest;
 import org.project.Model.Room;
 import org.project.Model.Service;
 import org.project.Service.IGuestService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 
 
-@Singleton
+@Controller
 public class GuestController implements IGuestController {
 
-    @InjectByType
     private IGuestService guestService;
+
+    @Autowired
+    public GuestController(IGuestService guestService) {
+        this.guestService = guestService;
+    }
 
     @Override
     public Guest getGuest(int index) {

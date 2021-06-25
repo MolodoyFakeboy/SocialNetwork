@@ -2,13 +2,12 @@ package org.project.Service;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.project.Annotations.InjectByType;
-import org.project.Annotations.Singleton;
 import org.project.Dao.GenericDao;
 import org.project.Model.Guest;
 import org.project.Model.Room;
 import org.project.Model.Service;
 import org.project.Util.JPAUtility;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.*;
@@ -17,17 +16,18 @@ import java.util.List;
 import java.util.stream.Stream;
 
 
-@Singleton
+@org.springframework.stereotype.Service
 public class GuestService implements IGuestService {
 
-    @InjectByType
     private GenericDao <Guest> genericDao;
 
     private Logger log;
 
     private EntityManager em;
 
-    public GuestService() {
+    @Autowired
+    public GuestService(GenericDao<Guest> genericDao) {
+        this.genericDao = genericDao;
         log = LogManager.getLogger(GuestService.class);
     }
 
@@ -137,8 +137,5 @@ public class GuestService implements IGuestService {
         return JPAUtility.getEntityManager();
     }
 
-    public void setGenericDao(GenericDao genericDao) {
-        this.genericDao = genericDao;
-    }
 
 }

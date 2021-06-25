@@ -1,19 +1,18 @@
 package org.project.Util;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonIOException;
+import com.google.gson.JsonSyntaxException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.project.Dao.GuestDao;
 import org.project.Dao.RoomDao;
 import org.project.Dao.ServiceDao;
-import org.project.Annotations.Singleton;
-import com.google.gson.Gson;
-import com.google.gson.JsonIOException;
-import com.google.gson.JsonSyntaxException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
-@Singleton
+
 public class JsonSaver {
 
     private final Gson gson;

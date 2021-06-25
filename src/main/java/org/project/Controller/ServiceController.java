@@ -1,15 +1,19 @@
 package org.project.Controller;
 
-import org.project.Annotations.InjectByType;
-import org.project.Annotations.Singleton;
 import org.project.Model.Service;
 import org.project.Service.IFunctionService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 
-@Singleton
+@Controller
 public class ServiceController implements IServiceController {
 
-    @InjectByType
     private IFunctionService functionService;
+
+    @Autowired
+    public ServiceController(IFunctionService functionService) {
+        this.functionService = functionService;
+    }
 
     @Override
     public Service getService(int index) {
