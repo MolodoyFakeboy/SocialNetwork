@@ -1,33 +1,50 @@
 package org.project.Dao;
 
-import org.project.Annotations.AddArrayList;
 import org.project.Annotations.Singleton;
 import org.project.Model.Guest;
 
-import java.io.Serializable;
+import javax.persistence.EntityManager;
 import java.util.List;
 
-
 @Singleton
-public class GuestDao implements IGuestDao, Serializable {
+public class GuestDao extends HibernateAbstractDao<Guest> {
 
-    @AddArrayList
-    private List<Guest> guests;
-
-    @Override
-    public void addGuest(Guest guest) {
-        guests.add(guest);
+    public GuestDao() {
+        setType(Guest.class);
     }
 
     @Override
-    public void deletGuest(Guest guest) {
-        if (guests.contains(guest)) {
-            guests.remove(guest);
-        }
+    public void add(Guest enity) {
+        super.add(enity);
     }
 
     @Override
-    public List<Guest> getGuests() {
-        return guests;
+    public Guest update(Guest enity) {
+        return super.update(enity);
+    }
+
+    @Override
+    public void delete(int id) {
+        super.delete(id);
+    }
+
+    @Override
+    public List<Guest> findAll() {
+        return super.findAll();
+    }
+
+    @Override
+    public Guest find(int id) {
+        return super.find(id);
+    }
+
+    @Override
+    public void setType(Class<Guest> type) {
+        super.setType(type);
+    }
+
+    @Override
+    protected EntityManager getEntityManager() {
+        return super.getEntityManager();
     }
 }

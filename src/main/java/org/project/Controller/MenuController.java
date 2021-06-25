@@ -7,14 +7,12 @@ import org.project.UI.Navigator;
 
 import java.util.Scanner;
 
-
 public class MenuController {
 
     private final MenuBuilder builder;
     private final Navigator navigator;
 
     private static final Logger log = LogManager.getLogger(MenuController.class);
-
 
     public MenuController(MenuBuilder builder, Navigator navigator) {
         this.builder = builder;
@@ -32,6 +30,7 @@ public class MenuController {
             }
         } catch (Exception exception) {
             log.error("Ошибка меню");
+            exception.printStackTrace();
         }
 
     }

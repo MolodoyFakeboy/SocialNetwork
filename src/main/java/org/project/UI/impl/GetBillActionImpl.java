@@ -23,11 +23,9 @@ public class GetBillActionImpl implements IAction {
     public void execute(){
         try {
             Scanner in = new Scanner(System.in);
-            log.info("Укажите ваш ID");
-            int index = in.nextInt();
             log.info("Укажите индекс вашей комнаты");
             int indexRoom = in.nextInt();
-            guestController.getaBill(index,roomController.getRoom(indexRoom));
+            guestController.getaBill(indexRoom);
         } catch (NoSuchElementException exception){
             log.error("нет елемента под таким индексом");
         } catch (Exception e){

@@ -1,30 +1,52 @@
 package org.project.Dao;
 
-import org.project.Annotations.AddArrayList;
 import org.project.Annotations.Singleton;
 import org.project.Model.Service;
 
-import java.io.Serializable;
+import javax.persistence.EntityManager;
 import java.util.List;
 
 @Singleton
-public class ServiceDao implements IServiceDao, Serializable {
+public class ServiceDao extends HibernateAbstractDao <Service> {
 
-    @AddArrayList
-    private List<Service> services;
-
-    @Override
-    public void addService(Service service){
-        services.add(service);
+    public ServiceDao(){
+        setType(Service.class);
     }
 
     @Override
-    public void removeService(Service service){
-        services.remove(service);
+    public void add(Service enity) {
+        super.add(enity);
     }
 
     @Override
-    public List<Service> getServices() {
-        return services;
+    public Service update(Service enity) {
+        return super.update(enity);
+    }
+
+    @Override
+    public void delete(int id) {
+        super.delete(id);
+    }
+
+    @Override
+    public List<Service> findAll() {
+        return super.findAll();
+    }
+
+    @Override
+    public Service find(int id) {
+        return super.find(id);
+    }
+
+    @Override
+    public void setType(Class<Service> type) {
+        super.setType(type);
+    }
+
+
+    @Override
+    protected EntityManager getEntityManager() {
+        return super.getEntityManager();
     }
 }
+

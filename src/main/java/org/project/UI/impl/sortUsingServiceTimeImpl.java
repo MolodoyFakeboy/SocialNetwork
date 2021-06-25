@@ -21,7 +21,7 @@ public class sortUsingServiceTimeImpl implements IAction {
             Scanner in = new Scanner(System.in);
             log.info("Укажите индекс гостя");
             int guestIndex = in.nextInt();
-            guestController.sortUsingServiceTime(guestController.getGuest(guestIndex));
+            guestController.sortUsingServiceTime(guestIndex);
         } catch (Exception exception) {
             log.error("Неверный индекс");
         }

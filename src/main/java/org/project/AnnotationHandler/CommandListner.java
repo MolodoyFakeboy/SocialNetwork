@@ -2,14 +2,17 @@ package org.project.AnnotationHandler;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.project.Annotations.*;
+import org.project.Annotations.ConfigProperty;
+import org.project.Annotations.InjectByType;
+import org.project.Annotations.InjectProperty;
+import org.project.Annotations.Singleton;
 import org.project.Util.Prop;
 import org.reflections.Reflections;
 import org.reflections.scanners.SubTypesScanner;
+
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -17,6 +20,7 @@ import java.util.stream.Collectors;
 public class CommandListner implements ICommandListner {
 
     private String packagetoScan;
+
     private final Logger log;
 
     public CommandListner() {
@@ -45,21 +49,6 @@ public class CommandListner implements ICommandListner {
 
 
     @Override
-    public void initializationValues(Object a) {
-        try {
-            for (Field field : a.getClass().getDeclaredFields()) {
-                if (field.isAnnotationPresent(AddArrayList.class)) {
-                    field.setAccessible(true);
-                    field.set(a, new ArrayList<>());
-                }
-            }
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
-    }
-
-
-    @Override
     public void configure(Object a, ApplicationContext context) {
         for (Field field : a.getClass().getDeclaredFields()) {
             if (field.isAnnotationPresent(InjectByType.class)) {
@@ -75,6 +64,21 @@ public class CommandListner implements ICommandListner {
 
         }
 
+    }
+
+    @Override
+    public void injectDaoToService(Object service, Object dao) {
+        for (Field field : service.getClass().getDeclaredFields()) {
+            if (field.isAnnotationPresent(InjectByType.class)) {
+                field.setAccessible(true);
+                try {
+                    field.set(service, dao);
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                }
+            }
+
+        }
     }
 
 
@@ -96,7 +100,7 @@ public class CommandListner implements ICommandListner {
     }
 
     @Override
-    public void initDependency(String packageName, ApplicationContext context) {
+    public void initDependencyContoller(String packageName, ApplicationContext context) {
         List<Class<?>> classes = getAllClassesFrom(packageName);
         for (Class cls : classes) {
             configure(context.getObject(cls), context);
@@ -104,10 +108,10 @@ public class CommandListner implements ICommandListner {
     }
 
     @Override
-    public void createDao(String packageName, ApplicationContext context) {
+    public void createSingeltonClasses(String packageName, ApplicationContext context) {
         List<Class<?>> classes = getAllClassesFrom(packageName);
         for (Class cls : classes) {
-            initializationValues(context.getObject(cls));
+            context.getObject(cls);
         }
     }
 
@@ -127,9 +131,9 @@ public class CommandListner implements ICommandListner {
             if (field.isAnnotationPresent(ConfigProperty.class)) {
                 field.setAccessible(true);
                 ConfigProperty configProperty = field.getAnnotation(ConfigProperty.class);
-                int value = Prop.getProperties().getInteger(configProperty.propertyName(),1);
+                int value = Prop.getProperties().getInteger(configProperty.propertyName(), 1);
                 try {
-                    field.set(a,value);
+                    field.set(a, value);
                     log.info("Значение установлено");
                 } catch (IllegalAccessException e) {
                     e.printStackTrace();

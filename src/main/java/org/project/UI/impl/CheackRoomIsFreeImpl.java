@@ -6,6 +6,7 @@ import org.project.Controller.IRoomController;
 import org.project.Exeception.MyException;
 import org.project.UI.IAction;
 
+import java.sql.Date;
 import java.time.LocalDate;
 import java.util.Scanner;
 
@@ -38,7 +39,8 @@ public class CheackRoomIsFreeImpl implements IAction {
                 throw new MyException("String can not be empty!");
             }
             LocalDate localDate = LocalDate.of(year, month, day);
-            roomController.sortRoomIsFree(localDate);
+            Date date = Date.valueOf(localDate);
+            roomController.sortRoomIsFree(date);
         } catch (Exception e) {
             log.error("Неверно указан формат даты");
         }
