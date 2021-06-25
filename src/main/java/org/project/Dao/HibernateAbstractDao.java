@@ -14,6 +14,7 @@ public abstract class HibernateAbstractDao<T extends Serializable> implements Ge
     private Class<T> type;
 
     private EntityManager entityManager;
+
     private  final Logger log = LogManager.getLogger(HibernateAbstractDao.class);
 
     @Override
@@ -60,7 +61,7 @@ public abstract class HibernateAbstractDao<T extends Serializable> implements Ge
             entityManager.remove(object);
             tx.commit();
         } catch (Exception e) {
-            e.printStackTrace();
+            tx.rollback();
             log.error(e.getMessage());
         } finally {
             entityManager.close();
@@ -83,7 +84,8 @@ public abstract class HibernateAbstractDao<T extends Serializable> implements Ge
              t = entityManager.find(type, id);
             entityManager.detach(t);
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error(e.getMessage());
+            tx.rollback();
         } finally {
             entityManager.close();
         }
