@@ -61,5 +61,4 @@ public class FunctionService implements IFunctionService {
         return genericDao.find(index);
     }
 
-
 }

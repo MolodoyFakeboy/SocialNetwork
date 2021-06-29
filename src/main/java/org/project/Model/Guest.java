@@ -28,7 +28,7 @@ public class Guest implements Serializable {
     @Column(name = "LocalDate")
     private Date localDate;
 
-    @ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "room_has_guest",
             joinColumns = {@JoinColumn(name = "Guest_id")},
             inverseJoinColumns = {@JoinColumn(name = "Room_roomID")}
@@ -43,10 +43,10 @@ public class Guest implements Serializable {
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "lastguests_room",
-            joinColumns = { @JoinColumn(name = "Guest_id")},
-            inverseJoinColumns = { @JoinColumn(name = "Room_roomID")}
+            joinColumns = {@JoinColumn(name = "Guest_id")},
+            inverseJoinColumns = {@JoinColumn(name = "Room_roomID")}
     )
-    private Set<Room>lastRooms;
+    private Set<Room> lastRooms;
 
     private static final Logger log = LogManager.getLogger(Guest.class);
 
@@ -71,7 +71,6 @@ public class Guest implements Serializable {
         this.id = id;
     }
 
-
     public String getName() {
         return name;
     }
@@ -89,7 +88,6 @@ public class Guest implements Serializable {
         this.surname = surname;
     }
 
-
     public String getPhoneNumber() {
         return phoneNumber;
     }
@@ -97,7 +95,6 @@ public class Guest implements Serializable {
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
-
 
     public Date getLocalDate() {
         return localDate;
@@ -107,7 +104,6 @@ public class Guest implements Serializable {
         this.localDate = localDate;
     }
 
-
     public Set<Room> getRooms() {
         return rooms;
     }
@@ -115,7 +111,6 @@ public class Guest implements Serializable {
     public void setRooms(Set<Room> rooms) {
         this.rooms = rooms;
     }
-
 
     public Set<Service> getServices() {
         return services;

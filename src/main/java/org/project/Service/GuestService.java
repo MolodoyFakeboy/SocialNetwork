@@ -129,8 +129,4 @@ public class GuestService implements IGuestService {
     public Guest getGuest(int index) {
         return (Guest) genericDao.find(index);
     }
-
-
-
-
 }

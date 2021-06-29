@@ -37,7 +37,7 @@ public class Room implements Serializable {
     @ManyToMany(mappedBy = "rooms", fetch = FetchType.EAGER)
     private Set<Guest> guests;
 
-    @ManyToMany(mappedBy = "lastRooms",fetch = FetchType.EAGER)
+    @ManyToMany(mappedBy = "lastRooms", fetch = FetchType.EAGER)
     private Set<Guest> lastGuests;
 
 
@@ -59,7 +59,6 @@ public class Room implements Serializable {
         this.guests = guests;
     }
 
-
     public int getRoomId() {
         return roomId;
     }
@@ -67,7 +66,6 @@ public class Room implements Serializable {
     public void setRoomId(int roomId) {
         this.roomId = roomId;
     }
-
 
     public int getRoomNumber() {
         return roomNumber;
@@ -85,7 +83,6 @@ public class Room implements Serializable {
         this.numberOfStars = numberOfStars;
     }
 
-
     public int getFloor() {
         return floor;
     }
@@ -93,7 +90,6 @@ public class Room implements Serializable {
     public void setFloor(int floor) {
         this.floor = floor;
     }
-
 
     public EnumStatus getStatus() {
         return status;
@@ -138,11 +134,9 @@ public class Room implements Serializable {
         return Objects.hash(roomId, roomNumber, numberOfStars, floor, status, numBed, basePrice);
     }
 
-
     public Set<Guest> getGuests() {
         return guests;
     }
-
 
     public Set<Guest> getLastGuests() {
         return lastGuests;

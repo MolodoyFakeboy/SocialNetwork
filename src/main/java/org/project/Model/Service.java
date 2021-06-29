@@ -40,7 +40,6 @@ public class Service implements Serializable {
         guests = new HashSet<>();
     }
 
-
     public Set<Guest> getGuests() {
         return guests;
     }
@@ -48,7 +47,6 @@ public class Service implements Serializable {
     public void setGuests(Set<Guest> guests) {
         this.guests = guests;
     }
-
 
     public int getIdService() {
         return idService;
@@ -58,7 +56,6 @@ public class Service implements Serializable {
         this.idService = idService;
     }
 
-
     public String getName() {
         return name;
     }
@@ -67,7 +64,6 @@ public class Service implements Serializable {
         this.name = name;
     }
 
-
     public double getPrice() {
         return price;
     }
@@ -75,7 +71,6 @@ public class Service implements Serializable {
     public void setPrice(double price) {
         this.price = price;
     }
-
 
     public String getDescription() {
         return description;

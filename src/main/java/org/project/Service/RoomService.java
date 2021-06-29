@@ -23,7 +23,7 @@ import java.util.stream.Stream;
 @Service
 public class RoomService implements IRoomService {
 
-    private GenericDao <Room> genericDao;
+    private GenericDao<Room> genericDao;
 
     private Logger log;
 
@@ -213,7 +213,7 @@ public class RoomService implements IRoomService {
                 CriteriaBuilder cb = em.getCriteriaBuilder();
                 CriteriaQuery<Guest> query = cb.createQuery(Guest.class);
                 Root<Guest> guests = query.from(Guest.class);
-                Join<Guest, Room> guestRoomJoin = guests.join("lastRooms",JoinType.LEFT);
+                Join<Guest, Room> guestRoomJoin = guests.join("lastRooms", JoinType.LEFT);
                 Predicate guestPredicate = cb.equal(guestRoomJoin.get("roomId"), index);
                 query.select(guests).where(guestPredicate);
                 list = em.createQuery(query).setMaxResults(3).getResultList();

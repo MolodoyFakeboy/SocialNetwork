@@ -43,7 +43,6 @@ public class ServiceDao extends HibernateAbstractDao <Service> {
         super.setType(type);
     }
 
-
     @Override
     protected EntityManager getEntityManager() {
         return super.getEntityManager();
