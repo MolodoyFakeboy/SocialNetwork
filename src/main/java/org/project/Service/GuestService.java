@@ -23,8 +23,6 @@ public class GuestService implements IGuestService {
 
     private Logger log;
 
-    private EntityManager em;
-
     @Autowired
     public GuestService(GenericDao<Guest> genericDao) {
         this.genericDao = genericDao;
@@ -69,7 +67,7 @@ public class GuestService implements IGuestService {
 
     @Override
     public void getaBill(int guestIndex) {
-        em = getEntityManager();
+        EntityManager em = JPAUtility.getEntityManager();
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Room> query = cb.createQuery(Room.class);
         Root<Room> rooms = query.from(Room.class);
@@ -83,7 +81,7 @@ public class GuestService implements IGuestService {
 
     @Override
     public List<Guest> getNumberGuest() {
-        em = getEntityManager();
+        EntityManager em = JPAUtility.getEntityManager();
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Guest> query = cb.createQuery(Guest.class);
         Root<Guest> guests = query.from(Guest.class);
@@ -96,7 +94,7 @@ public class GuestService implements IGuestService {
 
     @Override
     public List<Service> sortUsingServicePrice(int guestIndex) {
-        em = getEntityManager();
+        EntityManager em = JPAUtility.getEntityManager();
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Service> query = cb.createQuery(Service.class);
         Root<Service> services = query.from(Service.class);
@@ -113,7 +111,7 @@ public class GuestService implements IGuestService {
 
     @Override
     public List<Service> sortUsingServiceTime(int guestIndex) {
-        em = getEntityManager();
+        EntityManager em = JPAUtility.getEntityManager();
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Service> query = cb.createQuery(Service.class);
         Root<Service> services = query.from(Service.class);
@@ -132,10 +130,7 @@ public class GuestService implements IGuestService {
         return (Guest) genericDao.find(index);
     }
 
-    @Override
-    public EntityManager getEntityManager() {
-        return JPAUtility.getEntityManager();
-    }
+
 
 
 }

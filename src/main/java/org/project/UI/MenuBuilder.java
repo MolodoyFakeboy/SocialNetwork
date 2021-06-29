@@ -4,9 +4,13 @@ import org.project.Controller.GuestController;
 import org.project.Controller.RoomController;
 import org.project.Controller.ServiceController;
 import org.project.UI.impl.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 
+
+@Component
 public class MenuBuilder {
 
     private final Menu rootMenu;
@@ -14,8 +18,9 @@ public class MenuBuilder {
     private final ServiceController serviceController;
     private final GuestController guestController;
 
-    public MenuBuilder(RoomController roomController, ServiceController serviceController, GuestController guestController) {
-        rootMenu = new Menu("Root Menu", new ArrayList<>());
+    @Autowired
+    public MenuBuilder(RoomController roomController, ServiceController serviceController, GuestController guestController,Menu rootMenu) {
+        this.rootMenu = rootMenu;
         this.roomController = roomController;
         this.serviceController = serviceController;
         this.guestController = guestController;

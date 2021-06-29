@@ -25,8 +25,6 @@ public class RoomService implements IRoomService {
 
     private GenericDao <Room> genericDao;
 
-    private EntityManager em;
-
     private Logger log;
 
     @Value("${my.boolean.status}")
@@ -85,7 +83,7 @@ public class RoomService implements IRoomService {
 
     @Override
     public List<Room> sortRoomforPrice() {
-        em = getEntityManager();
+        EntityManager em = JPAUtility.getEntityManager();
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Room> query = cb.createQuery(Room.class);
         Root<Room> root = query.from(Room.class);
@@ -99,7 +97,7 @@ public class RoomService implements IRoomService {
 
     @Override
     public List<Room> sortRoomforBed() {
-        em = getEntityManager();
+        EntityManager em = JPAUtility.getEntityManager();
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Room> query = cb.createQuery(Room.class);
         Root<Room> root = query.from(Room.class);
@@ -113,7 +111,7 @@ public class RoomService implements IRoomService {
 
     @Override
     public List<Room> sortRoomforStars() {
-        em = getEntityManager();
+        EntityManager em = JPAUtility.getEntityManager();
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Room> query = cb.createQuery(Room.class);
         Root<Room> root = query.from(Room.class);
@@ -126,7 +124,7 @@ public class RoomService implements IRoomService {
 
     @Override
     public List<Room> sortFreeRoomforPrice() {
-        em = getEntityManager();
+        EntityManager em = JPAUtility.getEntityManager();
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Room> query = cb.createQuery(Room.class);
         Root<Room> room = query.from(Room.class);
@@ -140,7 +138,7 @@ public class RoomService implements IRoomService {
 
     @Override
     public List<Room> sortFreeRoomBed() {
-        em = getEntityManager();
+        EntityManager em = JPAUtility.getEntityManager();
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Room> query = cb.createQuery(Room.class);
         Root<Room> room = query.from(Room.class);
@@ -154,7 +152,7 @@ public class RoomService implements IRoomService {
 
     @Override
     public List<Room> sortFreeRoomStars() {
-        em = getEntityManager();
+        EntityManager em = JPAUtility.getEntityManager();
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Room> query = cb.createQuery(Room.class);
         Root<Room> room = query.from(Room.class);
@@ -168,7 +166,7 @@ public class RoomService implements IRoomService {
 
     @Override
     public List<Room> getAmountFreeRoom() {
-        em = getEntityManager();
+        EntityManager em = JPAUtility.getEntityManager();
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Room> query = cb.createQuery(Room.class);
         Root<Room> room = query.from(Room.class);
@@ -181,7 +179,7 @@ public class RoomService implements IRoomService {
 
     @Override
     public List<Room> sortRoomIsFree(Date date) throws ParseException {
-        em = getEntityManager();
+        EntityManager em = JPAUtility.getEntityManager();
         CriteriaBuilder cb = em.getCriteriaBuilder();
 
         //Запрос номер 1
@@ -211,7 +209,7 @@ public class RoomService implements IRoomService {
         List<Guest> list = new ArrayList<>();
         try {
             if (history) {
-                em = getEntityManager();
+                EntityManager em = JPAUtility.getEntityManager();
                 CriteriaBuilder cb = em.getCriteriaBuilder();
                 CriteriaQuery<Guest> query = cb.createQuery(Guest.class);
                 Root<Guest> guests = query.from(Guest.class);
@@ -253,11 +251,6 @@ public class RoomService implements IRoomService {
     @Override
     public Room getRoom(int index) {
         return genericDao.find(index);
-    }
-
-    @Override
-    public EntityManager getEntityManager() {
-        return JPAUtility.getEntityManager();
     }
 
 }

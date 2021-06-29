@@ -7,6 +7,7 @@
     <groupId>org.example</groupId>
     <artifactId>zahar_studennikov</artifactId>
     <version>1.0-SNAPSHOT</version>
+
     <dependencies>
         <dependency>
             <groupId>com.google.code.gson</groupId>
@@ -59,6 +60,7 @@
             <version>5.2.15.RELEASE</version>
         </dependency>
     </dependencies>
+
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>

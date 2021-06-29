@@ -12,13 +12,40 @@ import java.util.Set;
 
 @Entity
 public class Guest implements Serializable {
+    @Id
+    @Column(name = "id")
     private int id;
+    @Basic
+    @Column(name = "name")
     private String name;
+    @Basic
+    @Column(name = "surname")
     private String surname;
+    @Basic
+    @Column(name = "PhoneNumber")
     private String phoneNumber;
+    @Basic
+    @Column(name = "LocalDate")
     private Date localDate;
+
+    @ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    @JoinTable(name = "room_has_guest",
+            joinColumns = {@JoinColumn(name = "Guest_id")},
+            inverseJoinColumns = {@JoinColumn(name = "Room_roomID")}
+    )
     private Set<Room> rooms;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "guest_has_service",
+            joinColumns = @JoinColumn(name = "Guest_id"),
+            inverseJoinColumns = @JoinColumn(name = "Service_idService"))
     private Set<Service> services;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "lastguests_room",
+            joinColumns = { @JoinColumn(name = "Guest_id")},
+            inverseJoinColumns = { @JoinColumn(name = "Room_roomID")}
+    )
     private Set<Room>lastRooms;
 
     private static final Logger log = LogManager.getLogger(Guest.class);
@@ -36,9 +63,6 @@ public class Guest implements Serializable {
         lastRooms = new HashSet<>();
     }
 
-
-    @Id
-    @Column(name = "id")
     public int getId() {
         return id;
     }
@@ -47,8 +71,7 @@ public class Guest implements Serializable {
         this.id = id;
     }
 
-    @Basic
-    @Column(name = "name")
+
     public String getName() {
         return name;
     }
@@ -57,8 +80,7 @@ public class Guest implements Serializable {
         this.name = name;
     }
 
-    @Basic
-    @Column(name = "surname")
+
     public String getSurname() {
         return surname;
     }
@@ -67,8 +89,7 @@ public class Guest implements Serializable {
         this.surname = surname;
     }
 
-    @Basic
-    @Column(name = "PhoneNumber")
+
     public String getPhoneNumber() {
         return phoneNumber;
     }
@@ -77,8 +98,7 @@ public class Guest implements Serializable {
         this.phoneNumber = phoneNumber;
     }
 
-    @Basic
-    @Column(name = "LocalDate")
+
     public Date getLocalDate() {
         return localDate;
     }
@@ -87,11 +107,7 @@ public class Guest implements Serializable {
         this.localDate = localDate;
     }
 
-    @ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
-    @JoinTable(name = "room_has_guest",
-            joinColumns = {@JoinColumn(name = "Guest_id")},
-            inverseJoinColumns = {@JoinColumn(name = "Room_roomID")}
-    )
+
     public Set<Room> getRooms() {
         return rooms;
     }
@@ -100,23 +116,15 @@ public class Guest implements Serializable {
         this.rooms = rooms;
     }
 
-    public void setServices(Set<Service> services) {
-        this.services = services;
-    }
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "guest_has_service",
-            joinColumns = @JoinColumn(name = "Guest_id"),
-            inverseJoinColumns = @JoinColumn(name = "Service_idService"))
     public Set<Service> getServices() {
         return services;
     }
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "lastguests_room",
-            joinColumns = { @JoinColumn(name = "Guest_id")},
-            inverseJoinColumns = { @JoinColumn(name = "Room_roomID")}
-    )
+    public void setServices(Set<Service> services) {
+        this.services = services;
+    }
+
     public Set<Room> getLastRooms() {
         return lastRooms;
     }

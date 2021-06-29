@@ -4,7 +4,6 @@ import org.project.Model.Guest;
 import org.project.Model.Room;
 import org.project.Model.Service;
 
-import javax.persistence.EntityManager;
 import java.util.List;
 
 public interface IGuestService {
@@ -16,5 +15,5 @@ public interface IGuestService {
     List<Service> sortUsingServicePrice(int guestIndex);
     List<Service> sortUsingServiceTime(int guestIndex);
     Guest getGuest(int index);
-    EntityManager getEntityManager();
+
 }

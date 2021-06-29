@@ -2,14 +2,18 @@ package org.project.UI;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+@Component
 public class Navigator {
 
   private Menu currentMenu;
   private static final Logger log = LogManager.getLogger(Navigator.class);
 
+  @Autowired
   public Navigator(Menu currentMenu) {
     this.currentMenu = currentMenu;
   }

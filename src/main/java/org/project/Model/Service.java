@@ -9,11 +9,23 @@ import java.util.Set;
 
 @Entity
 public class Service implements Serializable {
+    @Id
+    @Column(name = "idService")
     private int idService;
+    @Basic
+    @Column(name = "name")
     private String name;
+    @Basic
+    @Column(name = "price")
     private double price;
+    @Basic
+    @Column(name = "description")
     private String description;
+    @Basic
+    @Column(name = "date")
     private Timestamp date;
+
+    @ManyToMany(mappedBy = "services",fetch = FetchType.EAGER)
     private Set<Guest> guests;
 
     public Service() {
@@ -28,7 +40,7 @@ public class Service implements Serializable {
         guests = new HashSet<>();
     }
 
-    @ManyToMany(mappedBy = "services",fetch = FetchType.EAGER)
+
     public Set<Guest> getGuests() {
         return guests;
     }
@@ -37,8 +49,7 @@ public class Service implements Serializable {
         this.guests = guests;
     }
 
-    @Id
-    @Column(name = "idService")
+
     public int getIdService() {
         return idService;
     }
@@ -47,8 +58,7 @@ public class Service implements Serializable {
         this.idService = idService;
     }
 
-    @Basic
-    @Column(name = "name")
+
     public String getName() {
         return name;
     }
@@ -57,8 +67,7 @@ public class Service implements Serializable {
         this.name = name;
     }
 
-    @Basic
-    @Column(name = "price")
+
     public double getPrice() {
         return price;
     }
@@ -67,8 +76,7 @@ public class Service implements Serializable {
         this.price = price;
     }
 
-    @Basic
-    @Column(name = "description")
+
     public String getDescription() {
         return description;
     }
@@ -77,8 +85,7 @@ public class Service implements Serializable {
         this.description = description;
     }
 
-    @Basic
-    @Column(name = "date")
+
     public Timestamp getDate() {
         return date;
     }
