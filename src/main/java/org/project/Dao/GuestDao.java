@@ -1,12 +1,12 @@
 package org.project.Dao;
 
-import org.project.Annotations.Singleton;
 import org.project.Model.Guest;
+import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import java.util.List;
 
-@Singleton
+@Repository
 public class GuestDao extends HibernateAbstractDao<Guest> {
 
     public GuestDao() {

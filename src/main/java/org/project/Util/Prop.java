@@ -1,19 +1,14 @@
 package org.project.Util;
 
-import org.project.Annotations.InjectProperty;
-
 import java.io.File;
 
 public class Prop {
 
     private static ExProperties properties;
 
-
-    @InjectProperty
     public void load() {
         properties = initProperties("src/main/resources/config.properties");
     }
-
 
     public static ExProperties initProperties(String filename) {
         final ExProperties result = new ExProperties();

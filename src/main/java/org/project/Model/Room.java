@@ -11,14 +11,33 @@ import java.util.Set;
 public class Room implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "roomID")
     private int roomId;
+    @Basic
+    @Column(name = "roomNumber")
     private int roomNumber;
+    @Basic
+    @Column(name = "numberOfStars")
     private int numberOfStars;
+    @Basic
+    @Column(name = "floor")
     private int floor;
+    @Basic
+    @Column(name = "status")
+    @Enumerated(EnumType.STRING)
     private EnumStatus status;
+    @Basic
+    @Column(name = "numBed")
     private int numBed;
+
+    @Basic
+    @Column(name = "basePrice")
     private double basePrice;
+
+    @ManyToMany(mappedBy = "rooms", fetch = FetchType.EAGER)
     private Set<Guest> guests;
+
+    @ManyToMany(mappedBy = "lastRooms", fetch = FetchType.EAGER)
     private Set<Guest> lastGuests;
 
 
@@ -40,8 +59,6 @@ public class Room implements Serializable {
         this.guests = guests;
     }
 
-    @Id
-    @Column(name = "roomID")
     public int getRoomId() {
         return roomId;
     }
@@ -50,8 +67,6 @@ public class Room implements Serializable {
         this.roomId = roomId;
     }
 
-    @Basic
-    @Column(name = "roomNumber")
     public int getRoomNumber() {
         return roomNumber;
     }
@@ -60,8 +75,6 @@ public class Room implements Serializable {
         this.roomNumber = roomNumber;
     }
 
-    @Basic
-    @Column(name = "numberOfStars")
     public int getNumberOfStars() {
         return numberOfStars;
     }
@@ -70,8 +83,6 @@ public class Room implements Serializable {
         this.numberOfStars = numberOfStars;
     }
 
-    @Basic
-    @Column(name = "floor")
     public int getFloor() {
         return floor;
     }
@@ -80,9 +91,6 @@ public class Room implements Serializable {
         this.floor = floor;
     }
 
-    @Basic
-    @Column(name = "status")
-    @Enumerated(EnumType.STRING)
     public EnumStatus getStatus() {
         return status;
     }
@@ -91,8 +99,6 @@ public class Room implements Serializable {
         this.status = status;
     }
 
-    @Basic
-    @Column(name = "numBed")
     public int getNumBed() {
         return numBed;
     }
@@ -101,8 +107,6 @@ public class Room implements Serializable {
         this.numBed = numBed;
     }
 
-    @Basic
-    @Column(name = "basePrice")
     public double getBasePrice() {
         return basePrice;
     }
@@ -130,12 +134,10 @@ public class Room implements Serializable {
         return Objects.hash(roomId, roomNumber, numberOfStars, floor, status, numBed, basePrice);
     }
 
-    @ManyToMany(mappedBy = "rooms", fetch = FetchType.EAGER)
     public Set<Guest> getGuests() {
         return guests;
     }
 
-    @ManyToMany(mappedBy = "lastRooms",fetch = FetchType.EAGER)
     public Set<Guest> getLastGuests() {
         return lastGuests;
     }

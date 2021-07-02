@@ -1,19 +1,23 @@
 package org.project.Controller;
 
-import org.project.Annotations.InjectByType;
-import org.project.Annotations.Singleton;
 import org.project.Model.EnumStatus;
 import org.project.Model.Room;
 import org.project.Service.IRoomService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 
 import java.sql.Date;
 import java.text.ParseException;
 
-@Singleton
+@Controller
 public class RoomController implements IRoomController {
 
-    @InjectByType
     private IRoomService roomService;
+
+    @Autowired
+    public RoomController(IRoomService roomService) {
+        this.roomService = roomService;
+    }
 
     @Override
     public Room getRoom(int index) {

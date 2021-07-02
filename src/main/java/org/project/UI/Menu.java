@@ -2,9 +2,11 @@ package org.project.UI;
 
 import java.util.List;
 
+
 public class Menu {
-  private String name;
-  private List<MenuItem> menuItems;
+
+    private String name;
+    private List<MenuItem> menuItems;
 
     public Menu(String name, List<MenuItem> menuItems) {
         this.name = name;

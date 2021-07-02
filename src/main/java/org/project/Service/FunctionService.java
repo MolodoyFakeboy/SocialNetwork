@@ -2,11 +2,10 @@ package org.project.Service;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.project.Annotations.InjectByType;
-import org.project.Annotations.Singleton;
 import org.project.Dao.GenericDao;
 import org.project.Model.Service;
 import org.project.Util.JPAUtility;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -15,15 +14,16 @@ import javax.persistence.criteria.Root;
 import java.util.List;
 import java.util.stream.Stream;
 
-@Singleton
+@org.springframework.stereotype.Service
 public class FunctionService implements IFunctionService {
 
-    @InjectByType
     private GenericDao<Service> genericDao;
 
     private Logger log;
 
-    public FunctionService() {
+    @Autowired
+    public FunctionService(GenericDao<Service> genericDao) {
+        this.genericDao = genericDao;
         log = LogManager.getLogger(FunctionService.class);
     }
 
@@ -59,10 +59,6 @@ public class FunctionService implements IFunctionService {
     @Override
     public Service getService(int index) {
         return genericDao.find(index);
-    }
-
-    public void setGenericDao(GenericDao genericDao) {
-        this.genericDao = genericDao;
     }
 
 }

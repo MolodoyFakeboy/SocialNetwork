@@ -2,13 +2,12 @@ package org.project.Service;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.project.Annotations.InjectByType;
-import org.project.Annotations.Singleton;
 import org.project.Dao.GenericDao;
 import org.project.Model.Guest;
 import org.project.Model.Room;
 import org.project.Model.Service;
 import org.project.Util.JPAUtility;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.*;
@@ -17,17 +16,16 @@ import java.util.List;
 import java.util.stream.Stream;
 
 
-@Singleton
+@org.springframework.stereotype.Service
 public class GuestService implements IGuestService {
 
-    @InjectByType
     private GenericDao <Guest> genericDao;
 
     private Logger log;
 
-    private EntityManager em;
-
-    public GuestService() {
+    @Autowired
+    public GuestService(GenericDao<Guest> genericDao) {
+        this.genericDao = genericDao;
         log = LogManager.getLogger(GuestService.class);
     }
 
@@ -69,7 +67,7 @@ public class GuestService implements IGuestService {
 
     @Override
     public void getaBill(int guestIndex) {
-        em = getEntityManager();
+        EntityManager em = JPAUtility.getEntityManager();
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Room> query = cb.createQuery(Room.class);
         Root<Room> rooms = query.from(Room.class);
@@ -83,7 +81,7 @@ public class GuestService implements IGuestService {
 
     @Override
     public List<Guest> getNumberGuest() {
-        em = getEntityManager();
+        EntityManager em = JPAUtility.getEntityManager();
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Guest> query = cb.createQuery(Guest.class);
         Root<Guest> guests = query.from(Guest.class);
@@ -96,7 +94,7 @@ public class GuestService implements IGuestService {
 
     @Override
     public List<Service> sortUsingServicePrice(int guestIndex) {
-        em = getEntityManager();
+        EntityManager em = JPAUtility.getEntityManager();
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Service> query = cb.createQuery(Service.class);
         Root<Service> services = query.from(Service.class);
@@ -113,7 +111,7 @@ public class GuestService implements IGuestService {
 
     @Override
     public List<Service> sortUsingServiceTime(int guestIndex) {
-        em = getEntityManager();
+        EntityManager em = JPAUtility.getEntityManager();
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Service> query = cb.createQuery(Service.class);
         Root<Service> services = query.from(Service.class);
@@ -131,14 +129,4 @@ public class GuestService implements IGuestService {
     public Guest getGuest(int index) {
         return (Guest) genericDao.find(index);
     }
-
-    @Override
-    public EntityManager getEntityManager() {
-        return JPAUtility.getEntityManager();
-    }
-
-    public void setGenericDao(GenericDao genericDao) {
-        this.genericDao = genericDao;
-    }
-
 }
