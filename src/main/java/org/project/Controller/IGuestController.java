@@ -3,21 +3,27 @@ package org.project.Controller;
 import org.project.Model.Guest;
 import org.project.Model.Room;
 import org.project.Model.Service;
+import org.springframework.http.ResponseEntity;
+
+import java.util.List;
 
 public interface IGuestController {
+
+    Guest addNewGuest(Guest guest);
+
     Guest getGuest(int index);
 
-    void bookRoom(Room room, Guest guest);
+    ResponseEntity<String> bookRoom(int guestID, Room room);
 
-    void leaveHotel(Room room, int guestIndex);
+    ResponseEntity<String> leaveHotel(Room room, int guestIndex);
 
-    void useService(Service service, int guestIndex);
+    ResponseEntity<String> useService(Service service, int guestIndex);
 
-    void getaBill(int roomIndex);
+    double getaBill(int roomIndex);
 
-    void getNumberGuest();
+    List<Guest> getNumberGuest();
 
-    void sortUsingServicePrice(int guestIndex);
+    List<Service> sortUsingServicePrice(int guestIndex);
 
-    void sortUsingServiceTime(int guestIndex);
+    List<Service> sortUsingServiceTime(int guestIndex);
 }

@@ -44,15 +44,21 @@ public class FunctionService implements IFunctionService {
 
     @Override
     public List<Service> sortServicePrice() {
+        List<Service> list = null;
         EntityManager em = JPAUtility.getEntityManager();
-        CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<Service> query = cb.createQuery(Service.class);
-        Root<Service> root = query.from(Service.class);
-        query.select(root);
-        query.orderBy(cb.asc(root.get("price")));
-        List<Service> list = em.createQuery(query).getResultList();
-        Stream<Service> stream = list.stream();
-        stream.forEach(log::info);
+        try {
+            CriteriaBuilder cb = em.getCriteriaBuilder();
+            CriteriaQuery<Service> query = cb.createQuery(Service.class);
+            Root<Service> root = query.from(Service.class);
+            query.select(root);
+            query.orderBy(cb.asc(root.get("price")));
+            list = em.createQuery(query).getResultList();
+            Stream<Service> stream = list.stream();
+        } catch (Exception e) {
+            log.error(e.getMessage());
+        } finally {
+            em.close();
+        }
         return list;
     }
 

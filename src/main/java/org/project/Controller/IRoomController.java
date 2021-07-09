@@ -1,39 +1,40 @@
 package org.project.Controller;
 
 import org.project.Model.EnumStatus;
+import org.project.Model.Guest;
 import org.project.Model.Room;
+import org.springframework.http.ResponseEntity;
 
 import java.sql.Date;
 import java.text.ParseException;
+import java.util.List;
 
 public interface IRoomController {
     Room getRoom(int index);
 
-    void updateRoom(Room room);
+    Room updateRoom(Room room);
 
-    void deleatRoom(int roomIndex);
+    ResponseEntity<String> deleatRoom(int id);
 
-    void changeRoomStatus(int Index, EnumStatus status);
+    Room changeRoomStatus(int index, EnumStatus status);
 
-    void changeRoomPrice(int Index, double price);
+    Room changeRoomPrice(int index, double price);
 
-    void sortRoomforPrice();
+    List<Room> sortRoomforPrice();
 
-    void sortRoomforBed();
+    List<Room> sortRoomforBed();
 
-    void sortRoomforStars();
+    List<Room> sortRoomforStars();
 
-    void sortFreeRoomforPrice();
+    List<Room> sortFreeRoomforPrice();
 
-    void sortFreeRoomBed();
+    List<Room> sortFreeRoomBed();
 
-    void sortFreeRoomStars() throws Exception;
+    List<Room> sortFreeRoomStars() throws Exception;
 
-    void getAmountFreeRoom() throws Exception;
+    ResponseEntity<String> getAmountFreeRoom() throws Exception;
 
-    void sortRoomIsFree(Date date) throws ParseException;
+    List<Room> sortRoomIsFree(Date date) throws ParseException;
 
-    void getLastThreeGuest(int roomIndex);
-
-    void getInfoAbourRoom(int roomIndex);
+    List<Guest> getLastThreeGuest(int roomIndex);
 }

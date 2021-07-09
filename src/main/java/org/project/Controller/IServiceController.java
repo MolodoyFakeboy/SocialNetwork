@@ -2,12 +2,15 @@ package org.project.Controller;
 
 import org.project.Model.Service;
 
+import java.util.List;
+
 public interface IServiceController {
+
     Service getService(int index);
 
     Service uppdateService(Service service);
 
-    void changeServicePrice(int indexService, double price);
+    Service changeServicePrice(Service service);
 
-    void sortServicePrice();
+    List<Service> sortServicePrice();
 }

@@ -17,7 +17,6 @@ import java.sql.Date;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Stream;
 
 
 @Service
@@ -83,133 +82,174 @@ public class RoomService implements IRoomService {
 
     @Override
     public List<Room> sortRoomforPrice() {
+        List<Room> list = null;
         EntityManager em = JPAUtility.getEntityManager();
-        CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<Room> query = cb.createQuery(Room.class);
-        Root<Room> root = query.from(Room.class);
-        query.select(root);
-        query.orderBy(cb.asc(root.get("basePrice")));
-        List<Room> list = em.createQuery(query).getResultList();
-        Stream<Room> stream = list.stream();
-        stream.forEach(System.out::println);
+        try {
+            CriteriaBuilder cb = em.getCriteriaBuilder();
+            CriteriaQuery<Room> query = cb.createQuery(Room.class);
+            Root<Room> root = query.from(Room.class);
+            query.select(root);
+            query.orderBy(cb.asc(root.get("basePrice")));
+            list = em.createQuery(query).getResultList();
+        } catch (Exception e) {
+            log.error(e.getMessage());
+        } finally {
+            em.close();
+        }
         return list;
     }
 
     @Override
     public List<Room> sortRoomforBed() {
+        List<Room> list = null;
         EntityManager em = JPAUtility.getEntityManager();
-        CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<Room> query = cb.createQuery(Room.class);
-        Root<Room> root = query.from(Room.class);
-        query.select(root);
-        query.orderBy(cb.asc(root.get("numBed")));
-        List<Room> list = em.createQuery(query).getResultList();
-        Stream<Room> stream = list.stream();
-        stream.forEach(log::info);
+        try {
+            CriteriaBuilder cb = em.getCriteriaBuilder();
+            CriteriaQuery<Room> query = cb.createQuery(Room.class);
+            Root<Room> root = query.from(Room.class);
+            query.select(root);
+            query.orderBy(cb.asc(root.get("numBed")));
+            list = em.createQuery(query).getResultList();
+        } catch (Exception e) {
+            log.error(e.getMessage());
+        } finally {
+            em.close();
+        }
         return list;
     }
 
     @Override
     public List<Room> sortRoomforStars() {
+        List<Room> list = null;
         EntityManager em = JPAUtility.getEntityManager();
-        CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<Room> query = cb.createQuery(Room.class);
-        Root<Room> root = query.from(Room.class);
-        query.select(root).orderBy(cb.asc(root.get("numberOfStars")));
-        List<Room> list = em.createQuery(query).getResultList();
-        Stream<Room> stream = list.stream();
-        stream.forEach(System.out::println);
+        try {
+            CriteriaBuilder cb = em.getCriteriaBuilder();
+            CriteriaQuery<Room> query = cb.createQuery(Room.class);
+            Root<Room> root = query.from(Room.class);
+            query.select(root).orderBy(cb.asc(root.get("numberOfStars")));
+            list = em.createQuery(query).getResultList();
+        } catch (Exception e) {
+            log.error(e.getMessage());
+        } finally {
+            em.close();
+        }
         return list;
     }
 
     @Override
     public List<Room> sortFreeRoomforPrice() {
+        List<Room> list = null;
         EntityManager em = JPAUtility.getEntityManager();
-        CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<Room> query = cb.createQuery(Room.class);
-        Root<Room> room = query.from(Room.class);
-        Join<Room, Guest> roomGuestJoin = room.join("guests", JoinType.LEFT);
-        query.select(room).where(roomGuestJoin.get("id").isNull()).orderBy(cb.asc(room.get("basePrice")));
-        List<Room> list = em.createQuery(query).getResultList();
-        Stream<Room> stream = list.stream();
-        stream.forEach(System.out::println);
+        try {
+            CriteriaBuilder cb = em.getCriteriaBuilder();
+            CriteriaQuery<Room> query = cb.createQuery(Room.class);
+            Root<Room> room = query.from(Room.class);
+            Join<Room, Guest> roomGuestJoin = room.join("guests", JoinType.LEFT);
+            query.select(room).where(roomGuestJoin.get("id").isNull()).orderBy(cb.asc(room.get("basePrice")));
+            list = em.createQuery(query).getResultList();
+        } catch (Exception e) {
+            log.error(e.getMessage());
+        } finally {
+            em.close();
+        }
         return list;
     }
 
     @Override
     public List<Room> sortFreeRoomBed() {
+        List<Room> list = null;
         EntityManager em = JPAUtility.getEntityManager();
-        CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<Room> query = cb.createQuery(Room.class);
-        Root<Room> room = query.from(Room.class);
-        Join<Room, Guest> roomGuestJoin = room.join("guests", JoinType.LEFT);
-        query.select(room).where(roomGuestJoin.get("id").isNull()).orderBy(cb.asc(room.get("numBed")));
-        List<Room> list = em.createQuery(query).getResultList();
-        Stream<Room> stream = list.stream();
-        stream.forEach(log::info);
+        try {
+            CriteriaBuilder cb = em.getCriteriaBuilder();
+            CriteriaQuery<Room> query = cb.createQuery(Room.class);
+            Root<Room> room = query.from(Room.class);
+            Join<Room, Guest> roomGuestJoin = room.join("guests", JoinType.LEFT);
+            query.select(room).where(roomGuestJoin.get("id").isNull()).orderBy(cb.asc(room.get("numBed")));
+            list = em.createQuery(query).getResultList();
+        } catch (Exception e) {
+            log.error(e.getMessage());
+        } finally {
+            em.close();
+        }
         return list;
     }
 
     @Override
     public List<Room> sortFreeRoomStars() {
+        List<Room> list = null;
         EntityManager em = JPAUtility.getEntityManager();
-        CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<Room> query = cb.createQuery(Room.class);
-        Root<Room> room = query.from(Room.class);
-        Join<Room, Guest> roomGuestJoin = room.join("guests", JoinType.LEFT);
-        query.select(room).where(roomGuestJoin.get("id").isNull()).orderBy(cb.asc(room.get("numberOfStars")));
-        List<Room> list = em.createQuery(query).getResultList();
-        Stream<Room> stream = list.stream();
-        stream.forEach(log::info);
+        try {
+            CriteriaBuilder cb = em.getCriteriaBuilder();
+            CriteriaQuery<Room> query = cb.createQuery(Room.class);
+            Root<Room> room = query.from(Room.class);
+            Join<Room, Guest> roomGuestJoin = room.join("guests", JoinType.LEFT);
+            query.select(room).where(roomGuestJoin.get("id").isNull()).orderBy(cb.asc(room.get("numberOfStars")));
+            list = em.createQuery(query).getResultList();
+        } catch (Exception e) {
+            log.error(e.getMessage());
+        } finally {
+            em.close();
+        }
         return list;
     }
 
     @Override
     public List<Room> getAmountFreeRoom() {
+        List<Room> list = null;
         EntityManager em = JPAUtility.getEntityManager();
-        CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<Room> query = cb.createQuery(Room.class);
-        Root<Room> room = query.from(Room.class);
-        Join<Room, Guest> roomGuestJoin = room.join("guests", JoinType.LEFT);
-        query.select(room).where(roomGuestJoin.get("id").isNull());
-        List<Room> list = em.createQuery(query).getResultList();
-        log.info(" Колличество свободных комнат: " + list.size());
+        try {
+            CriteriaBuilder cb = em.getCriteriaBuilder();
+            CriteriaQuery<Room> query = cb.createQuery(Room.class);
+            Root<Room> room = query.from(Room.class);
+            Join<Room, Guest> roomGuestJoin = room.join("guests", JoinType.LEFT);
+            query.select(room).where(roomGuestJoin.get("id").isNull());
+            list = em.createQuery(query).getResultList();
+        } catch (Exception e) {
+            log.error(e.getMessage());
+        } finally {
+            em.close();
+        }
         return list;
     }
 
     @Override
     public List<Room> sortRoomIsFree(Date date) throws ParseException {
+        List<Room> list = null;
         EntityManager em = JPAUtility.getEntityManager();
-        CriteriaBuilder cb = em.getCriteriaBuilder();
+        try {
+            CriteriaBuilder cb = em.getCriteriaBuilder();
 
-        //Запрос номер 1
-        CriteriaQuery<Room> query = cb.createQuery(Room.class);
-        Root<Room> room = query.from(Room.class);
-        Join<Room, Guest> roomGuestJoin = room.join("guests", JoinType.LEFT);
-        query.select(room).where(roomGuestJoin.get("id").isNull());
-        List<Room> list = em.createQuery(query).getResultList();
+            //Запрос номер 1
+            CriteriaQuery<Room> query = cb.createQuery(Room.class);
+            Root<Room> room = query.from(Room.class);
+            Join<Room, Guest> roomGuestJoin = room.join("guests", JoinType.LEFT);
+            query.select(room).where(roomGuestJoin.get("id").isNull());
+            list = em.createQuery(query).getResultList();
 
-        //Запрос номер 2
-        CriteriaQuery<Room> query1 = cb.createQuery(Room.class);
-        Root<Room> room1 = query1.from(Room.class);
-        Join<Room, Guest> roomGuestJoin1 = room1.join("guests", JoinType.LEFT);
-        Predicate localDatePredicate = cb.lessThan(roomGuestJoin1.get("localDate"), date);
-        query1.select(room1).where(localDatePredicate);
-        List<Room> list1 = em.createQuery(query1).getResultList();
+            //Запрос номер 2
+            CriteriaQuery<Room> query1 = cb.createQuery(Room.class);
+            Root<Room> room1 = query1.from(Room.class);
+            Join<Room, Guest> roomGuestJoin1 = room1.join("guests", JoinType.LEFT);
+            Predicate localDatePredicate = cb.lessThan(roomGuestJoin1.get("localDate"), date);
+            query1.select(room1).where(localDatePredicate);
+            List<Room> list1 = em.createQuery(query1).getResultList();
 
-        //union
-        list.addAll(list1);
-        Stream<Room> stream = list.stream();
-        stream.forEach(System.out::println);
+            //union
+            list.addAll(list1);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+        } finally {
+            em.close();
+        }
         return list;
     }
 
     @Override
     public List<Guest> getLastThreeGuest(int index) {
         List<Guest> list = new ArrayList<>();
+        EntityManager em = JPAUtility.getEntityManager();
         try {
             if (history) {
-                EntityManager em = JPAUtility.getEntityManager();
                 CriteriaBuilder cb = em.getCriteriaBuilder();
                 CriteriaQuery<Guest> query = cb.createQuery(Guest.class);
                 Root<Guest> guests = query.from(Guest.class);
@@ -217,35 +257,15 @@ public class RoomService implements IRoomService {
                 Predicate guestPredicate = cb.equal(guestRoomJoin.get("roomId"), index);
                 query.select(guests).where(guestPredicate);
                 list = em.createQuery(query).setMaxResults(3).getResultList();
-                Stream<Guest> stream = list.stream();
-                stream.forEach(System.out::println);
             } else {
-                System.out.println("Пока нельзя выполнить это действие измините настройки property");
+                log.info("Пока нельзя выполнить это действие измините настройки property");
             }
         } catch (Exception e) {
-            System.out.println("Ошибка в поиске 3 последних гостей");
+            log.error(e.getMessage());
+        } finally {
+            em.close();
         }
         return list;
-    }
-
-
-    @Override
-    public Room getInfoRoom(int index) {
-        Room room = (Room) genericDao.find(index);
-        log.info(" Комнатан находится " + room.getFloor() + " этаже ");
-        log.info(" Количество кроватей в комнате " + room.getNumBed());
-        log.info(" Стоиость комнаты составит " + room.getBasePrice());
-        log.info("Количество звезд у комнаты: " + room.getNumberOfStars());
-        try {
-            if (room.getGuests().isEmpty()) {
-                log.info("В комнате не проживают гости");
-            } else {
-                log.info("В данный момент комната занята");
-            }
-        } catch (Exception exception) {
-            log.error("Нет гостей");
-        }
-        return room;
     }
 
     @Override

@@ -13,7 +13,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.criteria.*;
 import java.sql.Timestamp;
 import java.util.List;
-import java.util.stream.Stream;
 
 
 @org.springframework.stereotype.Service
@@ -30,13 +29,19 @@ public class GuestService implements IGuestService {
     }
 
     @Override
-    public Room bookRoom(Room room, Guest guest) {
+    public Guest addGuest(Guest guest) {
+        genericDao.add(guest);
+        return guest;
+    }
+
+    @Override
+    public Room bookRoom(int guestID,Room room) {
         try {
-            genericDao.add(guest);
+            Guest guest = genericDao.find(guestID);
             guest.getRooms().add(room);
             genericDao.update(guest);
         } catch (Exception exception) {
-            exception.printStackTrace();
+            log.error(exception.getMessage());
         }
         return room;
     }
@@ -48,9 +53,8 @@ public class GuestService implements IGuestService {
             guest.getRooms().remove(room);
             guest.getLastRooms().add(room);
             genericDao.update(guest);
-            log.info("Приезжайте к нам еще");
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error(e.getMessage());
         }
 
         return true;
@@ -58,70 +62,101 @@ public class GuestService implements IGuestService {
 
     @Override
     public Service useService(Guest guest, Service service) {
-        guest.getServices().add(service);
-        service.setDate(new Timestamp(System.currentTimeMillis()));
-        genericDao.update(guest);
-        log.info(" Гость воспользовался услугой " + service.getName());
+        try {
+            guest.getServices().add(service);
+            service.setDate(new Timestamp(System.currentTimeMillis()));
+            genericDao.update(guest);
+            log.info(" Гость воспользовался услугой " + service.getName());
+        } catch (Exception e) {
+            log.error(e.getMessage());
+        }
         return service;
     }
 
     @Override
-    public void getaBill(int guestIndex) {
+    public double getaBill(int guestIndex) {
+        double bill = 0;
+        List<Room> list = null;
         EntityManager em = JPAUtility.getEntityManager();
-        CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<Room> query = cb.createQuery(Room.class);
-        Root<Room> rooms = query.from(Room.class);
-        Join<Guest, Room> guestRoomJoin = rooms.join("guests");
-        Predicate guestPredicate = cb.equal(guestRoomJoin.get("id"), guestIndex);
-        query.select(rooms).where(guestPredicate);
-        List<Room> list =  em.createQuery(query).getResultList();
-        Stream<Room> stream = list.stream();
-        stream.forEach(room -> System.out.println("Сумма к оплате за номер " + room.getBasePrice()));
+        try {
+            CriteriaBuilder cb = em.getCriteriaBuilder();
+            CriteriaQuery<Room> query = cb.createQuery(Room.class);
+            Root<Room> rooms = query.from(Room.class);
+            Join<Guest, Room> guestRoomJoin = rooms.join("guests");
+            Predicate guestPredicate = cb.equal(guestRoomJoin.get("id"), guestIndex);
+            query.select(rooms).where(guestPredicate);
+            list = em.createQuery(query).getResultList();
+        } catch (Exception e) {
+            log.error(e.getMessage());
+        } finally {
+            em.close();
+        }
+
+        for (Room room : list){
+            bill =+ room.getBasePrice();
+        }
+        return  bill;
     }
 
     @Override
     public List<Guest> getNumberGuest() {
+        List<Guest> list = null;
         EntityManager em = JPAUtility.getEntityManager();
-        CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<Guest> query = cb.createQuery(Guest.class);
-        Root<Guest> guests = query.from(Guest.class);
-        Join<Guest, Room> guestRoomJoin = guests.join("rooms");
-        query.select(guests).where(guestRoomJoin.get("roomId").isNotNull());
-        List<Guest> list = em.createQuery(query).getResultList();
-        log.info(" Колличество гостей в отеле: " + list.size());
+        try {
+            CriteriaBuilder cb = em.getCriteriaBuilder();
+            CriteriaQuery<Guest> query = cb.createQuery(Guest.class);
+            Root<Guest> guests = query.from(Guest.class);
+            Join<Guest, Room> guestRoomJoin = guests.join("rooms");
+            query.select(guests).where(guestRoomJoin.get("roomId").isNotNull());
+            list = em.createQuery(query).getResultList();
+        } catch (Exception e) {
+            log.error(e.getMessage());
+        } finally {
+            em.close();
+        }
         return list;
     }
 
     @Override
     public List<Service> sortUsingServicePrice(int guestIndex) {
+        List<Service> list = null;
         EntityManager em = JPAUtility.getEntityManager();
-        CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<Service> query = cb.createQuery(Service.class);
-        Root<Service> services = query.from(Service.class);
-        Join<Guest, Service> guestServiceJoin = services.join("guests");
-        Predicate guestPredicate = cb.equal(guestServiceJoin.get("id"), guestIndex);
-        query.select(services).where(guestPredicate);
-        query.orderBy(cb.asc(services.get("price")));
-        List<Service> list = em.createQuery(query).getResultList();
-        Stream<Service> stream = list.stream();
-        stream.forEach(System.out::println);
+        try {
+            CriteriaBuilder cb = em.getCriteriaBuilder();
+            CriteriaQuery<Service> query = cb.createQuery(Service.class);
+            Root<Service> services = query.from(Service.class);
+            Join<Guest, Service> guestServiceJoin = services.join("guests");
+            Predicate guestPredicate = cb.equal(guestServiceJoin.get("id"), guestIndex);
+            query.select(services).where(guestPredicate);
+            query.orderBy(cb.asc(services.get("price")));
+            list = em.createQuery(query).getResultList();
+        } catch (Exception e) {
+            log.error(e.getMessage());
+        } finally {
+            em.close();
+        }
         return list;
 
     }
 
     @Override
     public List<Service> sortUsingServiceTime(int guestIndex) {
+        List<Service> list = null;
         EntityManager em = JPAUtility.getEntityManager();
-        CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<Service> query = cb.createQuery(Service.class);
-        Root<Service> services = query.from(Service.class);
-        Join<Guest, Service> guestServiceJoin = services.join("guests");
-        Predicate guestPredicate = cb.equal(guestServiceJoin.get("id"), guestIndex);
-        query.select(services).where(guestPredicate);
-        query.orderBy(cb.asc(services.get("date")));
-        List<Service> list = em.createQuery(query).getResultList();
-        Stream<Service> stream = list.stream();
-        stream.forEach(log::info);
+        try {
+            CriteriaBuilder cb = em.getCriteriaBuilder();
+            CriteriaQuery<Service> query = cb.createQuery(Service.class);
+            Root<Service> services = query.from(Service.class);
+            Join<Guest, Service> guestServiceJoin = services.join("guests");
+            Predicate guestPredicate = cb.equal(guestServiceJoin.get("id"), guestIndex);
+            query.select(services).where(guestPredicate);
+            query.orderBy(cb.asc(services.get("date")));
+            list = em.createQuery(query).getResultList();
+        } catch (Exception e) {
+            log.error(e.getMessage());
+        } finally {
+            em.close();
+        }
         return list;
     }
 
