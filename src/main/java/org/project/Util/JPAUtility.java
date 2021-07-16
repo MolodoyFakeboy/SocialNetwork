@@ -1,31 +1,23 @@
 package org.project.Util;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
-import javax.persistence.*;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 
 @Component
 public class JPAUtility {
 
-    private static EntityManagerFactory emFactory ;
+    private  EntityManagerFactory emFactory ;
 
-    @PostConstruct
-    public static EntityManagerFactory getEmFactory (){
-        try {
-            return emFactory = Persistence.createEntityManagerFactory("Project");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return emFactory;
+    @Autowired
+    public JPAUtility(EntityManagerFactory emFactory) {
+        this.emFactory = emFactory;
     }
 
-    public static EntityManager getEntityManager(){
+    public EntityManager getEntityManager(){
         return emFactory.createEntityManager();
-    }
-
-    public static void close(){
-        emFactory.close();
     }
 
 }

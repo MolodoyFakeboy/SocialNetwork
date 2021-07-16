@@ -1,9 +1,9 @@
 package org.project.Dao;
 
+import org.hibernate.Session;
 import org.project.Model.Service;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.EntityManager;
 import java.util.List;
 
 @Repository
@@ -44,8 +44,8 @@ public class ServiceDao extends HibernateAbstractDao <Service> {
     }
 
     @Override
-    protected EntityManager getEntityManager() {
-        return super.getEntityManager();
+    protected Session getSession() {
+        return super.getSession();
     }
 }
 

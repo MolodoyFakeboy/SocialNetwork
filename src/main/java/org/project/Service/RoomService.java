@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.*;
+import javax.transaction.Transactional;
 import java.sql.Date;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -20,11 +21,14 @@ import java.util.List;
 
 
 @Service
+@Transactional
 public class RoomService implements IRoomService {
 
     private GenericDao<Room> genericDao;
 
     private Logger log;
+
+    private JPAUtility jpaUtility;
 
     @Value("${my.boolean.status}")
     private Boolean status;
@@ -37,6 +41,11 @@ public class RoomService implements IRoomService {
     public RoomService(GenericDao<Room> genericDao) {
         this.genericDao = genericDao;
         log = LogManager.getLogger(RoomService.class);
+    }
+
+    @Autowired
+    public void setJpaUtility(JPAUtility jpaUtility) {
+        this.jpaUtility = jpaUtility;
     }
 
     @Override
@@ -61,7 +70,6 @@ public class RoomService implements IRoomService {
             if (status) {
                 room.setStatus(roomStatus);
                 genericDao.update(room);
-                log.info(room.getStatus());
                 return room;
             } else {
                 log.info("Сейчас нельзя выполнить это действие");
@@ -83,7 +91,7 @@ public class RoomService implements IRoomService {
     @Override
     public List<Room> sortRoomforPrice() {
         List<Room> list = null;
-        EntityManager em = JPAUtility.getEntityManager();
+        EntityManager em = jpaUtility.getEntityManager();
         try {
             CriteriaBuilder cb = em.getCriteriaBuilder();
             CriteriaQuery<Room> query = cb.createQuery(Room.class);
@@ -93,8 +101,6 @@ public class RoomService implements IRoomService {
             list = em.createQuery(query).getResultList();
         } catch (Exception e) {
             log.error(e.getMessage());
-        } finally {
-            em.close();
         }
         return list;
     }
@@ -102,7 +108,7 @@ public class RoomService implements IRoomService {
     @Override
     public List<Room> sortRoomforBed() {
         List<Room> list = null;
-        EntityManager em = JPAUtility.getEntityManager();
+        EntityManager em = jpaUtility.getEntityManager();
         try {
             CriteriaBuilder cb = em.getCriteriaBuilder();
             CriteriaQuery<Room> query = cb.createQuery(Room.class);
@@ -112,8 +118,6 @@ public class RoomService implements IRoomService {
             list = em.createQuery(query).getResultList();
         } catch (Exception e) {
             log.error(e.getMessage());
-        } finally {
-            em.close();
         }
         return list;
     }
@@ -121,7 +125,7 @@ public class RoomService implements IRoomService {
     @Override
     public List<Room> sortRoomforStars() {
         List<Room> list = null;
-        EntityManager em = JPAUtility.getEntityManager();
+        EntityManager em = jpaUtility.getEntityManager();
         try {
             CriteriaBuilder cb = em.getCriteriaBuilder();
             CriteriaQuery<Room> query = cb.createQuery(Room.class);
@@ -130,8 +134,6 @@ public class RoomService implements IRoomService {
             list = em.createQuery(query).getResultList();
         } catch (Exception e) {
             log.error(e.getMessage());
-        } finally {
-            em.close();
         }
         return list;
     }
@@ -139,7 +141,7 @@ public class RoomService implements IRoomService {
     @Override
     public List<Room> sortFreeRoomforPrice() {
         List<Room> list = null;
-        EntityManager em = JPAUtility.getEntityManager();
+        EntityManager em = jpaUtility.getEntityManager();
         try {
             CriteriaBuilder cb = em.getCriteriaBuilder();
             CriteriaQuery<Room> query = cb.createQuery(Room.class);
@@ -149,8 +151,6 @@ public class RoomService implements IRoomService {
             list = em.createQuery(query).getResultList();
         } catch (Exception e) {
             log.error(e.getMessage());
-        } finally {
-            em.close();
         }
         return list;
     }
@@ -158,7 +158,7 @@ public class RoomService implements IRoomService {
     @Override
     public List<Room> sortFreeRoomBed() {
         List<Room> list = null;
-        EntityManager em = JPAUtility.getEntityManager();
+        EntityManager em = jpaUtility.getEntityManager();
         try {
             CriteriaBuilder cb = em.getCriteriaBuilder();
             CriteriaQuery<Room> query = cb.createQuery(Room.class);
@@ -168,8 +168,6 @@ public class RoomService implements IRoomService {
             list = em.createQuery(query).getResultList();
         } catch (Exception e) {
             log.error(e.getMessage());
-        } finally {
-            em.close();
         }
         return list;
     }
@@ -177,7 +175,7 @@ public class RoomService implements IRoomService {
     @Override
     public List<Room> sortFreeRoomStars() {
         List<Room> list = null;
-        EntityManager em = JPAUtility.getEntityManager();
+        EntityManager em = jpaUtility.getEntityManager();
         try {
             CriteriaBuilder cb = em.getCriteriaBuilder();
             CriteriaQuery<Room> query = cb.createQuery(Room.class);
@@ -187,8 +185,6 @@ public class RoomService implements IRoomService {
             list = em.createQuery(query).getResultList();
         } catch (Exception e) {
             log.error(e.getMessage());
-        } finally {
-            em.close();
         }
         return list;
     }
@@ -196,7 +192,7 @@ public class RoomService implements IRoomService {
     @Override
     public List<Room> getAmountFreeRoom() {
         List<Room> list = null;
-        EntityManager em = JPAUtility.getEntityManager();
+        EntityManager em = jpaUtility.getEntityManager();
         try {
             CriteriaBuilder cb = em.getCriteriaBuilder();
             CriteriaQuery<Room> query = cb.createQuery(Room.class);
@@ -206,8 +202,6 @@ public class RoomService implements IRoomService {
             list = em.createQuery(query).getResultList();
         } catch (Exception e) {
             log.error(e.getMessage());
-        } finally {
-            em.close();
         }
         return list;
     }
@@ -215,7 +209,7 @@ public class RoomService implements IRoomService {
     @Override
     public List<Room> sortRoomIsFree(Date date) throws ParseException {
         List<Room> list = null;
-        EntityManager em = JPAUtility.getEntityManager();
+        EntityManager em = jpaUtility.getEntityManager();
         try {
             CriteriaBuilder cb = em.getCriteriaBuilder();
 
@@ -238,8 +232,6 @@ public class RoomService implements IRoomService {
             list.addAll(list1);
         } catch (Exception e) {
             log.error(e.getMessage());
-        } finally {
-            em.close();
         }
         return list;
     }
@@ -247,7 +239,7 @@ public class RoomService implements IRoomService {
     @Override
     public List<Guest> getLastThreeGuest(int index) {
         List<Guest> list = new ArrayList<>();
-        EntityManager em = JPAUtility.getEntityManager();
+        EntityManager em = jpaUtility.getEntityManager();
         try {
             if (history) {
                 CriteriaBuilder cb = em.getCriteriaBuilder();
@@ -262,8 +254,6 @@ public class RoomService implements IRoomService {
             }
         } catch (Exception e) {
             log.error(e.getMessage());
-        } finally {
-            em.close();
         }
         return list;
     }

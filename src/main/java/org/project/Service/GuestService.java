@@ -11,21 +11,31 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.*;
+import javax.transaction.Transactional;
 import java.sql.Timestamp;
 import java.util.List;
 
 
 @org.springframework.stereotype.Service
+@Transactional
 public class GuestService implements IGuestService {
 
     private GenericDao <Guest> genericDao;
 
     private Logger log;
 
+    private JPAUtility jpaUtility;
+
+
     @Autowired
     public GuestService(GenericDao<Guest> genericDao) {
         this.genericDao = genericDao;
         log = LogManager.getLogger(GuestService.class);
+    }
+
+    @Autowired
+    public void setJpaUtility(JPAUtility jpaUtility) {
+        this.jpaUtility = jpaUtility;
     }
 
     @Override
@@ -77,7 +87,7 @@ public class GuestService implements IGuestService {
     public double getaBill(int guestIndex) {
         double bill = 0;
         List<Room> list = null;
-        EntityManager em = JPAUtility.getEntityManager();
+        EntityManager em = jpaUtility.getEntityManager();
         try {
             CriteriaBuilder cb = em.getCriteriaBuilder();
             CriteriaQuery<Room> query = cb.createQuery(Room.class);
@@ -88,10 +98,7 @@ public class GuestService implements IGuestService {
             list = em.createQuery(query).getResultList();
         } catch (Exception e) {
             log.error(e.getMessage());
-        } finally {
-            em.close();
         }
-
         for (Room room : list){
             bill =+ room.getBasePrice();
         }
@@ -101,7 +108,7 @@ public class GuestService implements IGuestService {
     @Override
     public List<Guest> getNumberGuest() {
         List<Guest> list = null;
-        EntityManager em = JPAUtility.getEntityManager();
+        EntityManager em = jpaUtility.getEntityManager();
         try {
             CriteriaBuilder cb = em.getCriteriaBuilder();
             CriteriaQuery<Guest> query = cb.createQuery(Guest.class);
@@ -111,8 +118,6 @@ public class GuestService implements IGuestService {
             list = em.createQuery(query).getResultList();
         } catch (Exception e) {
             log.error(e.getMessage());
-        } finally {
-            em.close();
         }
         return list;
     }
@@ -120,7 +125,7 @@ public class GuestService implements IGuestService {
     @Override
     public List<Service> sortUsingServicePrice(int guestIndex) {
         List<Service> list = null;
-        EntityManager em = JPAUtility.getEntityManager();
+        EntityManager em = jpaUtility.getEntityManager();
         try {
             CriteriaBuilder cb = em.getCriteriaBuilder();
             CriteriaQuery<Service> query = cb.createQuery(Service.class);
@@ -132,8 +137,6 @@ public class GuestService implements IGuestService {
             list = em.createQuery(query).getResultList();
         } catch (Exception e) {
             log.error(e.getMessage());
-        } finally {
-            em.close();
         }
         return list;
 
@@ -142,7 +145,7 @@ public class GuestService implements IGuestService {
     @Override
     public List<Service> sortUsingServiceTime(int guestIndex) {
         List<Service> list = null;
-        EntityManager em = JPAUtility.getEntityManager();
+        EntityManager em = jpaUtility.getEntityManager();
         try {
             CriteriaBuilder cb = em.getCriteriaBuilder();
             CriteriaQuery<Service> query = cb.createQuery(Service.class);
@@ -154,8 +157,6 @@ public class GuestService implements IGuestService {
             list = em.createQuery(query).getResultList();
         } catch (Exception e) {
             log.error(e.getMessage());
-        } finally {
-            em.close();
         }
         return list;
     }
