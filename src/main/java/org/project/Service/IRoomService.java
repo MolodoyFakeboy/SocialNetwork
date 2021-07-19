@@ -35,7 +35,5 @@ public interface IRoomService {
 
     List<Guest> getLastThreeGuest(int index);
 
-    Room getInfoRoom(int index);
-
     Room getRoom(int index);
 }

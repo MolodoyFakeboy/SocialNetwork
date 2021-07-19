@@ -1,11 +1,17 @@
 package org.project.Controller;
 
+import org.project.Exeception.IdIncorrectData;
 import org.project.Model.Service;
 import org.project.Service.IFunctionService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
-@Controller
+import java.util.List;
+import java.util.NoSuchElementException;
+
+@RestController
 public class ServiceController implements IServiceController {
 
     private IFunctionService functionService;
@@ -16,25 +22,40 @@ public class ServiceController implements IServiceController {
     }
 
     @Override
-    public Service getService(int index) {
-        return functionService.getService(index);
-
+    @GetMapping("service/{index}")
+    public Service getService(@PathVariable int index) {
+        Service service = functionService.getService(index);
+        if (service == null) {
+            throw new NoSuchElementException("There is no service with such id = " + index + " in shema hotel");
+        }
+        return service;
     }
 
     @Override
-    public Service uppdateService(Service service) {
+    @PostMapping("service")
+    public Service uppdateService(@RequestBody Service service) {
         functionService.addService(service);
         return service;
     }
 
     @Override
-    public void changeServicePrice(int indexService, double price) {
-        functionService.changeServicePrice(getService(indexService), price);
+    @PutMapping("service")
+    public Service changeServicePrice(@RequestBody Service service) {
+        functionService.addService(service);
+        return service;
     }
 
     @Override
-    public void sortServicePrice() {
-        functionService.sortServicePrice();
+    @GetMapping("services")
+    public List<Service> sortServicePrice() {
+        return functionService.sortServicePrice();
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<IdIncorrectData> handleException(NoSuchElementException exception){
+        IdIncorrectData idIncorrectData = new IdIncorrectData();
+        idIncorrectData.setInfo(exception.getMessage());
+        return new ResponseEntity<>(idIncorrectData, HttpStatus.NOT_FOUND);
     }
 
 }

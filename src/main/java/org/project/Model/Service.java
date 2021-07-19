@@ -1,5 +1,7 @@
 package org.project.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Timestamp;
@@ -26,6 +28,7 @@ public class Service implements Serializable {
     private Timestamp date;
 
     @ManyToMany(mappedBy = "services",fetch = FetchType.EAGER)
+    @JsonIgnore
     private Set<Guest> guests;
 
     public Service() {

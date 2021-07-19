@@ -1,5 +1,7 @@
 package org.project.Model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -26,6 +28,7 @@ public class Guest implements Serializable {
     private String phoneNumber;
     @Basic
     @Column(name = "LocalDate")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date localDate;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
@@ -33,12 +36,14 @@ public class Guest implements Serializable {
             joinColumns = {@JoinColumn(name = "Guest_id")},
             inverseJoinColumns = {@JoinColumn(name = "Room_roomID")}
     )
+    @JsonIgnore
     private Set<Room> rooms;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "guest_has_service",
             joinColumns = @JoinColumn(name = "Guest_id"),
             inverseJoinColumns = @JoinColumn(name = "Service_idService"))
+    @JsonIgnore
     private Set<Service> services;
 
     @ManyToMany(fetch = FetchType.EAGER)
@@ -46,6 +51,7 @@ public class Guest implements Serializable {
             joinColumns = {@JoinColumn(name = "Guest_id")},
             inverseJoinColumns = {@JoinColumn(name = "Room_roomID")}
     )
+    @JsonIgnore
     private Set<Room> lastRooms;
 
     private static final Logger log = LogManager.getLogger(Guest.class);

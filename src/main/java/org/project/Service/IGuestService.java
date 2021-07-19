@@ -7,13 +7,15 @@ import org.project.Model.Service;
 import java.util.List;
 
 public interface IGuestService {
-    Room bookRoom(Room room, Guest guest);
+    Guest addGuest(Guest guest);
+
+    Room bookRoom(int guestID,Room room);
 
     Boolean leaveHotel(Room room, int guestId);
 
     Service useService(Guest guest, Service service);
 
-    void getaBill(int guestIndex);
+    double getaBill(int guestIndex);
 
     List<Guest> getNumberGuest();
 

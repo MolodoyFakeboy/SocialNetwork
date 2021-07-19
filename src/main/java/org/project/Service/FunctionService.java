@@ -11,9 +11,11 @@ import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Stream;
 
+@Transactional
 @org.springframework.stereotype.Service
 public class FunctionService implements IFunctionService {
 
@@ -21,10 +23,18 @@ public class FunctionService implements IFunctionService {
 
     private Logger log;
 
+    private JPAUtility jpaUtility;
+
+
     @Autowired
     public FunctionService(GenericDao<Service> genericDao) {
         this.genericDao = genericDao;
         log = LogManager.getLogger(FunctionService.class);
+    }
+
+    @Autowired
+    public void setJpaUtility(JPAUtility jpaUtility) {
+        this.jpaUtility = jpaUtility;
     }
 
     @Override
@@ -44,15 +54,19 @@ public class FunctionService implements IFunctionService {
 
     @Override
     public List<Service> sortServicePrice() {
-        EntityManager em = JPAUtility.getEntityManager();
-        CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<Service> query = cb.createQuery(Service.class);
-        Root<Service> root = query.from(Service.class);
-        query.select(root);
-        query.orderBy(cb.asc(root.get("price")));
-        List<Service> list = em.createQuery(query).getResultList();
-        Stream<Service> stream = list.stream();
-        stream.forEach(log::info);
+        List<Service> list = null;
+        EntityManager em = jpaUtility.getEntityManager();
+        try {
+            CriteriaBuilder cb = em.getCriteriaBuilder();
+            CriteriaQuery<Service> query = cb.createQuery(Service.class);
+            Root<Service> root = query.from(Service.class);
+            query.select(root);
+            query.orderBy(cb.asc(root.get("price")));
+            list = em.createQuery(query).getResultList();
+            Stream<Service> stream = list.stream();
+        } catch (Exception e) {
+            log.error(e.getMessage());
+        }
         return list;
     }
 

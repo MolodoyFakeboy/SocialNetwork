@@ -1,5 +1,7 @@
 package org.project.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
@@ -35,9 +37,11 @@ public class Room implements Serializable {
     private double basePrice;
 
     @ManyToMany(mappedBy = "rooms", fetch = FetchType.EAGER)
+    @JsonIgnore
     private Set<Guest> guests;
 
     @ManyToMany(mappedBy = "lastRooms", fetch = FetchType.EAGER)
+    @JsonIgnore
     private Set<Guest> lastGuests;
 
 

@@ -1,15 +1,21 @@
 package org.project.Controller;
 
+import org.project.Exeception.IdIncorrectData;
 import org.project.Model.EnumStatus;
+import org.project.Model.Guest;
 import org.project.Model.Room;
 import org.project.Service.IRoomService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.sql.Date;
 import java.text.ParseException;
+import java.util.List;
+import java.util.NoSuchElementException;
 
-@Controller
+@RestController
 public class RoomController implements IRoomController {
 
     private IRoomService roomService;
@@ -20,78 +26,100 @@ public class RoomController implements IRoomController {
     }
 
     @Override
-    public Room getRoom(int index) {
-        return roomService.getRoom(index);
+    @GetMapping("room/{index}")
+    public Room getRoom(@PathVariable int index) {
+        Room room = roomService.getRoom(index);
+        if (room == null) {
+            throw new NoSuchElementException("There is no room with such id = " + index + " in shema hotel");
+        }
+        return room;
     }
 
     @Override
-    public void updateRoom(Room room) {
-        roomService.addNewRoom(room);
+    @PostMapping("room")
+    public Room updateRoom(@RequestBody Room room) {
+        return roomService.addNewRoom(room);
     }
 
     @Override
-    public void deleatRoom(int roomIndex) {
-        roomService.removeRoom(roomIndex);
+    @DeleteMapping("room/{id}")
+    public ResponseEntity<String> deleatRoom(@PathVariable int id) {
+        roomService.removeRoom(id);
+        return new ResponseEntity<String>("room with ID = " + id + "was deleated", HttpStatus.OK);
     }
 
     @Override
-    public void changeRoomStatus(int Index, EnumStatus status) {
-        roomService.changeRoomStatus(getRoom(Index), status);
+    @PutMapping("roomStatus/{index}/{status}")
+    public Room changeRoomStatus(@PathVariable int index, @PathVariable EnumStatus status) {
+        return roomService.changeRoomStatus(roomService.getRoom(index), status);
     }
 
     @Override
-    public void changeRoomPrice(int Index, double price) {
-        roomService.changePriceonRoom(getRoom(Index), price);
+    @PutMapping("roomPrice/{index}/{price}")
+    public Room changeRoomPrice(@PathVariable int index, @PathVariable double price) {
+        return roomService.changePriceonRoom(roomService.getRoom(index), price);
     }
 
     @Override
-    public void sortRoomforPrice() {
-        roomService.sortRoomforPrice();
+    @GetMapping("roomsPrice")
+    public List<Room> sortRoomforPrice() {
+        return roomService.sortRoomforPrice();
     }
 
     @Override
-    public void sortRoomforBed() {
-        roomService.sortRoomforBed();
+    @GetMapping("roomsBed")
+    public List<Room> sortRoomforBed() {
+        return roomService.sortRoomforBed();
     }
 
     @Override
-    public void sortRoomforStars() {
-        roomService.sortRoomforBed();
+    @GetMapping("roomsStars")
+    public List<Room> sortRoomforStars() {
+        return roomService.sortRoomforBed();
     }
 
     @Override
-    public void sortFreeRoomforPrice() {
-        roomService.sortFreeRoomforPrice();
+    @GetMapping("free/roomsPrice")
+    public List<Room> sortFreeRoomforPrice() {
+        return roomService.sortFreeRoomforPrice();
     }
 
     @Override
-    public void sortFreeRoomBed() {
-        roomService.sortFreeRoomBed();
+    @GetMapping("free/roomsBed")
+    public List<Room> sortFreeRoomBed() {
+        return roomService.sortFreeRoomBed();
     }
 
     @Override
-    public void sortFreeRoomStars() throws Exception {
-        roomService.sortFreeRoomStars();
+    @GetMapping("free/roomsStars")
+    public List<Room> sortFreeRoomStars() throws Exception {
+        return roomService.sortFreeRoomStars();
     }
 
     @Override
-    public void getAmountFreeRoom() throws Exception {
-        roomService.getAmountFreeRoom();
+    @GetMapping("free/roomsAmount")
+    public ResponseEntity<String> getAmountFreeRoom() throws Exception {
+        int amountRooms = roomService.getAmountFreeRoom().size();
+        return new ResponseEntity<String> (" Количество свободных комнат: " + amountRooms, HttpStatus.OK);
     }
 
     @Override
-    public void sortRoomIsFree(Date date) throws ParseException {
-        roomService.sortRoomIsFree(date);
+    @GetMapping("rooms/{date}")
+    public List<Room> sortRoomIsFree(@PathVariable Date date) throws ParseException {
+        return roomService.sortRoomIsFree(date);
     }
 
     @Override
-    public void getLastThreeGuest(int roomIndex) {
-        roomService.getLastThreeGuest(roomIndex);
+    @GetMapping("roomsGuest/{roomIndex}")
+    public  List<Guest> getLastThreeGuest(@PathVariable int roomIndex) {
+        return roomService.getLastThreeGuest(roomIndex);
     }
 
-    @Override
-    public void getInfoAbourRoom(int roomIndex) {
-        roomService.getInfoRoom(roomIndex);
+    @ExceptionHandler
+    public ResponseEntity<IdIncorrectData> handleException(NoSuchElementException exception){
+        IdIncorrectData idIncorrectData = new IdIncorrectData();
+        idIncorrectData.setInfo(exception.getMessage());
+        return new ResponseEntity<>(idIncorrectData, HttpStatus.NOT_FOUND);
     }
 
 }
