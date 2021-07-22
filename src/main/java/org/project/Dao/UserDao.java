@@ -1,26 +1,27 @@
 package org.project.Dao;
 
 import org.hibernate.Session;
-import org.project.Model.Service;
+
+import org.project.Model.User;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import java.util.List;
 
 @Repository
-public class ServiceDao extends HibernateAbstractDao <Service> {
+public class UserDao extends HibernateAbstractDao<User> {
 
-    public ServiceDao(){
-        setType(Service.class);
+    public UserDao() {
+        setType(User.class);
     }
 
     @Override
-    public void add(Service enity) {
+    public void add(User enity) {
         super.add(enity);
     }
 
     @Override
-    public Service update(Service enity) {
+    public User update(User enity) {
         return super.update(enity);
     }
 
@@ -30,17 +31,17 @@ public class ServiceDao extends HibernateAbstractDao <Service> {
     }
 
     @Override
-    public List<Service> findAll() {
+    public List<User> findAll() {
         return super.findAll();
     }
 
     @Override
-    public Service find(int id) {
+    public User find(int id) {
         return super.find(id);
     }
 
     @Override
-    public void setType(Class<Service> type) {
+    public void setType(Class<User> type) {
         super.setType(type);
     }
 
@@ -54,4 +55,3 @@ public class ServiceDao extends HibernateAbstractDao <Service> {
         return super.getEntityManager();
     }
 }
-

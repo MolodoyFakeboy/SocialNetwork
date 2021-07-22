@@ -4,6 +4,7 @@ import org.hibernate.Session;
 import org.project.Model.Room;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.EntityManager;
 import java.util.List;
 
 @Repository
@@ -46,5 +47,10 @@ public class RoomDao extends HibernateAbstractDao <Room> {
     @Override
     protected Session getSession() {
         return super.getSession();
+    }
+
+    @Override
+    public EntityManager getEntityManager() {
+        return super.getEntityManager();
     }
 }

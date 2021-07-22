@@ -31,7 +31,7 @@ public class Guest implements Serializable {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date localDate;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "room_has_guest",
             joinColumns = {@JoinColumn(name = "Guest_id")},
             inverseJoinColumns = {@JoinColumn(name = "Room_roomID")}

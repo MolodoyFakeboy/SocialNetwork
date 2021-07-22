@@ -6,7 +6,6 @@ import org.project.Dao.GenericDao;
 import org.project.Model.Guest;
 import org.project.Model.Room;
 import org.project.Model.Service;
-import org.project.Util.JPAUtility;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.EntityManager;
@@ -24,18 +23,10 @@ public class GuestService implements IGuestService {
 
     private Logger log;
 
-    private JPAUtility jpaUtility;
-
-
     @Autowired
     public GuestService(GenericDao<Guest> genericDao) {
         this.genericDao = genericDao;
         log = LogManager.getLogger(GuestService.class);
-    }
-
-    @Autowired
-    public void setJpaUtility(JPAUtility jpaUtility) {
-        this.jpaUtility = jpaUtility;
     }
 
     @Override
@@ -87,7 +78,7 @@ public class GuestService implements IGuestService {
     public double getaBill(int guestIndex) {
         double bill = 0;
         List<Room> list = null;
-        EntityManager em = jpaUtility.getEntityManager();
+        EntityManager em = genericDao.getEntityManager();
         try {
             CriteriaBuilder cb = em.getCriteriaBuilder();
             CriteriaQuery<Room> query = cb.createQuery(Room.class);
@@ -108,7 +99,7 @@ public class GuestService implements IGuestService {
     @Override
     public List<Guest> getNumberGuest() {
         List<Guest> list = null;
-        EntityManager em = jpaUtility.getEntityManager();
+        EntityManager em = genericDao.getEntityManager();
         try {
             CriteriaBuilder cb = em.getCriteriaBuilder();
             CriteriaQuery<Guest> query = cb.createQuery(Guest.class);
@@ -125,7 +116,7 @@ public class GuestService implements IGuestService {
     @Override
     public List<Service> sortUsingServicePrice(int guestIndex) {
         List<Service> list = null;
-        EntityManager em = jpaUtility.getEntityManager();
+        EntityManager em = genericDao.getEntityManager();
         try {
             CriteriaBuilder cb = em.getCriteriaBuilder();
             CriteriaQuery<Service> query = cb.createQuery(Service.class);
@@ -145,7 +136,7 @@ public class GuestService implements IGuestService {
     @Override
     public List<Service> sortUsingServiceTime(int guestIndex) {
         List<Service> list = null;
-        EntityManager em = jpaUtility.getEntityManager();
+        EntityManager em = genericDao.getEntityManager();
         try {
             CriteriaBuilder cb = em.getCriteriaBuilder();
             CriteriaQuery<Service> query = cb.createQuery(Service.class);
@@ -163,6 +154,6 @@ public class GuestService implements IGuestService {
 
     @Override
     public Guest getGuest(int index) {
-        return (Guest) genericDao.find(index);
+        return genericDao.find(index);
     }
 }
