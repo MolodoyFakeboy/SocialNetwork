@@ -14,7 +14,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.criteria.*;
 import javax.transaction.Transactional;
 import java.sql.Date;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -200,7 +199,7 @@ public class RoomService implements IRoomService {
     }
 
     @Override
-    public List<Room> sortRoomIsFree(Date date) throws ParseException {
+    public List<Room> sortRoomIsFree(Date date) {
         List<Room> list = null;
         EntityManager em = genericDao.getEntityManager();
         try {
