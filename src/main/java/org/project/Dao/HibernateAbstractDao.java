@@ -55,4 +55,9 @@ public abstract class HibernateAbstractDao<T extends Serializable> implements Ge
     protected Session getSession(){
         return  entityManager.unwrap(Session.class);
     }
+
+    @Override
+    public EntityManager getEntityManager() {
+        return entityManager;
+    }
 }

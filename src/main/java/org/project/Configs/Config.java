@@ -17,7 +17,7 @@ import javax.sql.DataSource;
 import java.util.Properties;
 
 
-@ComponentScan(basePackages = {"org.project.Dao","org.project.Service","org.project.Controller","org.project.Util"})
+@ComponentScan(basePackages = {"org.project.Dao","org.project.Service","org.project.Controller", "org.project.Configs"})
 @Configuration
 @PropertySource("classpath:/config.properties")
 @EnableTransactionManagement

@@ -1,5 +1,6 @@
 package org.project.Dao;
 
+import javax.persistence.EntityManager;
 import java.io.Serializable;
 import java.util.List;
 
@@ -13,4 +14,6 @@ public interface GenericDao<T> extends Serializable {
     List<T> findAll();
 
     T find(int id);
+
+    EntityManager getEntityManager();
 }
