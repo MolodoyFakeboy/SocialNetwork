@@ -5,7 +5,6 @@ import org.project.Model.Guest;
 import org.project.Model.Room;
 
 import java.sql.Date;
-import java.text.ParseException;
 import java.util.List;
 
 public interface IRoomService {
@@ -27,11 +26,11 @@ public interface IRoomService {
 
     List<Room> sortFreeRoomBed();
 
-    List<Room> sortFreeRoomStars() throws Exception;
+    List<Room> sortFreeRoomStars();
 
-    List<Room> getAmountFreeRoom() throws Exception;
+    List<Room> getAmountFreeRoom();
 
-    List<Room> sortRoomIsFree(Date date) throws ParseException;
+    List<Room> sortRoomIsFree(Date date);
 
     List<Guest> getLastThreeGuest(int index);
 
