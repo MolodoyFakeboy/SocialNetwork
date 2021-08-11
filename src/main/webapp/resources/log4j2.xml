@@ -1,7 +1,6 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <Configuration status="warn">
     <Properties>
-        <Property name="basePath">D:\\zahar_studennikov\\src\main\\java\\org\\project\\Log</Property>
+        <Property name="basePath">D:\\Project\\src\main\\java\\com\\social\\network\\Log</Property>
     </Properties>
 
     <Appenders>
@@ -19,7 +18,13 @@
         </Console>
     </Appenders>
     <Loggers>
-        <Logger name="com.howtodoinjava" level="debug" additivity="true">
+        <Logger name="com.social.network.Model" level="debug" additivity="true">
+            <appender-ref ref="fileLogger" level="debug" />
+        </Logger>
+        <Logger name="com.social.network.Services" level="debug" additivity="true">
+            <appender-ref ref="fileLogger" level="debug" />
+        </Logger>
+        <Logger name="com.social.network.Dao" level="debug" additivity="true">
             <appender-ref ref="fileLogger" level="debug" />
         </Logger>
         <Root level="debug" additivity="false">
