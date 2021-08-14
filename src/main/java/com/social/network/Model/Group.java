@@ -2,6 +2,7 @@ package com.social.network.Model;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -19,8 +20,26 @@ public class Group implements Serializable {
     @Column(name = "description")
     private String description;
 
+    @Basic
+    @Column(name = "numberSubscribers")
+    private int numberSubscribers;
+
     @ManyToMany(mappedBy = "groupList")
     private Set<User>users;
+
+    @ManyToMany(mappedBy = "groups")
+    private Set<Post> posts;
+
+    public Group() {
+    }
+
+    public Group(String name, String description) {
+        this.name = name;
+        this.description = description;
+        users = new HashSet<>();
+        posts = new HashSet<>();
+
+    }
 
     public int getIdGroup() {
         return idGroup;
@@ -53,6 +72,8 @@ public class Group implements Serializable {
     public void setUsers(Set<User> users) {
         this.users = users;
     }
+
+
 
     @Override
     public boolean equals(Object o) {

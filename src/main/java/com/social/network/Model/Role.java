@@ -1,12 +1,10 @@
 package com.social.network.Model;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
+@Table(name= "role", schema = "network social")
 public class Role implements Serializable {
 
     @Id

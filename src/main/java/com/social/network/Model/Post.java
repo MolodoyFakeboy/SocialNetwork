@@ -28,9 +28,12 @@ public class Post implements Serializable {
     )
     private Set<Image> images;
 
-    @ManyToOne
-    @JoinColumn(name = "Group_idGroup")
-    private Group group;
+    @ManyToMany
+    @JoinTable(name = "group_has_post",
+            joinColumns = {@JoinColumn(name = "Post_idPost")},
+            inverseJoinColumns = {@JoinColumn(name = "Group_idGroup")}
+    )
+    private Set<Group> groups;
 
     public Post() {
 
@@ -40,6 +43,7 @@ public class Post implements Serializable {
         this.createdDate = new Timestamp(System.currentTimeMillis());
         this.title = title;
         images = new HashSet<>();
+        groups = new HashSet<>();
     }
 
     public int getIdPost() {
@@ -66,6 +70,21 @@ public class Post implements Serializable {
         this.title = title;
     }
 
+    public Set<Image> getImages() {
+        return images;
+    }
+
+    public void setImages(Set<Image> images) {
+        this.images = images;
+    }
+
+    public Set<Group> getGroups() {
+        return groups;
+    }
+
+    public void setGroups(Set<Group> groups) {
+        this.groups = groups;
+    }
 
     @Override
     public boolean equals(Object o) {

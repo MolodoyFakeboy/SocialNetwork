@@ -2,10 +2,12 @@ package com.social.network.Dao;
 
 import com.social.network.Model.Group;
 import org.hibernate.Session;
+import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import java.util.List;
 
+@Repository
 public class GroupDao extends AbstractGenericDaoImpl<Group> {
 
     public GroupDao() {

@@ -2,10 +2,13 @@ package com.social.network.Dao;
 
 import com.social.network.Model.User;
 import org.hibernate.Session;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import java.util.List;
 
+@Repository
 public class UserDao extends AbstractGenericDaoImpl<User> {
 
     public UserDao() {

@@ -1,5 +1,7 @@
 package com.social.network.Model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Date;
@@ -29,14 +31,15 @@ public class User implements Serializable {
 
     @Basic
     @Column(name = "birthday")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date birthday;
 
     @ManyToOne
     @JoinColumn(name = "Role_idRole")
     private Role role;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "user_has_group",
+    @ManyToMany
+    @JoinTable(name = "group_has_user",
             joinColumns = {@JoinColumn(name = "User_idUser")},
             inverseJoinColumns = {@JoinColumn(name = "Group_idGroup")}
     )
@@ -44,7 +47,7 @@ public class User implements Serializable {
 
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "post_has_user",
+    @JoinTable(name = "user_has_post",
             joinColumns = {@JoinColumn(name = "User_idUser")},
             inverseJoinColumns = {@JoinColumn(name = "Post_idPost")}
     )
@@ -52,13 +55,12 @@ public class User implements Serializable {
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "friends",
-            joinColumns = {@JoinColumn(name = "User_idUser")},
-            inverseJoinColumns = {@JoinColumn(name = "User_idFriend")}
-    )
+            joinColumns = @JoinColumn(name = "User_idUser", referencedColumnName = "idUser", nullable = false),
+            inverseJoinColumns = @JoinColumn(name = "User_idFrend", referencedColumnName = "idUser", nullable = false))
     private Set<User>friends;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "chat_has_user",
+    @JoinTable(name = "user_has_chat",
             joinColumns = {@JoinColumn(name = "User_idUser")},
             inverseJoinColumns = {@JoinColumn(name = "Chat_idChat")}
     )
@@ -193,5 +195,15 @@ public class User implements Serializable {
         result = 31 * result + (email != null ? email.hashCode() : 0);
         result = 31 * result + (birthday != null ? birthday.hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                '}';
     }
 }
