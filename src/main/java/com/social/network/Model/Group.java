@@ -6,10 +6,12 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
+@Table(name = "public")
 public class Group implements Serializable {
 
     @Id
-    @Column(name = "idGroup")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "publicID")
     private int idGroup;
 
     @Basic
@@ -20,25 +22,21 @@ public class Group implements Serializable {
     @Column(name = "description")
     private String description;
 
-    @Basic
-    @Column(name = "numberSubscribers")
-    private int numberSubscribers;
-
-    @ManyToMany(mappedBy = "groupList")
+    @ManyToMany(mappedBy = "communities")
     private Set<User>users;
 
-    @ManyToMany(mappedBy = "groups")
-    private Set<Post> posts;
+    @ManyToMany(mappedBy = "listGroup")
+    private Set<Publication> publications;
 
     public Group() {
+
     }
 
     public Group(String name, String description) {
         this.name = name;
         this.description = description;
         users = new HashSet<>();
-        posts = new HashSet<>();
-
+        publications = new HashSet<>();
     }
 
     public int getIdGroup() {
@@ -73,7 +71,13 @@ public class Group implements Serializable {
         this.users = users;
     }
 
+    public Set<Publication> getPublications() {
+        return publications;
+    }
 
+    public void setPublications(Set<Publication> publications) {
+        this.publications = publications;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -96,4 +100,10 @@ public class Group implements Serializable {
         result = 31 * result + (description != null ? description.hashCode() : 0);
         return result;
     }
+
+    @Override
+    public String toString() {
+        return "Group " + getName();
+    }
 }
+

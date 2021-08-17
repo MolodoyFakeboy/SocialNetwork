@@ -34,24 +34,16 @@ public class User implements Serializable {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date birthday;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "Role_idRole")
     private Role role;
 
-    @ManyToMany
-    @JoinTable(name = "group_has_user",
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "user_has_group",
             joinColumns = {@JoinColumn(name = "User_idUser")},
             inverseJoinColumns = {@JoinColumn(name = "Group_idGroup")}
     )
-    private Set<Group>groupList;
-
-
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "user_has_post",
-            joinColumns = {@JoinColumn(name = "User_idUser")},
-            inverseJoinColumns = {@JoinColumn(name = "Post_idPost")}
-    )
-    private Set<Post>posts;
+    private Set<Group>communities;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "friends",
@@ -59,7 +51,7 @@ public class User implements Serializable {
             inverseJoinColumns = @JoinColumn(name = "User_idFrend", referencedColumnName = "idUser", nullable = false))
     private Set<User>friends;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "user_has_chat",
             joinColumns = {@JoinColumn(name = "User_idUser")},
             inverseJoinColumns = {@JoinColumn(name = "Chat_idChat")}
@@ -68,6 +60,13 @@ public class User implements Serializable {
 
     @OneToMany(mappedBy = "user")
     private Set<Message>messages;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "post_has_user",
+            joinColumns = {@JoinColumn(name = "User_idUser")},
+            inverseJoinColumns = {@JoinColumn(name = "Post_idPost")}
+    )
+    private Set<Post>posts;
 
     public User() {
 
@@ -78,10 +77,11 @@ public class User implements Serializable {
         this.password = password;
         this.email = email;
         this.birthday = birthday;
-        groupList = new HashSet<>();
+        communities = new HashSet<>();
         posts = new HashSet<>();
         friends = new HashSet<>();
         chats = new HashSet<>();
+        messages = new HashSet<>();
     }
 
     public int getId() {
@@ -132,12 +132,12 @@ public class User implements Serializable {
         this.role = role;
     }
 
-    public Set<Group> getGroupList() {
-        return groupList;
+    public Set<Group> getCommunities() {
+        return communities;
     }
 
-    public void setGroupList(Set<Group> groupList) {
-        this.groupList = groupList;
+    public void setCommunities(Set<Group> communities) {
+        this.communities = communities;
     }
 
     public Set<Post> getPosts() {

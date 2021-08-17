@@ -1,0 +1,14 @@
+[INFO ] 2021-08-17 02:35:08.529 [main] PostService - User schessor0create new post
+[INFO ] 2021-08-17 02:49:53.414 [main] PostService - User schessor0create new post
+[INFO ] 2021-08-17 02:52:12.400 [main] PostService - User schessor0create new post
+[INFO ] 2021-08-17 02:55:13.930 [main] PostService - User schessor0create new post
+[INFO ] 2021-08-17 17:01:59.594 [main] UserSerivce - Saving User mamontov.artem51@example.net
+[INFO ] 2021-08-17 18:08:08.468 [main] UserSerivce - Saving User mamontov.artem51@example.net
+[ERROR] 2021-08-17 22:34:23.664 [main] UserSerivce - Cannot find User with this name
+[INFO ] 2021-08-17 22:34:23.824 [main] UserSerivce - Saving User mamontov.artem51@example.net
+[ERROR] 2021-08-17 23:44:30.274 [main] UserSerivce - Cannot find User with this name
+[ERROR] 2021-08-17 23:44:30.404 [main] UserSerivce - Cannot find User with this name
+[ERROR] 2021-08-17 23:44:30.684 [main] UserSerivce - Cannot find User with this name
+[ERROR] 2021-08-17 23:44:30.724 [main] UserSerivce - Cannot find User with this name
+[INFO ] 2021-08-17 23:44:30.864 [main] UserSerivce - Saving User mamontov.artem51@example.net
+[ERROR] 2021-08-17 23:47:00.557 [main] UserSerivce - Cannot find User with this name

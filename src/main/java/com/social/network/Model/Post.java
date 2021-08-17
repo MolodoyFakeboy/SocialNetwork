@@ -11,6 +11,7 @@ public class Post implements Serializable {
 
     @Id
     @Column(name = "idPost")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idPost;
 
     @Basic
@@ -21,19 +22,8 @@ public class Post implements Serializable {
     @Column(name = "title")
     private String title;
 
-    @ManyToMany
-    @JoinTable(name = "image_has_post",
-            joinColumns = {@JoinColumn(name = "Post_idPost")},
-            inverseJoinColumns = {@JoinColumn(name = "Image_idImage")}
-    )
-    private Set<Image> images;
-
-    @ManyToMany
-    @JoinTable(name = "group_has_post",
-            joinColumns = {@JoinColumn(name = "Post_idPost")},
-            inverseJoinColumns = {@JoinColumn(name = "Group_idGroup")}
-    )
-    private Set<Group> groups;
+    @ManyToMany(mappedBy = "posts")
+    private Set<User>users;
 
     public Post() {
 
@@ -42,8 +32,7 @@ public class Post implements Serializable {
     public Post(String title) {
         this.createdDate = new Timestamp(System.currentTimeMillis());
         this.title = title;
-        images = new HashSet<>();
-        groups = new HashSet<>();
+        users = new HashSet<>();
     }
 
     public int getIdPost() {
@@ -70,20 +59,12 @@ public class Post implements Serializable {
         this.title = title;
     }
 
-    public Set<Image> getImages() {
-        return images;
+    public Set<User> getUsers() {
+        return users;
     }
 
-    public void setImages(Set<Image> images) {
-        this.images = images;
-    }
-
-    public Set<Group> getGroups() {
-        return groups;
-    }
-
-    public void setGroups(Set<Group> groups) {
-        this.groups = groups;
+    public void setUsers(Set<User> users) {
+        this.users = users;
     }
 
     @Override

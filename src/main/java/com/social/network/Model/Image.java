@@ -3,6 +3,7 @@ package com.social.network.Model;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -10,6 +11,7 @@ public class Image implements Serializable {
 
     @Id
     @Column(name = "idImage")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idImage;
 
     @Basic
@@ -20,9 +22,13 @@ public class Image implements Serializable {
     @Column(name = "Photo")
     private byte[] photo;
 
-    @ManyToMany(mappedBy = "images")
-    private Set<Post> posts;
 
+    @ManyToMany(mappedBy = "images")
+    private Set<Publication> publications;
+
+    public Image() {
+        publications = new HashSet<>();
+    }
 
     public int getIdImage() {
         return idImage;
@@ -48,12 +54,12 @@ public class Image implements Serializable {
         this.photo = photo;
     }
 
-    public Set<Post> getPosts() {
-        return posts;
+    public Set<Publication> getPublications() {
+        return publications;
     }
 
-    public void setPosts(Set<Post> posts) {
-        this.posts = posts;
+    public void setPublications(Set<Publication> publications) {
+        this.publications = publications;
     }
 
     @Override

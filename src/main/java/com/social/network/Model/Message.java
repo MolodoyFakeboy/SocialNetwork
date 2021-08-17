@@ -9,6 +9,7 @@ public class Message implements Serializable {
 
     @Id
     @Column(name = "idMessage")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idMessage;
 
     @Basic

@@ -1,10 +1,12 @@
 package com.social.network.Services;
 
 import com.social.network.Dao.GenericDao;
+import com.social.network.Model.Post;
 import com.social.network.Model.Role;
-import com.social.network.PayLoad.ChangePasswordRequest.ChangePasswordRequest;
-import com.social.network.PayLoad.SignUpRequest.SignupRequest;
 import com.social.network.Model.User;
+import com.social.network.PayLoad.ChangePasswordRequest.ChangePasswordRequest;
+import com.social.network.PayLoad.LoginRequest.LoginRequest;
+import com.social.network.PayLoad.SignUpRequest.SignupRequest;
 import com.social.network.exceptions.UserExistException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -15,7 +17,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.*;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 @Transactional
@@ -39,12 +43,22 @@ public class UserSerivce implements IUserService {
     }
 
     @Override
-    public User createUser(SignupRequest signupRequest){
-       User user = new User();
-       user.setUsername(signupRequest.getUserName());
-       user.setPassword(passwordEncoder.encode(signupRequest.getPassword()));
-       user.setBirthday(signupRequest.getBirthday());
-       user.setEmail(signupRequest.getEmail());
+    public User createUser(SignupRequest signupRequest) {
+        User user = new User();
+        //Для каждого нового юзера устанавливается дефолтная роль USER
+        Role role = new Role();
+        role.setIdRole(1);
+        //проверка нет ли пользователя с таким именем
+        User timeUser = findByName(signupRequest.getUserName());
+        if (timeUser != null) {
+            throw new UserExistException("The user " + user.getUsername() + " already exist. Please change your username");
+        } else {
+            user.setUsername(signupRequest.getUserName());
+            user.setPassword(passwordEncoder.encode(signupRequest.getPassword()));
+            user.setBirthday(signupRequest.getBirthday());
+            user.setEmail(signupRequest.getEmail());
+            user.setRole(role);
+        }
         try {
             log.info("Saving User {}", user.getEmail());
             userGenericDao.add(user);
@@ -85,10 +99,10 @@ public class UserSerivce implements IUserService {
     }
 
     @Override
-    public User findByNamePassword(String name, String password) {
-        User user = findByName(name);
+    public User findByNamePassword(LoginRequest loginRequest) {
+        User user = findByName(loginRequest.getUsername());
         if (user != null) {
-            if (passwordEncoder.matches(password, user.getPassword())) {
+            if (passwordEncoder.matches(loginRequest.getPassword(), user.getPassword())) {
                 return user;
             }
         }
@@ -97,7 +111,8 @@ public class UserSerivce implements IUserService {
 
     @Override
     public User changePassowrd(ChangePasswordRequest changePasswordRequest){
-         User user = findByNamePassword(changePasswordRequest.getUserName(),changePasswordRequest.getOldPassword());
+        LoginRequest loginRequest = new LoginRequest(changePasswordRequest.getUserName(),changePasswordRequest.getOldPassword());
+        User user = findByNamePassword(loginRequest);
          if(user != null){
              user.setPassword(passwordEncoder.encode(changePasswordRequest.getPassword()));
              userGenericDao.update(user);
@@ -155,8 +170,9 @@ public class UserSerivce implements IUserService {
     }
 
     @Override
-    public List<User> Subscribers(int userID){
+    public List<User> getSubscribers(int userID){
         User userTest = userGenericDao.find(userID);
+
         EntityManager em = userGenericDao.getEntityManager();
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<User> query = cb.createQuery(User.class);
@@ -165,17 +181,17 @@ public class UserSerivce implements IUserService {
         Predicate userPredicate = cb.equal(friendsJoin.get("id"), userID);
         query.select(user).where(userPredicate);
         List<User> users = em.createQuery(query).getResultList();
-        for (int i = 0; i < users.size() ; i++) {
-            if(users.get(i).getFriends().contains(userTest)){
-                users.remove(users.get(i));
-            }
-        }
+
+        users.removeIf(us -> userTest.getFriends().contains(us));
+
+        System.out.println(users.size());
         users.forEach(System.out::println);
         return users;
     }
 
-    public List<User> friend(int userID){
+    public List<User> getFriends(int userID){
         User userTest = userGenericDao.find(userID);
+
         EntityManager em = userGenericDao.getEntityManager();
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<User> query = cb.createQuery(User.class);
@@ -185,12 +201,9 @@ public class UserSerivce implements IUserService {
         query.select(user).where(userPredicate);
         List<User> users = em.createQuery(query).getResultList();
 
-        for (int i = 0; i < users.size() ; i++) {
-            if(!userTest.getFriends().contains(users.get(i))){
-                users.remove(users.get(i));
-            }
-        }
+        users.removeIf(us -> !userTest.getFriends().contains(us));
 
+        System.out.println(users.size());
         users.forEach(System.out::println);
         return users;
     }
@@ -205,6 +218,19 @@ public class UserSerivce implements IUserService {
         }
     }
 
+    @Override
+    public List<User>findallUsers(){
+        return userGenericDao.findAll();
+    }
 
+    @Override
+    public Set<Post>openNews(int userID){
+        List<User>users = getFriends(userID);
+        Set<Post> posts = new HashSet<>();
+        for(User us : users){
+            posts.addAll(us.getPosts());
+        }
+        return posts;
+    }
 
 }

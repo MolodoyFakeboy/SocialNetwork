@@ -1,11 +1,14 @@
 package com.social.network.Services;
 
+import com.social.network.Model.Post;
 import com.social.network.Model.Role;
 import com.social.network.Model.User;
 import com.social.network.PayLoad.ChangePasswordRequest.ChangePasswordRequest;
+import com.social.network.PayLoad.LoginRequest.LoginRequest;
 import com.social.network.PayLoad.SignUpRequest.SignupRequest;
 
 import java.util.List;
+import java.util.Set;
 
 public interface IUserService {
 
@@ -15,7 +18,7 @@ public interface IUserService {
 
     User findByName(String name);
 
-    User findByNamePassword(String name, String password);
+    User findByNamePassword(LoginRequest loginRequest);
 
     User changePassowrd(ChangePasswordRequest changePasswordRequest);
 
@@ -29,8 +32,12 @@ public interface IUserService {
 
     User deleteFriend(int userID, int friendID);
 
-    List<User> Subscribers(int userID);
+    List<User> getSubscribers(int userID);
 
-    List<User> friend(int userID);
+    List<User> getFriends(int userID);
+
+    List<User>findallUsers();
+
+    Set<Post> openNews(int userID);
 
 }
