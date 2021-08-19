@@ -1,12 +1,15 @@
 package com.social.network.Services;
 
 import com.social.network.Dao.GenericDao;
+import com.social.network.Dto.UserDTO;
+import com.social.network.Facade.UserFacade;
 import com.social.network.Model.Post;
 import com.social.network.Model.Role;
-import com.social.network.Model.User;
 import com.social.network.PayLoad.ChangePasswordRequest.ChangePasswordRequest;
 import com.social.network.PayLoad.LoginRequest.LoginRequest;
 import com.social.network.PayLoad.SignUpRequest.SignupRequest;
+import com.social.network.Model.User;
+import com.social.network.Services.Interfaces.IUserService;
 import com.social.network.exceptions.UserExistException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -17,9 +20,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.*;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.security.Principal;
+import java.util.*;
+import java.util.stream.Collectors;
+
 
 @Service
 @Transactional
@@ -27,9 +31,11 @@ public class UserSerivce implements IUserService {
 
     private Logger log;
 
-    private GenericDao<User>userGenericDao;
+    private GenericDao<User> userGenericDao;
 
     private PasswordEncoder passwordEncoder;
+
+    private UserFacade userFacade;
 
     @Autowired
     public UserSerivce(GenericDao<User> userGenericDao) {
@@ -40,6 +46,11 @@ public class UserSerivce implements IUserService {
     @Autowired
     public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
         this.passwordEncoder = passwordEncoder;
+    }
+
+    @Autowired
+    public void setUserFacade(UserFacade userFacade) {
+        this.userFacade = userFacade;
     }
 
     @Override
@@ -73,13 +84,173 @@ public class UserSerivce implements IUserService {
     @Override
     public void setRole(int id, Role role) {
         User user = userGenericDao.find(id);
-        if(user == null){
+        if (user == null) {
             throw new UserExistException("The user " + id + "not found");
         } else {
             user.setRole(role);
             userGenericDao.update(user);
         }
     }
+
+    @Override
+    public User setBio(int id,String bio){
+        User user = userGenericDao.find(id);
+        if (user == null) {
+            throw new UserExistException("The user " + id + "not found");
+        } else {
+            user.setBio(bio);
+            userGenericDao.update(user);
+            return user;
+        }
+    }
+
+    @Override
+    public UserDTO findUserDtoByName(String name){
+        User timeUser = null;
+        try {
+            EntityManager em = userGenericDao.getEntityManager();
+            CriteriaBuilder cb = em.getCriteriaBuilder();
+            CriteriaQuery<User> query = cb.createQuery(User.class);
+            Root<User> user = query.from(User.class);
+            Predicate userPredicate = cb.equal(user.get("username"), name);
+            query.select(user).where(userPredicate);
+            timeUser = em.createQuery(query).setMaxResults(1).getSingleResult();
+        } catch (Exception e) {
+            log.error("Cannot find User with this name");
+        }
+        return userFacade.getUserProfile(timeUser);
+    }
+
+    @Override
+    public User findByNamePassword(LoginRequest loginRequest) {
+        User user = findByName(loginRequest.getUsername());
+        if (user != null) {
+            if (passwordEncoder.matches(loginRequest.getPassword(), user.getPassword())) {
+                return user;
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public User changePassowrd(ChangePasswordRequest changePasswordRequest) {
+        LoginRequest loginRequest = new LoginRequest(changePasswordRequest.getUserName(), changePasswordRequest.getOldPassword());
+        User user = findByNamePassword(loginRequest);
+        if (user != null) {
+            user.setPassword(passwordEncoder.encode(changePasswordRequest.getPassword()));
+            userGenericDao.update(user);
+            return user;
+        } else {
+            throw new UserExistException("Invalid username or password");
+        }
+    }
+
+    @Override
+    public User changeUserName(Principal principal, String userName) {
+        User user = findByName(principal.getName());
+        User timeUser = findByName(userName);
+        if (timeUser == null) {
+            user.setUsername(userName);
+            userGenericDao.update(user);
+            return user;
+        } else {
+            throw new UserExistException("User with this name already exists");
+        }
+    }
+
+    @Override
+    public User changeEmail(Principal principal, String email) {
+        User user = findByName(principal.getName());
+        if (user != null) {
+            user.setEmail(email);
+            userGenericDao.update(user);
+            return user;
+        } else {
+            throw new UserExistException("No user with such id");
+        }
+    }
+
+    @Override
+    public User addNewfriend(Principal principal, int friendID) {
+        User user = findByName(principal.getName());
+        User friend = userGenericDao.find(friendID);
+        user.getFriends().add(friend);
+        userGenericDao.update(user);
+        return user;
+    }
+
+    @Override
+    public User deleteFriend(Principal principal, int friendID) {
+        User user = findByName(principal.getName());
+        User friend = userGenericDao.find(friendID);
+        if (user.getFriends().contains(friend)) {
+            user.getFriends().remove(friend);
+            userGenericDao.update(user);
+            return friend;
+        } else {
+            throw new UserExistException("No user with such id");
+        }
+    }
+
+    @Override
+    public List<UserDTO> getSubscribers(int userID) {
+        User userTest = userGenericDao.find(userID);
+
+        EntityManager em = userGenericDao.getEntityManager();
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<User> query = cb.createQuery(User.class);
+        Root<User> user = query.from(User.class);
+        Join<User, User> friendsJoin = user.join("friends");
+        Predicate userPredicate = cb.equal(friendsJoin.get("id"), userID);
+        query.select(user).where(userPredicate);
+        List<User> users = em.createQuery(query).getResultList();
+
+        users.removeIf(us -> userTest.getFriends().contains(us));
+
+        return users.stream().map(userFacade::getUserProfile).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<UserDTO> getFriends(int userID) {
+        User userTest = userGenericDao.find(userID);
+
+        EntityManager em = userGenericDao.getEntityManager();
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<User> query = cb.createQuery(User.class);
+        Root<User> user = query.from(User.class);
+        Join<User, User> friendsJoin = user.join("friends");
+        Predicate userPredicate = cb.equal(friendsJoin.get("id"), userID);
+        query.select(user).where(userPredicate);
+        List<User> users = em.createQuery(query).getResultList();
+
+        users.removeIf(us -> !userTest.getFriends().contains(us));
+
+        return users.stream().map(userFacade::getUserProfile).collect(Collectors.toList());
+    }
+
+    @Override
+    public UserDTO findById(int userID) {
+        User user = userGenericDao.find(userID);
+        if (user != null) {
+           UserDTO userDTO = userFacade.getUserProfile(user);
+            userDTO.setPosts(new ArrayList<>(user.getPosts()));
+            return userDTO;
+        } else {
+            throw new UserExistException("No user with such id");
+        }
+    }
+
+    @Override
+    public List<UserDTO> findallUsers() {
+        return userGenericDao.findAll().stream().map(userFacade::getUserProfile).collect(Collectors.toList());
+    }
+
+    @Override
+    public UserDTO openOwnPage(Principal principal){
+        User user = findByName(principal.getName());
+        return userFacade.getUserProfile(user);
+    }
+
 
     @Override
     public User findByName(String name) {
@@ -98,139 +269,5 @@ public class UserSerivce implements IUserService {
         return timeUser;
     }
 
-    @Override
-    public User findByNamePassword(LoginRequest loginRequest) {
-        User user = findByName(loginRequest.getUsername());
-        if (user != null) {
-            if (passwordEncoder.matches(loginRequest.getPassword(), user.getPassword())) {
-                return user;
-            }
-        }
-        return null;
-    }
-
-    @Override
-    public User changePassowrd(ChangePasswordRequest changePasswordRequest){
-        LoginRequest loginRequest = new LoginRequest(changePasswordRequest.getUserName(),changePasswordRequest.getOldPassword());
-        User user = findByNamePassword(loginRequest);
-         if(user != null){
-             user.setPassword(passwordEncoder.encode(changePasswordRequest.getPassword()));
-             userGenericDao.update(user);
-             return user;
-         } else {
-             throw new UserExistException("Invalid username or password");
-         }
-    }
-
-    @Override
-    public User changeUserName(int userID, String userName){
-        User user = userGenericDao.find(userID);
-        User timeUser = findByName(userName);
-        if(timeUser == null){
-            user.setUsername(userName);
-            userGenericDao.update(user);
-            return user;
-        }else {
-            throw new UserExistException("User with this name already exists");
-        }
-    }
-
-    @Override
-    public User changeEmail(int userID, String email){
-        User user = userGenericDao.find(userID);
-        if(user != null){
-            user.setEmail(email);
-            userGenericDao.update(user);
-            return user;
-        } else {
-            throw new UserExistException("No user with such id");
-        }
-    }
-
-    @Override
-    public User addNewfriend(int userID, int friendID){
-        User user = userGenericDao.find(userID);
-        User friend = userGenericDao.find(friendID);
-        user.getFriends().add(friend);
-        userGenericDao.update(user);
-        return friend;
-    }
-
-    @Override
-    public User deleteFriend(int userID, int friendID){
-        User user = userGenericDao.find(userID);
-        User friend = userGenericDao.find(friendID);
-        if(user.getFriends().contains(friend)){
-            user.getFriends().remove(friend);
-            userGenericDao.update(user);
-            return friend;
-        } else {
-            throw new UserExistException("No user with such id");
-        }
-    }
-
-    @Override
-    public List<User> getSubscribers(int userID){
-        User userTest = userGenericDao.find(userID);
-
-        EntityManager em = userGenericDao.getEntityManager();
-        CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<User> query = cb.createQuery(User.class);
-        Root<User> user = query.from(User.class);
-        Join<User, User> friendsJoin = user.join("friends");
-        Predicate userPredicate = cb.equal(friendsJoin.get("id"), userID);
-        query.select(user).where(userPredicate);
-        List<User> users = em.createQuery(query).getResultList();
-
-        users.removeIf(us -> userTest.getFriends().contains(us));
-
-        System.out.println(users.size());
-        users.forEach(System.out::println);
-        return users;
-    }
-
-    public List<User> getFriends(int userID){
-        User userTest = userGenericDao.find(userID);
-
-        EntityManager em = userGenericDao.getEntityManager();
-        CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<User> query = cb.createQuery(User.class);
-        Root<User> user = query.from(User.class);
-        Join<User, User> friendsJoin = user.join("friends");
-        Predicate userPredicate = cb.equal(friendsJoin.get("id"), userID);
-        query.select(user).where(userPredicate);
-        List<User> users = em.createQuery(query).getResultList();
-
-        users.removeIf(us -> !userTest.getFriends().contains(us));
-
-        System.out.println(users.size());
-        users.forEach(System.out::println);
-        return users;
-    }
-
-    @Override
-    public User findById(int userID) {
-        User user = userGenericDao.find(userID);
-        if(user != null){
-            return user;
-        } else {
-            throw new UserExistException("No user with such id");
-        }
-    }
-
-    @Override
-    public List<User>findallUsers(){
-        return userGenericDao.findAll();
-    }
-
-    @Override
-    public Set<Post>openNews(int userID){
-        List<User>users = getFriends(userID);
-        Set<Post> posts = new HashSet<>();
-        for(User us : users){
-            posts.addAll(us.getPosts());
-        }
-        return posts;
-    }
 
 }

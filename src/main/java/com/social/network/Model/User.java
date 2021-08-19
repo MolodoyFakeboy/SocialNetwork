@@ -1,10 +1,13 @@
 package com.social.network.Model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Date;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -30,18 +33,22 @@ public class User implements Serializable {
     private String email;
 
     @Basic
+    @Column(name = "bio")
+    private String bio;
+
+    @Basic
     @Column(name = "birthday")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date birthday;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "Role_idRole")
     private Role role;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "user_has_group",
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "user_has_public",
             joinColumns = {@JoinColumn(name = "User_idUser")},
-            inverseJoinColumns = {@JoinColumn(name = "Group_idGroup")}
+            inverseJoinColumns = {@JoinColumn(name = "Public_publicID")}
     )
     private Set<Group>communities;
 
@@ -61,11 +68,7 @@ public class User implements Serializable {
     @OneToMany(mappedBy = "user")
     private Set<Message>messages;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "post_has_user",
-            joinColumns = {@JoinColumn(name = "User_idUser")},
-            inverseJoinColumns = {@JoinColumn(name = "Post_idPost")}
-    )
+    @OneToMany(mappedBy = "user")
     private Set<Post>posts;
 
     public User() {
@@ -172,6 +175,14 @@ public class User implements Serializable {
         this.messages = messages;
     }
 
+    public String getBio() {
+        return bio;
+    }
+
+    public void setBio(String bio) {
+        this.bio = bio;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -206,4 +217,6 @@ public class User implements Serializable {
                 ", email='" + email + '\'' +
                 '}';
     }
+
+
 }

@@ -1,26 +1,22 @@
 package com.social.network.Services;
 
-import com.social.network.Configs.Config;
+import com.social.network.Config.TestConfig;
+import com.social.network.Model.Image;
+import com.social.network.Services.Interfaces.InterfaceImageService;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.web.multipart.MultipartFile;
 
-import javax.imageio.ImageIO;
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
-
-import static org.junit.jupiter.api.Assertions.*;
+import java.util.List;
 
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = Config.class)
+@ContextConfiguration(classes = TestConfig.class)
 class ImageServiceTest {
 
     private InterfaceImageService imageService;
@@ -34,6 +30,15 @@ class ImageServiceTest {
     void setImagetoPublication() throws IOException {
         FileInputStream inputFile = new FileInputStream( "D:/Project/src/main/webapp/resources/otzyvy.png");
         MockMultipartFile mockMultipartFile = new MockMultipartFile("file", "otzyvy", "png", inputFile);
-        imageService.setImagetoPublication(mockMultipartFile,1);
+        Image image = imageService.setImagetoPublication(mockMultipartFile,1);
+
+        Assertions.assertNotNull(image.getPublications());
+    }
+
+    @Test
+    void getImageToPost(){
+        List<Image>images = imageService.getImageToPost(1);
+
+        Assertions.assertNotNull(images);
     }
 }

@@ -3,6 +3,8 @@ package com.social.network.Services;
 import com.social.network.Dao.GenericDao;
 import com.social.network.Model.Image;
 import com.social.network.Model.Publication;
+import com.social.network.Services.Interfaces.InterfaceImageService;
+import com.social.network.exceptions.ImageNotFoundException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,19 +12,22 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.persistence.EntityManager;
+import javax.persistence.criteria.*;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.List;
 import java.util.zip.DataFormatException;
 import java.util.zip.Deflater;
 import java.util.zip.Inflater;
 
 @Service
 @Transactional
-public class ImageService implements InterfaceImageService{
+public class ImageService implements InterfaceImageService {
 
-    private GenericDao<Image>imageDao;
+    private GenericDao<Image> imageDao;
 
-    private GenericDao<Publication>publicationDao;
+    private GenericDao<Publication> publicationDao;
 
     private Logger log;
 
@@ -35,15 +40,42 @@ public class ImageService implements InterfaceImageService{
 
     @Override
     public Image setImagetoPublication(MultipartFile file, int postID) throws IOException {
-      Publication publication = publicationDao.find(postID);
-      Image image = new Image();
-      image.getPublications().add(publication);
-      image.setPhoto(compressBytes(file.getBytes()));
-      image.setName(file.getName());
-      publication.getImages().add(image);
-      log.info("Uploading image to Publication {}", publication.getId());
-      imageDao.add(image);
-      return image;
+        Publication publication = publicationDao.find(postID);
+        Image image = new Image();
+        image.setPhoto(compressBytes(file.getBytes()));
+        image.setName(file.getName());
+        publication.getImages().add(image);
+        log.info("Uploading image to Publication {}", publication.getId());
+        imageDao.add(image);
+        return image;
+    }
+
+    @Override
+    public List<Image> getImageToPost(int postId){
+        List<Image>images = null;
+        try {
+            EntityManager em = imageDao.getEntityManager();
+            CriteriaBuilder cb = em.getCriteriaBuilder();
+            CriteriaQuery<Image> query = cb.createQuery(Image.class);
+            Root<Image> imageRoot = query.from(Image.class);
+            Join<Image, Publication> imagePublicationJoin = imageRoot.join("publications");
+            Predicate userPredicate = cb.equal(imagePublicationJoin.get("id"), postId);
+            query.select(imageRoot).where(userPredicate);
+            images = em.createQuery(query).getResultList();
+        } catch (Exception e) {
+            log.error(e.getMessage());
+        }
+        return images;
+    }
+
+    @Override
+    public Image findImageByID(int imageID) {
+        Image image = imageDao.find(imageID);
+        if (image != null) {
+            return image;
+        } else {
+            throw new ImageNotFoundException("No Image with Such ID: " + imageID);
+        }
     }
 
     //cжатие фотки
@@ -83,4 +115,6 @@ public class ImageService implements InterfaceImageService{
         }
         return outputStream.toByteArray();
     }
+
+
 }

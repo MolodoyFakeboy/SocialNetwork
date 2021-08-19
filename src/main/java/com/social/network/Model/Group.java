@@ -1,5 +1,7 @@
 package com.social.network.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
@@ -19,13 +21,19 @@ public class Group implements Serializable {
     private String name;
 
     @Basic
+    @Column(name = "number_subscribers")
+    private int subscribers;
+
+    @Basic
     @Column(name = "description")
     private String description;
 
     @ManyToMany(mappedBy = "communities")
+    @JsonIgnore
     private Set<User>users;
 
     @ManyToMany(mappedBy = "listGroup")
+    @JsonIgnore
     private Set<Publication> publications;
 
     public Group() {
@@ -35,8 +43,8 @@ public class Group implements Serializable {
     public Group(String name, String description) {
         this.name = name;
         this.description = description;
-        users = new HashSet<>();
-        publications = new HashSet<>();
+        this.users = new HashSet<>();
+        this.publications = new HashSet<>();
     }
 
     public int getIdGroup() {
@@ -77,6 +85,14 @@ public class Group implements Serializable {
 
     public void setPublications(Set<Publication> publications) {
         this.publications = publications;
+    }
+
+    public int getSubscribers() {
+        return subscribers;
+    }
+
+    public void setSubscribers(int subscribers) {
+        this.subscribers = subscribers;
     }
 
     @Override

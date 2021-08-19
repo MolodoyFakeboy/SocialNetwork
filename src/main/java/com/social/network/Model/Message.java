@@ -97,4 +97,9 @@ public class Message implements Serializable {
         result = 31 * result + (sendTime != null ? sendTime.hashCode() : 0);
         return result;
     }
+
+    @Override
+    public String toString() {
+        return getSendText() + getSendTime();
+    }
 }

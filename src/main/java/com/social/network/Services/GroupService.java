@@ -1,8 +1,14 @@
 package com.social.network.Services;
 
 import com.social.network.Dao.GenericDao;
+import com.social.network.Dto.PostDTO;
+import com.social.network.Dto.PublicationDTO;
+import com.social.network.Facade.PostFacade;
+import com.social.network.Facade.PublicationFacade;
 import com.social.network.Model.Group;
+import com.social.network.Model.Publication;
 import com.social.network.Model.User;
+import com.social.network.Services.Interfaces.IGroupService;
 import com.social.network.exceptions.GroupNotFoundException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -11,12 +17,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
+import javax.persistence.criteria.*;
 import java.security.Principal;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
+
 
 @Transactional
 @Service
@@ -24,7 +30,9 @@ public class GroupService implements IGroupService {
 
     private GenericDao<Group> groupGenericDao;
 
-    private Logger log;
+    private final Logger log;
+
+    private PublicationFacade publicationFacade;
 
     @Autowired
     public GroupService(GenericDao<Group> groupGenericDao) {
@@ -32,8 +40,16 @@ public class GroupService implements IGroupService {
         log = LogManager.getLogger(GroupService.class);
     }
 
+    @Autowired
+    public void setPublicationFacade(PublicationFacade publicationFacade) {
+        this.publicationFacade = publicationFacade;
+    }
+
     @Override
-    public Group createNewGroup(Group group) {
+    public Group createNewGroup(Group group,Principal principal) {
+        User user = findByPrincipal(principal.getName());
+        user.getCommunities().add(group);
+        group.setSubscribers(1);
         groupGenericDao.add(group);
         return group;
     }
@@ -41,7 +57,7 @@ public class GroupService implements IGroupService {
     @Override
     public Group findGroupByID(int groupID) {
         Group group = groupGenericDao.find(groupID);
-        if (group != null){
+        if (group != null) {
             return group;
         } else {
             throw new GroupNotFoundException("No Group with such " + groupID);
@@ -58,21 +74,11 @@ public class GroupService implements IGroupService {
         Group group = groupGenericDao.find(groupID);
         User user = findByPrincipal(principal.getName());
         user.getCommunities().add(group);
+        group.setSubscribers(group.getUsers().size() + 1);
         groupGenericDao.update(group);
         return group;
     }
 
-    @Override
-    public boolean deleateGroup(int groupID){
-       Group group = groupGenericDao.find(groupID);
-       if(group != null){
-           log.info( group.getName() + " was deleted ");
-           groupGenericDao.delete(groupID);
-           return true;
-       } else {
-          throw new GroupNotFoundException("no Group with such ID" + groupID);
-       }
-   }
 
 
     private User findByPrincipal(String name) {
@@ -92,7 +98,7 @@ public class GroupService implements IGroupService {
     }
 
     @Override
-    public List<Group> findGroupByName(String name){
+    public List<Group> findGroupByName(String name) {
         List<Group> groups = null;
         try {
             EntityManager em = groupGenericDao.getEntityManager();
@@ -103,8 +109,34 @@ public class GroupService implements IGroupService {
             query.select(groupRoot).where(userPredicate);
             groups = em.createQuery(query).getResultList();
         } catch (Exception e) {
-            log.error("Cannot find User with this name");
+            log.error("Cannot find Group with this name");
         }
         return groups;
     }
+
+    @Override
+    public List<PublicationDTO> getAllPostInGroup(int groupID) {
+        Group group = findGroupByID(groupID);
+        return group.getPublications().stream().map(publicationFacade::publicationToDto)
+                .sorted(Comparator.comparing(PublicationDTO::getCreatedTime))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public Group updateGroup(Group group){
+        return groupGenericDao.update(group);
+    }
+
+    private List<User> findSubcribersOnGroup(int groupID){
+        EntityManager em = groupGenericDao.getEntityManager();
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<User> query = cb.createQuery(User.class);
+        Root<User> userRoot = query.from(User.class);
+        Join<Group,User> groupUserJoin = userRoot.join("communities");
+        Predicate userPredicate = cb.equal(groupUserJoin.get("idGroup"), groupID);
+        query.select(userRoot).where(userPredicate);
+        List<User> users = em.createQuery(query).getResultList();
+        return users;
+    }
+
 }

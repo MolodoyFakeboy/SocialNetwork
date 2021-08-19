@@ -1,17 +1,21 @@
 package com.social.network.Services;
 
-import com.social.network.Configs.Config;
+import com.social.network.Config.TestConfig;
+import com.social.network.Dto.PostDTO;
 import com.social.network.Model.Post;
+import com.social.network.Services.Interfaces.IPostService;
+import com.social.network.TestModel.TestPrincipal;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import static org.junit.jupiter.api.Assertions.*;
+import java.util.List;
 
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = Config.class)
+@ContextConfiguration(classes = TestConfig.class)
 class PostServiceTest {
 
     private IPostService postService;
@@ -23,7 +27,36 @@ class PostServiceTest {
 
     @Test
     void createNewPostFromUser() {
-//        Post post = new Post("ывфвфвыfxf");
-//        postService.createNewPostFromUser(post,1);
+        Post post = new Post("Я начал тестировать свой проект!");
+        TestPrincipal testPrincipal = new TestPrincipal();
+        PostDTO postDTO = postService.createNewPostFromUser(post,testPrincipal);
+
+        Assertions.assertEquals(post.getUser().getUsername(),postDTO.getUsername());
+    }
+
+
+    @Test
+    void deleatePost() {
+        TestPrincipal testPrincipal = new TestPrincipal();
+        int postID = 51; // Брать данные из бд
+        boolean result = postService.deleatePost(postID,testPrincipal);
+
+        Assertions.assertTrue(result);
+    }
+
+    @Test
+    void findPostByID() {
+        PostDTO postDTO = postService.findPostByID(50);
+
+        Assertions.assertNotNull(postDTO);
+    }
+
+    @Test
+    void openNews() {
+        TestPrincipal testPrincipal = new TestPrincipal();
+        List<PostDTO> posts = postService.openNews(testPrincipal);
+        posts.forEach(System.out::println);
+
+        Assertions.assertNotNull(posts);
     }
 }

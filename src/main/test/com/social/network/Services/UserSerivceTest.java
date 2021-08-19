@@ -1,50 +1,82 @@
 package com.social.network.Services;
 
+import com.social.network.Config.TestConfig;
 import com.social.network.Configs.Config;
+import com.social.network.Dao.UserDao;
+import com.social.network.Dto.UserDTO;
+import com.social.network.Facade.UserFacade;
 import com.social.network.Model.User;
 import com.social.network.PayLoad.ChangePasswordRequest.ChangePasswordRequest;
 import com.social.network.PayLoad.LoginRequest.LoginRequest;
 import com.social.network.PayLoad.SignUpRequest.SignupRequest;
+import com.social.network.Services.Interfaces.IUserService;
+import com.social.network.TestModel.TestPrincipal;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.sql.Date;
 import java.util.List;
 
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = Config.class)
+@ContextConfiguration(classes = TestConfig.class)
 class UserSerivceTest {
 
-    private IUserService userService;
+    @Mock
+    private UserDao userDao;
+
+    private UserSerivce userService;
+
+    @PersistenceContext
+    private EntityManager entityManager;
 
     @Autowired
-    public UserSerivceTest(IUserService userService) {
-        this.userService = userService;
+    private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private UserFacade userFacade;
+
+    @BeforeEach
+    public void setUp() {
+        MockitoAnnotations.openMocks(this);
+        userService = new UserSerivce(userDao);
+        userService.setPasswordEncoder(passwordEncoder);
+        userService.setUserFacade(userFacade);
+        Mockito.when(userDao.getEntityManager()).thenReturn(entityManager);
     }
 
     @Test
     void createUser() {
-        SignupRequest signupRequest = new SignupRequest("mamontov.SKAM", "cDeqwt2Ygd", "mamontov.artem51@example.net", Date.valueOf("1945-10-01"));
+        SignupRequest signupRequest = new SignupRequest("mamontov.Skam", "cDeqwt2Ygd", "mamontov.artem51@example.net", Date.valueOf("1945-10-01"));
         User user = userService.createUser(signupRequest);
+        Mockito.verify(userDao).add(user);
+        Mockito.verify(userDao, Mockito.times(1)).add(user);
 
         Assertions.assertEquals(signupRequest.getUserName(),user.getUsername());
     }
 
     @Test
     void findByName() {
-      String username = "mamontov.SKAM";
+      String username = "schessor0";
       User user = userService.findByName(username);
 
       Assertions.assertEquals(username,user.getUsername());
     }
 
+
     @Test
     void findByNamePassword() {
-       LoginRequest loginRequest = new LoginRequest("mamontov.SKAM","cDeqwt2Ygd");
+       LoginRequest loginRequest = new LoginRequest("mamontov.ur","cDeqwt2Ygd");
        User user = userService.findByNamePassword(loginRequest);
 
        Assertions.assertEquals(loginRequest.getUsername(),user.getUsername());
@@ -52,72 +84,75 @@ class UserSerivceTest {
 
     @Test
     void changePassowrd() {
-        ChangePasswordRequest changePasswordRequest = new ChangePasswordRequest("mamontov.SKAM","cDeqwt2Ygd","Skamer228");
+        ChangePasswordRequest changePasswordRequest = new ChangePasswordRequest("mamontov.ur","cDeqwt2Ygd","Skamer228");
+        User user = userService.changePassowrd(changePasswordRequest);
+        Mockito.verify(userDao).update(user);
+        Mockito.verify(userDao, Mockito.times(1)).update(user);
 
-        userService.changePassowrd(changePasswordRequest);
+        Assertions.assertNotEquals(changePasswordRequest.getOldPassword(),user.getPassword());
     }
 
     @Test
     void changeUserName() {
-        int userID = 53;
-        User user = userService.findById(userID);
-        User user1 = userService.changeUserName(userID,"Main.Skamer");
-
-        Assertions.assertNotEquals(user.getUsername(),user1.getUsername());
+        TestPrincipal testPrincipal = new TestPrincipal();
+        User user = userService.changeUserName(testPrincipal,"name");
+        Mockito.when(userDao.update(user)).thenReturn(user);
+        Mockito.verify(userDao).update(user);
+        Mockito.verify(userDao, Mockito.times(1)).update(user);
     }
 
     @Test
     void changeEmail() {
-        int userID = 53;
-        User user = userService.findById(userID);
-        User user1 = userService.changeEmail(userID,"mamontov.artem51@gmail.com");
+        TestPrincipal testPrincipal = new TestPrincipal();
+        User user = userService.changeEmail(testPrincipal,"mamontov.artem51@gmail.com");
+        Mockito.when(userDao.update(user)).thenReturn(user);
+        Mockito.verify(userDao).update(user);
+        Mockito.verify(userDao, Mockito.times(1)).update(user);
 
-        Assertions.assertNotEquals(user.getEmail(),user1.getEmail());
+        Assertions.assertEquals(testPrincipal.getName(),user.getUsername());
     }
 
     @Test
     void addNewfriend() {
-      int userID = 53;
-      int friendID = 2;
-      userService.addNewfriend(userID,friendID);
-      User user = userService.findById(userID);
-
-      Assertions.assertNotNull(user.getFriends());
-    }
-
-    @Test
-    void deleteFriend() {
-        int userID = 53;
+        TestPrincipal testPrincipal = new TestPrincipal();
         int friendID = 2;
-        userService.deleteFriend(userID,friendID);
-        User user = userService.findById(userID);
+        User user = userService.addNewfriend(testPrincipal, friendID);
+        Mockito.when(userDao.update(user)).thenReturn(user);
+        Mockito.verify(userDao).update(user);
+        Mockito.verify(userDao, Mockito.times(1)).update(user);
 
-       Assertions.assertNull(user.getFriends());
-
+        Assertions.assertNotNull(user.getFriends());
     }
 
     @Test
-    void getSubscribers() {
+    void getSubscribers(@Autowired IUserService userService) {
        int userID = 2;
-       List<User>users = userService.getSubscribers(2);
-
+       List<UserDTO> users = userService.getSubscribers(userID);
+       users.forEach(System.out::println);
         Assertions.assertNotNull(users);
     }
 
     @Test
-    void getFriends() {
+    void getFriends(@Autowired IUserService userService) {
         int userID = 2;
-        List<User>users = userService.getFriends(2);
+        List<UserDTO> users = userService.getFriends(userID);
+        users.forEach(System.out::println);
 
         Assertions.assertNotNull(users);
     }
 
-
     @Test
-    void findallUsers() {
-      List<User>users = userService.findallUsers();
+    void findallUsers(@Autowired IUserService userService) {
+        List<UserDTO> users = userService.findallUsers();
 
-      Assertions.assertTrue(users.size() > 50);
+        Assertions.assertTrue(users.size() > 50);
     }
 
+    @Test
+    void openOwnPage() {
+        TestPrincipal testPrincipal = new TestPrincipal();
+        UserDTO userDTO = userService.openOwnPage(testPrincipal);
+
+        Assertions.assertEquals(testPrincipal.getName(),userDTO.getUsername());
+    }
 }

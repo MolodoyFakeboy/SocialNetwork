@@ -1,8 +1,11 @@
 package com.social.network.Services;
 
 import com.social.network.Dao.GenericDao;
+import com.social.network.Dto.PublicationDTO;
+import com.social.network.Facade.PublicationFacade;
 import com.social.network.Model.Group;
 import com.social.network.Model.Publication;
+import com.social.network.Services.Interfaces.IPublicationService;
 import com.social.network.exceptions.PostNotFoundException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -20,6 +23,8 @@ public class PublicationService implements IPublicationService {
 
     private GenericDao<Group> groupGenericDao;
 
+    private PublicationFacade publicationFacade;
+
     @Autowired
     public PublicationService(GenericDao<Publication> publicationGenericDao, GenericDao<Group> groupGenericDao) {
         this.publicationGenericDao = publicationGenericDao;
@@ -27,26 +32,41 @@ public class PublicationService implements IPublicationService {
         this.log = LogManager.getLogger(PublicationService.class);
     }
 
+    @Autowired
+    public void setPublicationFacade(PublicationFacade publicationFacade) {
+        this.publicationFacade = publicationFacade;
+    }
+
     @Override
-    public Publication createNewPublicationGroup(Publication publication,int groupID) {
-        Group group = new Group();
-        group.setIdGroup(groupID);
+    public Publication createNewPublicationGroup(Publication publication, int groupID) {
+        Group group = groupGenericDao.find(groupID);
         publication.getListGroup().add(group);
         publicationGenericDao.add(publication);
         return publication;
     }
 
     @Override
-    public boolean deleatePublication(int postID){
+    public boolean deleatePublication(int postID) {
         Publication publication = publicationGenericDao.find(postID);
-        if(publication != null){
-           publication.getImages().clear();
-           publicationGenericDao.delete(postID);
-           log.info("Publication with id: " + postID + "was deleted");
-           return true;
+        if (publication != null) {
+            publication.getImages().clear();
+            publicationGenericDao.delete(postID);
+            log.info("Publication with id: " + postID + "was deleted");
+            return true;
         } else {
             throw new PostNotFoundException("Publication with id: " + postID + "not exist");
         }
+    }
+
+    @Override
+    public PublicationDTO findById(int id) {
+        Publication publication = publicationGenericDao.find(id);
+        if (publication != null) {
+            return publicationFacade.publicationToDto(publication);
+        } else {
+            throw new PostNotFoundException("Publication with id: " + id + "not exist");
+        }
+
     }
 
 }

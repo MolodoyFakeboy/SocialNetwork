@@ -1,3 +1,7 @@
-[INFO ] 2021-08-18 00:31:42.072 [main] ImageService - Uploading image to Publication 1
-[INFO ] 2021-08-18 00:37:56.804 [main] ImageService - Uploading image to Publication 1
-[INFO ] 2021-08-18 00:39:09.872 [main] ImageService - Uploading image to Publication 1
+[INFO ] 2021-08-20 00:13:44.814 [main] PublicationService - Publication with id: 1was deleted
+[INFO ] 2021-08-20 00:22:20.234 [main] PostService - User schessor0create new post
+[ERROR] 2021-08-20 00:58:34.158 [main] MessageService - Cannot find User with this name
+[INFO ] 2021-08-20 01:01:15.653 [main] ImageService - Uploading image to Publication 1
+[INFO ] 2021-08-20 02:06:13.446 [main] GroupService - Orel was deleted 
+[INFO ] 2021-08-20 02:09:52.313 [main] GroupService - Orel was deleted 
+[INFO ] 2021-08-20 02:14:47.385 [main] GroupService - Orel was deleted 

@@ -18,7 +18,8 @@ import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 import java.util.Properties;
 
-@ComponentScan(basePackages = {"com.social.network.Dao","com.social.network.Services","com.social.network.Controller", "com.social.network.Configs"})
+@ComponentScan(basePackages = {"com.social.network.Dao","com.social.network.Services","com.social.network.Controller",
+        "com.social.network.Facade"})
 @Configuration
 @PropertySource("classpath:/config.properties")
 @EnableTransactionManagement

@@ -22,8 +22,9 @@ public class Post implements Serializable {
     @Column(name = "title")
     private String title;
 
-    @ManyToMany(mappedBy = "posts")
-    private Set<User>users;
+    @ManyToOne
+    @JoinColumn(name = "User_idUser")
+    private User user;
 
     public Post() {
 
@@ -32,7 +33,6 @@ public class Post implements Serializable {
     public Post(String title) {
         this.createdDate = new Timestamp(System.currentTimeMillis());
         this.title = title;
-        users = new HashSet<>();
     }
 
     public int getIdPost() {
@@ -59,12 +59,12 @@ public class Post implements Serializable {
         this.title = title;
     }
 
-    public Set<User> getUsers() {
-        return users;
+    public User getUser() {
+        return user;
     }
 
-    public void setUsers(Set<User> users) {
-        this.users = users;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @Override

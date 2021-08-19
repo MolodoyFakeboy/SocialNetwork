@@ -1,5 +1,7 @@
 package com.social.network.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Arrays;
@@ -22,8 +24,8 @@ public class Image implements Serializable {
     @Column(name = "Photo")
     private byte[] photo;
 
-
     @ManyToMany(mappedBy = "images")
+    @JsonIgnore
     private Set<Publication> publications;
 
     public Image() {

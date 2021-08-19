@@ -1,0 +1,7 @@
+[INFO ] 2021-08-19 22:10:58.422 [main] ImageService - Chat was created with schessor0tgrinin1d
+[ERROR] 2021-08-19 23:12:22.728 [main] UserSerivce - Cannot find User with this name
+[INFO ] 2021-08-19 23:12:22.868 [main] UserSerivce - Saving User mamontov.artem51@example.net
+[ERROR] 2021-08-19 23:16:37.129 [main] UserSerivce - Cannot find User with this name
+[INFO ] 2021-08-19 23:16:37.249 [main] UserSerivce - Saving User mamontov.artem51@example.net
+[ERROR] 2021-08-19 23:20:43.742 [main] UserSerivce - Cannot find User with this name
+[INFO ] 2021-08-19 23:20:43.862 [main] UserSerivce - Saving User mamontov.artem51@example.net
