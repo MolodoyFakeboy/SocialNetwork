@@ -1,6 +1,7 @@
 package com.social.network.Services.Interfaces;
 
 import com.social.network.Dto.UserDTO;
+import com.social.network.Model.Group;
 import com.social.network.Model.Post;
 import com.social.network.Model.Role;
 import com.social.network.Model.User;
@@ -45,5 +46,9 @@ public interface IUserService {
     List<UserDTO>findallUsers();
 
     User findByName(String name);
+
+    User updatePassword(int userID);
+
+    List<Group> getListGroup(Principal principal);
 
 }

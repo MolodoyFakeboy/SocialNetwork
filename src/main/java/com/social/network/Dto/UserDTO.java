@@ -13,7 +13,7 @@ public class UserDTO {
 
     private Date birthday;
 
-    private List<Post> posts;
+    private List<PostDTO> posts;
 
     public String getUsername() {
         return username;
@@ -39,11 +39,11 @@ public class UserDTO {
         this.birthday = birthday;
     }
 
-    public List<Post> getPosts() {
+    public List<PostDTO> getPosts() {
         return posts;
     }
 
-    public void setPosts(List<Post> posts) {
+    public void setPosts(List<PostDTO> posts) {
         this.posts = posts;
     }
 

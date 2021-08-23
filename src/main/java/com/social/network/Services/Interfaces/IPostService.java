@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface IPostService {
 
-    PostDTO createNewPostFromUser(Post post, Principal principal);
+    PostDTO createNewPostFromUser(PostDTO post, Principal principal);
 
     boolean deleatePost(int postID,Principal principal);
 

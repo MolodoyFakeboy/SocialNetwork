@@ -1,6 +1,7 @@
 package com.social.network.Services;
 
 import com.social.network.Dao.GenericDao;
+import com.social.network.Dto.MessageDTO;
 import com.social.network.Model.Chat;
 import com.social.network.Model.Message;
 import com.social.network.Model.User;
@@ -36,9 +37,10 @@ public class MessageService implements IMessageService {
     }
 
     @Override
-    public Message writeMessageToUser(Message message, Principal principal, int chatID) {
+    public Message writeMessageToUser(MessageDTO messageFromRequest, Principal principal, int chatID) {
         User user = findByPrincipal(principal.getName());
         Chat chat = chatDao.find(chatID);
+        Message message = new Message(messageFromRequest.getSendText());
         message.setUser(user);
         message.setChat(chat);
         messageGenericDao.add(message);

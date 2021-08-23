@@ -36,7 +36,8 @@ class ChatServiceTest {
 
     @Test
     void getMessagesInChat() {
-      List<MessageDTO> messages = iChatSerivce.getMessagesInChat(1);
+        TestPrincipal testPrincipal = new TestPrincipal();
+       List<MessageDTO> messages = iChatSerivce.getMessagesInChat(1,testPrincipal);
       Assertions.assertNotNull(messages);
 
       messages.forEach(System.out::println);
@@ -44,8 +45,9 @@ class ChatServiceTest {
 
    @Test
     void getAllChatFromUser() {
-       List<Chat>chats = iChatSerivce.getAllUserChats(50);
-
+       TestPrincipal testPrincipal = new TestPrincipal();
+       List<Chat>chats = iChatSerivce.getAllUserChats(testPrincipal);
+       chats.forEach(System.out::println);
        Assertions.assertNotNull(chats);
    }
 }

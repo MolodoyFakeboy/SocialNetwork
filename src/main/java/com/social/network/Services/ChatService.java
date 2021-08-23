@@ -79,15 +79,24 @@ public class ChatService implements IChatSerivce {
     }
 
     @Override
-    public List<MessageDTO> getMessagesInChat(int chatId) {
+    public List<MessageDTO> getMessagesInChat(int chatId, Principal principal) {
         Chat chat = chatDao.find(chatId);
-        List<Message> messages = new ArrayList<>(chat.getMessages());
-        return messages.stream().map(messageFacade::messageToDto).sorted(Comparator.comparing(MessageDTO::getSendTime))
-                .collect(Collectors.toList());
+        if (chat != null) {
+            if (chat.getUsers().contains(findByPrincipal(principal.getName()))) {
+                List<Message> messages = new ArrayList<>(chat.getMessages());
+                return messages.stream().map(messageFacade::messageToDto).
+                        sorted(Comparator.comparing(MessageDTO::getSendTime))
+                        .collect(Collectors.toList());
+            } else {
+                return null;
+            }
+        } else {
+            return null;
+        }
     }
 
     @Override
-    public List<Chat> getAllUserChats(int userID) {
+    public List<Chat> getAllUserChats(Principal principal) {
         List<Chat> userChats = null;
         try {
             EntityManager em = chatDao.getEntityManager();
@@ -95,7 +104,7 @@ public class ChatService implements IChatSerivce {
             CriteriaQuery<Chat> query = cb.createQuery(Chat.class);
             Root<Chat> chats = query.from(Chat.class);
             Join<User, Chat> chatsJoin = chats.join("users");
-            Predicate userPredicate = cb.equal(chatsJoin.get("id"), userID);
+            Predicate userPredicate = cb.equal(chatsJoin.get("username"), principal.getName());
             query.select(chats).where(userPredicate);
             userChats = em.createQuery(query).getResultList();
         } catch (Exception e) {

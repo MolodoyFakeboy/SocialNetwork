@@ -12,13 +12,6 @@ public class SignupRequest {
 
     private Date birthday;
 
-    public SignupRequest(String userName, String password, String email, Date birthday) {
-        this.userName = userName;
-        this.password = password;
-        this.email = email;
-        this.birthday = birthday;
-    }
-
     public String getUserName() {
         return userName;
     }
@@ -33,5 +26,21 @@ public class SignupRequest {
 
     public Date getBirthday() {
         return birthday;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setBirthday(Date birthday) {
+        this.birthday = birthday;
     }
 }

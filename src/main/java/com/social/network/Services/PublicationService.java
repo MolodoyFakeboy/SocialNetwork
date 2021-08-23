@@ -38,8 +38,9 @@ public class PublicationService implements IPublicationService {
     }
 
     @Override
-    public Publication createNewPublicationGroup(Publication publication, int groupID) {
+    public Publication createNewPublicationGroup(PublicationDTO publicationFromRequest, int groupID) {
         Group group = groupGenericDao.find(groupID);
+        Publication publication = new Publication(publicationFromRequest.getInfo());
         publication.getListGroup().add(group);
         publicationGenericDao.add(publication);
         return publication;

@@ -1,0 +1,206 @@
+{
+	"info": {
+		"_postman_id": "99435aae-fdea-4b41-b562-7b53152ca408",
+		"name": "Social network2",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Зарегестрировать пользователя",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"userName\" : \"ZaharTest\",\r\n    \"password\" : \"ZaharTest\",\r\n    \"email\" : \"Zahar.Test@Gamil.com\",\r\n    \"birthday\" : \"2002-11-15\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/auth/signup",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"auth",
+						"signup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Начать новый чат",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJaYWhhciIsImV4cCI6MTYyOTc1MjQwMH0.uCeUrKNkYeiajiW2bAfxOFCIp6ypv_MLMFneSdgMobE_feO2xahcJ883xQbOnFoDmknjtYxF-qUsBGk0jvO32A",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/chat/17",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"chat",
+						"17"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "получить сообщения в чате",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJaYWhhciIsImV4cCI6MTYyOTc1MjQwMH0.uCeUrKNkYeiajiW2bAfxOFCIp6ypv_MLMFneSdgMobE_feO2xahcJ883xQbOnFoDmknjtYxF-qUsBGk0jvO32A",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/chat/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"chat",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Получить все чаты пользователя",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJaYWhhciIsImV4cCI6MTYyOTc1MjQwMH0.uCeUrKNkYeiajiW2bAfxOFCIp6ypv_MLMFneSdgMobE_feO2xahcJ883xQbOnFoDmknjtYxF-qUsBGk0jvO32A",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/сhats",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"сhats"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "создать новую публикацию",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJaYWhhciIsImV4cCI6MTYyOTc1MjQwMH0.uCeUrKNkYeiajiW2bAfxOFCIp6ypv_MLMFneSdgMobE_feO2xahcJ883xQbOnFoDmknjtYxF-qUsBGk0jvO32A",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"info\" : \"New post\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/publication/55",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"publication",
+						"55"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "удалить публикацию",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJaYWhhciIsImV4cCI6MTYyOTc1MjQwMH0.uCeUrKNkYeiajiW2bAfxOFCIp6ypv_MLMFneSdgMobE_feO2xahcJ883xQbOnFoDmknjtYxF-qUsBGk0jvO32A",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"info\" : \"New post\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/publication/53",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"publication",
+						"53"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

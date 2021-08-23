@@ -51,6 +51,7 @@ public class GroupService implements IGroupService {
         user.getCommunities().add(group);
         group.setSubscribers(1);
         groupGenericDao.add(group);
+        log.info("Группа успешна создана " + group.getName());
         return group;
     }
 
@@ -79,7 +80,15 @@ public class GroupService implements IGroupService {
         return group;
     }
 
-
+    @Override
+    public String unsubscribeFromGroup (int groupID, Principal principal){
+        Group group = groupGenericDao.find(groupID);
+        User user = findByPrincipal(principal.getName());
+        user.getCommunities().remove(group);
+        group.setSubscribers(group.getUsers().size() - 1);
+        groupGenericDao.update(group);
+        return "Group removed from your list";
+    }
 
     private User findByPrincipal(String name) {
         User timeUser = null;
@@ -125,18 +134,6 @@ public class GroupService implements IGroupService {
     @Override
     public Group updateGroup(Group group){
         return groupGenericDao.update(group);
-    }
-
-    private List<User> findSubcribersOnGroup(int groupID){
-        EntityManager em = groupGenericDao.getEntityManager();
-        CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<User> query = cb.createQuery(User.class);
-        Root<User> userRoot = query.from(User.class);
-        Join<Group,User> groupUserJoin = userRoot.join("communities");
-        Predicate userPredicate = cb.equal(groupUserJoin.get("idGroup"), groupID);
-        query.select(userRoot).where(userPredicate);
-        List<User> users = em.createQuery(query).getResultList();
-        return users;
     }
 
 }

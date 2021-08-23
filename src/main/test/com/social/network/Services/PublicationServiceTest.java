@@ -52,13 +52,14 @@ class PublicationServiceTest {
 
     @Test
     void createNewPublicationGroup() {
-        Publication publication = new Publication("я покушал");
+        PublicationDTO publication = new PublicationDTO();
+        publication.setInfo("я покушал");
         Group group = new Group("Orel","OrelNews");
         group.setIdGroup(1);
         Mockito.when(groupDao.find(group.getIdGroup())).thenReturn(group);
-        publicationService.createNewPublicationGroup(publication,group.getIdGroup());
-        Mockito.verify(publicationDao).add(publication);
-        Mockito.verify(publicationDao, Mockito.times(1)).add(publication);
+        Publication publication1 = publicationService.createNewPublicationGroup(publication,group.getIdGroup());
+        Mockito.verify(publicationDao).add(publication1);
+        Mockito.verify(publicationDao, Mockito.times(1)).add(publication1);
 
     }
 

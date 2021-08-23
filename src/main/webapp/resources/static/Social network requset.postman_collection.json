@@ -1,0 +1,1000 @@
+{
+	"info": {
+		"_postman_id": "1d27f425-2f61-4f72-8261-f9c24912534f",
+		"name": "Social network requset",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "авторизоваться",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"schessor0\",\r\n    \"password\":  \"Test\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/auth/signin",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"auth",
+						"signin"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "открыть личную страницу",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzY2hlc3NvcjAiLCJleHAiOjE2Mjk2NjYwMDB9.2PugdbBr6BnjbRI8-5E2TuBUpMjQyR-Mkl3HoUURKS84oJzEGNMvi17gQh5mU69Nj8hV3gjlj4E268unKNP9Mw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "найти пользователя по имени",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzY2hlc3NvcjAiLCJleHAiOjE2Mjk2NjYwMDB9.2PugdbBr6BnjbRI8-5E2TuBUpMjQyR-Mkl3HoUURKS84oJzEGNMvi17gQh5mU69Nj8hV3gjlj4E268unKNP9Mw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/searchUser/shaggett2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"searchUser",
+						"shaggett2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "изменить информацию в профиле (био)",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzY2hlc3NvcjAiLCJleHAiOjE2Mjk2NjYwMDB9.2PugdbBr6BnjbRI8-5E2TuBUpMjQyR-Mkl3HoUURKS84oJzEGNMvi17gQh5mU69Nj8hV3gjlj4E268unKNP9Mw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/userBio/1/я зарегестрировался в социальной сети!",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"userBio",
+						"1",
+						"я зарегестрировался в социальной сети!"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Поменять имя профиля, не забыть",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzY2hlc3NvcjAiLCJleHAiOjE2Mjk2NjYwMDB9.2PugdbBr6BnjbRI8-5E2TuBUpMjQyR-Mkl3HoUURKS84oJzEGNMvi17gQh5mU69Nj8hV3gjlj4E268unKNP9Mw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/userName/ZaharTest",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"userName",
+						"ZaharTest"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "поменять почту",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJaYWhhciIsImV4cCI6MTYyOTY2NjAwMH0.PejUXtxUEyd1zFfOXno-zzlTMwpdcCO_u6TdDzgwAdZgkvi5q5tC--lDSWmo9aNc5qdg_mdFQqOOgS0EpAyt4A",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/userEmail/zahar.studennikov@mail.ru",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"userEmail",
+						"zahar.studennikov@mail.ru"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Добавить нового друга",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/userFrined/52",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"userFrined",
+						"52"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Удалить друга",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJaYWhhciIsImV4cCI6MTYyOTY2NjAwMH0.PejUXtxUEyd1zFfOXno-zzlTMwpdcCO_u6TdDzgwAdZgkvi5q5tC--lDSWmo9aNc5qdg_mdFQqOOgS0EpAyt4A",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/userDeleteFriend/52",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"userDeleteFriend",
+						"52"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "найти пользователя по ID",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJaYWhhciIsImV4cCI6MTYyOTY2NjAwMH0.PejUXtxUEyd1zFfOXno-zzlTMwpdcCO_u6TdDzgwAdZgkvi5q5tC--lDSWmo9aNc5qdg_mdFQqOOgS0EpAyt4A",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/user/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Посмотреть список подписчиков",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJaYWhhciIsImV4cCI6MTYyOTY2NjAwMH0.PejUXtxUEyd1zFfOXno-zzlTMwpdcCO_u6TdDzgwAdZgkvi5q5tC--lDSWmo9aNc5qdg_mdFQqOOgS0EpAyt4A",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/userSubscribers/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"userSubscribers",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Список друзей",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJaYWhhciIsImV4cCI6MTYyOTY2NjAwMH0.PejUXtxUEyd1zFfOXno-zzlTMwpdcCO_u6TdDzgwAdZgkvi5q5tC--lDSWmo9aNc5qdg_mdFQqOOgS0EpAyt4A",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/userFriends/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"userFriends",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Всех юзеров на сайте",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJaYWhhciIsImV4cCI6MTYyOTY2NjAwMH0.PejUXtxUEyd1zFfOXno-zzlTMwpdcCO_u6TdDzgwAdZgkvi5q5tC--lDSWmo9aNc5qdg_mdFQqOOgS0EpAyt4A",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"userName\": \"zahar\",\r\n    \"oldPassword\": \"Test\",\r\n    \"password\":  \"Zahar\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/users",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Установить роль у пользователя",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJaYWhhciIsImV4cCI6MTYyOTY2NjAwMH0.PejUXtxUEyd1zFfOXno-zzlTMwpdcCO_u6TdDzgwAdZgkvi5q5tC--lDSWmo9aNc5qdg_mdFQqOOgS0EpAyt4A",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"idRole\" : 2,\r\n    \"name\" : \"ADMIN\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/userRole/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"userRole",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Открыть новости",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJaYWhhciIsImV4cCI6MTYyOTY2NjAwMH0.PejUXtxUEyd1zFfOXno-zzlTMwpdcCO_u6TdDzgwAdZgkvi5q5tC--lDSWmo9aNc5qdg_mdFQqOOgS0EpAyt4A",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/news",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"news"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Добавить новое публичное сообщение юзеру",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJaYWhhciIsImV4cCI6MTYyOTY2NjAwMH0.PejUXtxUEyd1zFfOXno-zzlTMwpdcCO_u6TdDzgwAdZgkvi5q5tC--lDSWmo9aNc5qdg_mdFQqOOgS0EpAyt4A",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"PostMan post\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/post",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"post"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "удалить пост юзеру",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJaYWhhciIsImV4cCI6MTYyOTY2NjAwMH0.PejUXtxUEyd1zFfOXno-zzlTMwpdcCO_u6TdDzgwAdZgkvi5q5tC--lDSWmo9aNc5qdg_mdFQqOOgS0EpAyt4A",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"userName\": \"zahar\",\r\n    \"oldPassword\": \"Test\",\r\n    \"password\":  \"Zahar\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/post/51",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"post",
+						"51"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Найти пост по айди",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJaYWhhciIsImV4cCI6MTYyOTY2NjAwMH0.PejUXtxUEyd1zFfOXno-zzlTMwpdcCO_u6TdDzgwAdZgkvi5q5tC--lDSWmo9aNc5qdg_mdFQqOOgS0EpAyt4A",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/post/50",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"post",
+						"50"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Отправить сообщение",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJaYWhhciIsImV4cCI6MTYyOTY2NjAwMH0.PejUXtxUEyd1zFfOXno-zzlTMwpdcCO_u6TdDzgwAdZgkvi5q5tC--lDSWmo9aNc5qdg_mdFQqOOgS0EpAyt4A",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"sendText\" : \"Привет отправляю сообщение в Постмене\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/message/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"message",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Добавить фото к публикации в группе",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJaYWhhciIsImV4cCI6MTYyOTY2NjAwMH0.PejUXtxUEyd1zFfOXno-zzlTMwpdcCO_u6TdDzgwAdZgkvi5q5tC--lDSWmo9aNc5qdg_mdFQqOOgS0EpAyt4A",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": "/D:/Project/src/main/webapp/resources/otzyvy.png"
+						}
+					],
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/image/50",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"image",
+						"50"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Получить фото по ID",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJaYWhhciIsImV4cCI6MTYyOTY2NjAwMH0.PejUXtxUEyd1zFfOXno-zzlTMwpdcCO_u6TdDzgwAdZgkvi5q5tC--lDSWmo9aNc5qdg_mdFQqOOgS0EpAyt4A",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/image/3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"image",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "получить фото для поста",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJaYWhhciIsImV4cCI6MTYyOTY2NjAwMH0.PejUXtxUEyd1zFfOXno-zzlTMwpdcCO_u6TdDzgwAdZgkvi5q5tC--lDSWmo9aNc5qdg_mdFQqOOgS0EpAyt4A",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/images/50",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"images",
+						"50"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "создать новую группу",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJaYWhhciIsImV4cCI6MTYyOTc1MjQwMH0.uCeUrKNkYeiajiW2bAfxOFCIp6ypv_MLMFneSdgMobE_feO2xahcJ883xQbOnFoDmknjtYxF-qUsBGk0jvO32A",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Orel Graffiti is Dead\",\r\n    \"description\" : \"If you know you know\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/group/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"group",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "подписаться на группу юзеру",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJaYWhhciIsImV4cCI6MTYyOTc1MjQwMH0.uCeUrKNkYeiajiW2bAfxOFCIp6ypv_MLMFneSdgMobE_feO2xahcJ883xQbOnFoDmknjtYxF-qUsBGk0jvO32A",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/group/55",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"group",
+						"55"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Обновить информацию о группе",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJaYWhhciIsImV4cCI6MTYyOTc1MjQwMH0.uCeUrKNkYeiajiW2bAfxOFCIp6ypv_MLMFneSdgMobE_feO2xahcJ883xQbOnFoDmknjtYxF-qUsBGk0jvO32A",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"idGroup\": 55,\r\n        \"name\": \"Orel Graffiti is Dead\",\r\n        \"subscribers\": 1,\r\n        \"description\": \"Already Dead\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/group",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"group"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Получить все публикации в группе",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJaYWhhciIsImV4cCI6MTYyOTc1MjQwMH0.uCeUrKNkYeiajiW2bAfxOFCIp6ypv_MLMFneSdgMobE_feO2xahcJ883xQbOnFoDmknjtYxF-qUsBGk0jvO32A",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/groupPost/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"groupPost",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "поменять пароль у юзера",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJaYWhhciIsImV4cCI6MTYyOTY2NjAwMH0.PejUXtxUEyd1zFfOXno-zzlTMwpdcCO_u6TdDzgwAdZgkvi5q5tC--lDSWmo9aNc5qdg_mdFQqOOgS0EpAyt4A",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"userName\": \"zahar\",\r\n    \"oldPassword\": \"Test\",\r\n    \"password\":  \"Zahar\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/userPassword",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"userPassword"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

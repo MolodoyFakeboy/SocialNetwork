@@ -1,7 +1,9 @@
 package com.social.network.PayLoad.response;
 
 public class InvalidLoginResponse {
+
     private String username;
+
     private String password;
 
     public InvalidLoginResponse() {

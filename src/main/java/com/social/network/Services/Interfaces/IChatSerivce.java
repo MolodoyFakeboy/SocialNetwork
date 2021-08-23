@@ -11,7 +11,7 @@ public interface IChatSerivce {
 
     Chat startNewChat(Principal principal, int userID);
 
-    List<MessageDTO> getMessagesInChat(int chatId);
+    List<MessageDTO> getMessagesInChat(int chatId,Principal principal);
 
-    List<Chat>getAllUserChats(int userID);
+    List<Chat>getAllUserChats(Principal principal);
 }

@@ -16,6 +16,7 @@ public interface IGroupService {
 
     Group subcribeOnGroup(int groupID, Principal principal);
 
+    String unsubscribeFromGroup (int groupID, Principal principal);
 
     List<Group> findGroupByName(String name);
 

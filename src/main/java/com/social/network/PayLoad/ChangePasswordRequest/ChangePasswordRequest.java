@@ -1,28 +1,36 @@
 package com.social.network.PayLoad.ChangePasswordRequest;
 
-public class ChangePasswordRequest {
+import java.io.Serializable;
 
-    private String UserName;
+public class ChangePasswordRequest implements Serializable {
 
-    private String OldPassword;
+    private String userName;
 
-    private String Password;
+    private String oldPassword;
 
-    public ChangePasswordRequest(String userName, String oldPassword, String password) {
-        UserName = userName;
-        OldPassword = oldPassword;
-        Password = password;
-    }
+    private String password;
 
     public String getUserName() {
-        return UserName;
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public String getOldPassword() {
-        return OldPassword;
+        return oldPassword;
+    }
+
+    public void setOldPassword(String oldPassword) {
+        this.oldPassword = oldPassword;
     }
 
     public String getPassword() {
-        return Password;
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

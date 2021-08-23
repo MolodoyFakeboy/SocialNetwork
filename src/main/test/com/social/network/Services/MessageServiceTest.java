@@ -3,6 +3,7 @@ package com.social.network.Services;
 import com.social.network.Config.TestConfig;
 import com.social.network.Dao.ChatDao;
 import com.social.network.Dao.MessageDao;
+import com.social.network.Dto.MessageDTO;
 import com.social.network.Model.Chat;
 import com.social.network.Model.Group;
 import com.social.network.Model.Message;
@@ -39,13 +40,14 @@ class MessageServiceTest {
     @Test
     void writeMessageToUser() {
         TestPrincipal testPrincipal = new TestPrincipal();
-        Message message = new Message("Привет я все еще пишу тесты *(!");
+        MessageDTO message = new MessageDTO();
+        message.setSendText("Привет я все еще пишу тесты *(!");
         Chat chat = new Chat("какой-то чат");
         chat.setIdChat(1);
         Mockito.when(chatDao.find(chat.getIdChat())).thenReturn(chat);
         Message message1 = messageService.writeMessageToUser(message,testPrincipal,53);
-        Mockito.verify(messageDao).add(message);
-        Mockito.verify(messageDao, Mockito.times(1)).add(message);
+        Mockito.verify(messageDao).add(message1);
+        Mockito.verify(messageDao, Mockito.times(1)).add(message1);
 
         Assertions.assertEquals(message.getSendText(),message1.getSendText());
     }

@@ -19,7 +19,7 @@ import javax.sql.DataSource;
 import java.util.Properties;
 
 @ComponentScan(basePackages = {"com.social.network.Dao","com.social.network.Services","com.social.network.Controller",
-        "com.social.network.Facade"})
+        "com.social.network.Facade","com.social.network.jwt","com.social.network.Configs"})
 @Configuration
 @PropertySource("classpath:/config.properties")
 @EnableTransactionManagement
@@ -66,11 +66,6 @@ public class Config {
         JpaTransactionManager txManager = new JpaTransactionManager();
         txManager.setEntityManagerFactory(emf);
         return txManager;
-    }
-
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
     }
 
 }

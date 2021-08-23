@@ -1,0 +1,12 @@
+[ERROR] 2021-08-22 20:54:03.418 [http-nio-8080-exec-9] UserSerivce - Cannot find User with this name
+[ERROR] 2021-08-22 21:21:07.061 [http-nio-8080-exec-3] UserSerivce - Cannot find User with this name
+[ERROR] 2021-08-22 21:21:59.497 [http-nio-8080-exec-5] UserSerivce - Cannot find User with this name
+[ERROR] 2021-08-22 21:22:16.181 [http-nio-8080-exec-7] UserSerivce - Cannot find User with this name
+[ERROR] 2021-08-22 21:23:22.895 [http-nio-8080-exec-4] UserSerivce - Cannot find User with this name
+[ERROR] 2021-08-22 21:25:11.717 [http-nio-8080-exec-5] UserSerivce - Cannot find User with this name
+[ERROR] 2021-08-22 21:26:38.009 [http-nio-8080-exec-8] UserSerivce - Cannot find User with this name
+[ERROR] 2021-08-22 21:31:00.192 [http-nio-8080-exec-5] UserSerivce - Cannot find User with this name
+[INFO ] 2021-08-22 22:41:25.364 [http-nio-8080-exec-6] PostService - User Zaharcreate new post
+[INFO ] 2021-08-22 23:45:45.970 [http-nio-8080-exec-8] ImageService - Uploading image to Publication 50
+[INFO ] 2021-08-22 23:48:12.418 [http-nio-8080-exec-10] ImageService - Uploading image to Publication 50
+[INFO ] 2021-08-22 23:50:04.651 [http-nio-8080-exec-3] ImageService - Uploading image to Publication 50

@@ -57,7 +57,10 @@ class UserSerivceTest {
 
     @Test
     void createUser() {
-        SignupRequest signupRequest = new SignupRequest("mamontov.Skam", "cDeqwt2Ygd", "mamontov.artem51@example.net", Date.valueOf("1945-10-01"));
+        SignupRequest signupRequest = new SignupRequest();
+        signupRequest.setUserName("mamontov.Skam");
+        signupRequest.setBirthday(Date.valueOf("1945-10-01"));
+        signupRequest.setPassword("cDeqwt2Ygd");
         User user = userService.createUser(signupRequest);
         Mockito.verify(userDao).add(user);
         Mockito.verify(userDao, Mockito.times(1)).add(user);
@@ -76,7 +79,9 @@ class UserSerivceTest {
 
     @Test
     void findByNamePassword() {
-       LoginRequest loginRequest = new LoginRequest("mamontov.ur","cDeqwt2Ygd");
+        LoginRequest loginRequest = new LoginRequest();
+        loginRequest.setUsername("schessor0");
+        loginRequest.setPassword("Test");
        User user = userService.findByNamePassword(loginRequest);
 
        Assertions.assertEquals(loginRequest.getUsername(),user.getUsername());
@@ -84,7 +89,10 @@ class UserSerivceTest {
 
     @Test
     void changePassowrd() {
-        ChangePasswordRequest changePasswordRequest = new ChangePasswordRequest("mamontov.ur","cDeqwt2Ygd","Skamer228");
+        ChangePasswordRequest changePasswordRequest = new ChangePasswordRequest();
+        changePasswordRequest.setOldPassword("cDeqwt2Ygd");
+        changePasswordRequest.setUserName("mamontov.ur");
+        changePasswordRequest.setPassword("Skamer228");
         User user = userService.changePassowrd(changePasswordRequest);
         Mockito.verify(userDao).update(user);
         Mockito.verify(userDao, Mockito.times(1)).update(user);

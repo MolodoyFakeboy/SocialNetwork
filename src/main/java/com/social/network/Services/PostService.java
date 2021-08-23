@@ -45,8 +45,9 @@ public class PostService implements IPostService {
     }
 
     @Override
-    public PostDTO createNewPostFromUser(Post post, Principal principal) {
+    public PostDTO createNewPostFromUser(PostDTO postFromRequest, Principal principal) {
         User timeUser = findByPrincipal(principal.getName());
+        Post post = new Post(postFromRequest.getTitle());
         post.setUser(timeUser);
         postGenericDao.add(post);
         log.info("User " + timeUser.getUsername() + "create new post");

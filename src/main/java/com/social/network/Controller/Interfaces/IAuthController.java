@@ -1,4 +1,4 @@
-package com.social.network.Controller;
+package com.social.network.Controller.Interfaces;
 
 import com.social.network.PayLoad.LoginRequest.LoginRequest;
 import com.social.network.PayLoad.SignUpRequest.SignupRequest;

@@ -27,11 +27,12 @@ class PostServiceTest {
 
     @Test
     void createNewPostFromUser() {
-        Post post = new Post("Я начал тестировать свой проект!");
+        PostDTO postDTO = new PostDTO();
+        postDTO.setTitle("Я начал тестировать свой проект!");
         TestPrincipal testPrincipal = new TestPrincipal();
-        PostDTO postDTO = postService.createNewPostFromUser(post,testPrincipal);
+        PostDTO postDTO1 = postService.createNewPostFromUser(postDTO,testPrincipal);
 
-        Assertions.assertEquals(post.getUser().getUsername(),postDTO.getUsername());
+        Assertions.assertEquals(postDTO1.getUsername(),postDTO.getUsername());
     }
 
 

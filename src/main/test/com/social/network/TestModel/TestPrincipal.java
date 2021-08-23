@@ -6,6 +6,6 @@ public class TestPrincipal implements Principal {
 
     @Override
     public String getName() {
-        return "schessor0";
+        return "Zahar";
     }
 }

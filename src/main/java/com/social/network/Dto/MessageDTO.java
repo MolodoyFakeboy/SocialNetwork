@@ -10,7 +10,6 @@ public class MessageDTO {
 
     private String username;
 
-
     public String getSendText() {
         return sendText;
     }

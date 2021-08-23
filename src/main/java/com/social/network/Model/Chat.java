@@ -1,5 +1,7 @@
 package com.social.network.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
@@ -17,9 +19,11 @@ public class Chat implements Serializable {
     private String name;
 
     @ManyToMany(mappedBy = "chats")
+    @JsonIgnore
     private Set<User> users;
 
     @OneToMany(mappedBy = "chat")
+    @JsonIgnore
     private Set<Message> messages;
 
     public Chat(String name) {

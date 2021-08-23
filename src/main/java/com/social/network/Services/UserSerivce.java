@@ -2,8 +2,9 @@ package com.social.network.Services;
 
 import com.social.network.Dao.GenericDao;
 import com.social.network.Dto.UserDTO;
+import com.social.network.Facade.PostFacade;
 import com.social.network.Facade.UserFacade;
-import com.social.network.Model.Post;
+import com.social.network.Model.Group;
 import com.social.network.Model.Role;
 import com.social.network.PayLoad.ChangePasswordRequest.ChangePasswordRequest;
 import com.social.network.PayLoad.LoginRequest.LoginRequest;
@@ -24,7 +25,6 @@ import java.security.Principal;
 import java.util.*;
 import java.util.stream.Collectors;
 
-
 @Service
 @Transactional
 public class UserSerivce implements IUserService {
@@ -36,6 +36,8 @@ public class UserSerivce implements IUserService {
     private PasswordEncoder passwordEncoder;
 
     private UserFacade userFacade;
+
+    private PostFacade postFacade;
 
     @Autowired
     public UserSerivce(GenericDao<User> userGenericDao) {
@@ -51,6 +53,11 @@ public class UserSerivce implements IUserService {
     @Autowired
     public void setUserFacade(UserFacade userFacade) {
         this.userFacade = userFacade;
+    }
+
+    @Autowired
+    public void setPostFacade(PostFacade postFacade) {
+        this.postFacade = postFacade;
     }
 
     @Override
@@ -134,7 +141,9 @@ public class UserSerivce implements IUserService {
 
     @Override
     public User changePassowrd(ChangePasswordRequest changePasswordRequest) {
-        LoginRequest loginRequest = new LoginRequest(changePasswordRequest.getUserName(), changePasswordRequest.getOldPassword());
+        LoginRequest loginRequest = new LoginRequest();
+        loginRequest.setUsername(changePasswordRequest.getUserName());
+        loginRequest.setPassword(changePasswordRequest.getOldPassword());
         User user = findByNamePassword(loginRequest);
         if (user != null) {
             user.setPassword(passwordEncoder.encode(changePasswordRequest.getPassword()));
@@ -233,7 +242,7 @@ public class UserSerivce implements IUserService {
         User user = userGenericDao.find(userID);
         if (user != null) {
            UserDTO userDTO = userFacade.getUserProfile(user);
-            userDTO.setPosts(new ArrayList<>(user.getPosts()));
+            userDTO.setPosts((user.getPosts().stream().map(postFacade::postToPostDTO).collect(Collectors.toList())));
             return userDTO;
         } else {
             throw new UserExistException("No user with such id");
@@ -267,6 +276,20 @@ public class UserSerivce implements IUserService {
             log.error("Cannot find User with this name");
         }
         return timeUser;
+    }
+
+    @Override
+    public User updatePassword(int userID){
+        User user = userGenericDao.find(1);
+        String Password = "Test";
+        user.setPassword(passwordEncoder.encode(Password));
+        return user;
+    }
+
+    @Override
+    public List<Group> getListGroup(Principal principal){
+        User user = findByName(principal.getName());
+        return user.getCommunities().stream().collect(Collectors.toList());
     }
 
 

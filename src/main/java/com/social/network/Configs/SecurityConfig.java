@@ -16,9 +16,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import java.io.PrintWriter;
 
-
 @EnableWebSecurity
-@Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
@@ -43,6 +41,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
                 http.authorizeRequests()
                 .antMatchers(SecurityConstants.SIGN_UP_URLS).permitAll()
+                        .antMatchers("/group").hasRole("ADMIN")
+                        .antMatchers("/publication/**").hasRole("ADMIN")
+                        .antMatchers("/userRole/**").hasRole("ADMIN")
                 .anyRequest().authenticated();
 
         http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
