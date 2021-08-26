@@ -3,6 +3,8 @@ package com.social.network.Services;
 import com.social.network.Config.TestConfig;
 import com.social.network.Model.Image;
 import com.social.network.Services.Interfaces.InterfaceImageService;
+import com.social.network.TestModel.TestPrincipal;
+import com.social.network.exceptions.ImageNotFoundException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -32,7 +34,7 @@ class ImageServiceTest {
         MockMultipartFile mockMultipartFile = new MockMultipartFile("file", "otzyvy", "png", inputFile);
         Image image = imageService.setImagetoPublication(mockMultipartFile,1);
 
-        Assertions.assertNotNull(image.getPublications());
+        Assertions.assertNotNull(image.getPublication());
     }
 
     @Test
@@ -41,4 +43,5 @@ class ImageServiceTest {
 
         Assertions.assertNotNull(images);
     }
+
 }

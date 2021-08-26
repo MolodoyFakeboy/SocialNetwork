@@ -20,7 +20,7 @@ public interface IUserController {
 
     ResponseEntity<UserDTO> findUserDtoByName(String name);
 
-    ResponseEntity<MessageResponse> setBio(int id,String bio);
+    ResponseEntity<MessageResponse> setBio(Principal principal,String bio);
 
     ResponseEntity<MessageResponse> changePassowrd(ChangePasswordRequest changePasswordRequest);
 

@@ -13,4 +13,6 @@ public interface IPublicationController {
 
     ResponseEntity<PublicationDTO> findById(int id);
 
+    ResponseEntity <MessageResponse> repost (int publicationID,int groupID);
+
 }

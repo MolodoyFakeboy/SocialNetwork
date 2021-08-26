@@ -1,7 +1,5 @@
 package com.social.network.Dao;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,8 +14,6 @@ public class AbstractGenericDaoImpl <T extends Serializable> implements GenericD
 
     @PersistenceContext
     private EntityManager entityManager;
-
-    private  final Logger log = LogManager.getLogger(AbstractGenericDaoImpl.class);
 
     @Override
     public void add(T enity) {
@@ -43,8 +39,7 @@ public class AbstractGenericDaoImpl <T extends Serializable> implements GenericD
 
     @Override
     public T find(int id) {
-        T t = getSession().find(type,id);
-        return t;
+        return getSession().find(type,id);
     }
 
     public void setType(Class<T> type) {

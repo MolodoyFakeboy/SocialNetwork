@@ -2,7 +2,6 @@ package com.social.network.Controller;
 
 import com.social.network.Controller.Interfaces.InterfaceImageController;
 import com.social.network.Model.Image;
-import com.social.network.Services.ImageService;
 import com.social.network.Services.Interfaces.InterfaceImageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -43,4 +42,5 @@ public class ImageController implements InterfaceImageController {
         List<Image> images = imageService.getImageToPost(postId);
         return new ResponseEntity<>(images,HttpStatus.OK);
     }
+
 }

@@ -1,12 +1,9 @@
 package com.social.network.Services;
 
 import com.social.network.Dao.GenericDao;
-import com.social.network.Dto.PostDTO;
 import com.social.network.Dto.PublicationDTO;
-import com.social.network.Facade.PostFacade;
 import com.social.network.Facade.PublicationFacade;
 import com.social.network.Model.Group;
-import com.social.network.Model.Publication;
 import com.social.network.Model.User;
 import com.social.network.Services.Interfaces.IGroupService;
 import com.social.network.exceptions.GroupNotFoundException;
@@ -46,7 +43,7 @@ public class GroupService implements IGroupService {
     }
 
     @Override
-    public Group createNewGroup(Group group,Principal principal) {
+    public Group createNewGroup(Group group, Principal principal) {
         User user = findByPrincipal(principal.getName());
         user.getCommunities().add(group);
         group.setSubscribers(1);
@@ -81,7 +78,7 @@ public class GroupService implements IGroupService {
     }
 
     @Override
-    public String unsubscribeFromGroup (int groupID, Principal principal){
+    public String unsubscribeFromGroup(int groupID, Principal principal) {
         Group group = groupGenericDao.find(groupID);
         User user = findByPrincipal(principal.getName());
         user.getCommunities().remove(group);
@@ -132,7 +129,7 @@ public class GroupService implements IGroupService {
     }
 
     @Override
-    public Group updateGroup(Group group){
+    public Group updateGroup(Group group) {
         return groupGenericDao.update(group);
     }
 

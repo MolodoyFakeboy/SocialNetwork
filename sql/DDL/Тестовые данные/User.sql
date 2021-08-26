@@ -1,4 +1,4 @@
-insert into User (idUser, username, password, email, birthday) values (1, 'Zahar', '$2a$10$frMb3GMwrl6RLvTfMbzPj.ArqxZCdINBs/E4F9EjjcjScnnnjt0lq', 'jrawstorn0@yandex.ru', '2002-11-15'); 
+insert into User (idUser, username, password, email, birthday, Role_idRole) values (1, 'Zahar', '$2a$10$frMb3GMwrl6RLvTfMbzPj.ArqxZCdINBs/E4F9EjjcjScnnnjt0lq', 'jrawstorn0@yandex.ru', '2002-11-15',2); 
 insert into User (idUser, username, password, email, birthday) values (2, 'hprobart1', 'MCcL4sMsKPd', 'sfrantsev1@vistaprint.com', '2017-08-13');
 insert into User (idUser, username, password, email, birthday) values (3, 'shaggett2', 'rXU29jAL', 'bwayte2@umich.edu', '2020-07-16');
 insert into User (idUser, username, password, email, birthday) values (4, 'cutridge3', 'IWvPjdTFbin', 'aloughney3@cornell.edu', '2018-06-10');

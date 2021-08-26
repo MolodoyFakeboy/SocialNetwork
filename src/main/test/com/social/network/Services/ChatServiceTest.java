@@ -47,7 +47,8 @@ class ChatServiceTest {
     void getAllChatFromUser() {
        TestPrincipal testPrincipal = new TestPrincipal();
        List<Chat>chats = iChatSerivce.getAllUserChats(testPrincipal);
-       chats.forEach(System.out::println);
        Assertions.assertNotNull(chats);
+
+       chats.forEach(System.out::println);
    }
 }

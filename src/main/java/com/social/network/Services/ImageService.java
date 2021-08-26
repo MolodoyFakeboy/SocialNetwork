@@ -21,6 +21,7 @@ import java.util.zip.DataFormatException;
 import java.util.zip.Deflater;
 import java.util.zip.Inflater;
 
+
 @Service
 @Transactional
 public class ImageService implements InterfaceImageService {
@@ -50,9 +51,10 @@ public class ImageService implements InterfaceImageService {
         return image;
     }
 
+
     @Override
-    public List<Image> getImageToPost(int postId){
-        List<Image>images = null;
+    public List<Image> getImageToPost(int postId) {
+        List<Image> images = null;
         try {
             EntityManager em = imageDao.getEntityManager();
             CriteriaBuilder cb = em.getCriteriaBuilder();
@@ -62,6 +64,7 @@ public class ImageService implements InterfaceImageService {
             Predicate userPredicate = cb.equal(imagePublicationJoin.get("id"), postId);
             query.select(imageRoot).where(userPredicate);
             images = em.createQuery(query).getResultList();
+            images.forEach(image -> decompressBytes(image.getPhoto()));
         } catch (Exception e) {
             log.error(e.getMessage());
         }
@@ -98,7 +101,7 @@ public class ImageService implements InterfaceImageService {
         return outputStream.toByteArray();
     }
 
-    //расжатие фотки
+
     private byte[] decompressBytes(byte[] data) {
         Inflater inflater = new Inflater();
         inflater.setInput(data);
@@ -115,6 +118,5 @@ public class ImageService implements InterfaceImageService {
         }
         return outputStream.toByteArray();
     }
-
 
 }

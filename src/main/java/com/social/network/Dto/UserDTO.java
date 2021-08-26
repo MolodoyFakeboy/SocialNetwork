@@ -1,7 +1,5 @@
 package com.social.network.Dto;
 
-import com.social.network.Model.Post;
-
 import java.util.Date;
 import java.util.List;
 
@@ -12,6 +10,8 @@ public class UserDTO {
     private String bio;
 
     private Date birthday;
+
+    private int userID;
 
     private List<PostDTO> posts;
 
@@ -25,6 +25,14 @@ public class UserDTO {
 
     public String getBio() {
         return bio;
+    }
+
+    public int getUserID() {
+        return userID;
+    }
+
+    public void setUserID(int userID) {
+        this.userID = userID;
     }
 
     public void setBio(String bio) {

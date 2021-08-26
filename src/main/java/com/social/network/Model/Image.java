@@ -5,8 +5,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 public class Image implements Serializable {
@@ -24,13 +22,10 @@ public class Image implements Serializable {
     @Column(name = "Photo")
     private byte[] photo;
 
-    @ManyToMany(mappedBy = "images")
+    @ManyToOne
+    @JoinColumn(name = "Publication_idPublication")
     @JsonIgnore
-    private Set<Publication> publications;
-
-    public Image() {
-        publications = new HashSet<>();
-    }
+    private Publication publication;
 
     public int getIdImage() {
         return idImage;
@@ -56,12 +51,12 @@ public class Image implements Serializable {
         this.photo = photo;
     }
 
-    public Set<Publication> getPublications() {
-        return publications;
+    public Publication getPublication() {
+        return publication;
     }
 
-    public void setPublications(Set<Publication> publications) {
-        this.publications = publications;
+    public void setPublication(Publication publication) {
+        this.publication = publication;
     }
 
     @Override

@@ -10,6 +10,7 @@ import com.social.network.exceptions.PostNotFoundException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,7 +26,6 @@ public class PublicationService implements IPublicationService {
 
     private PublicationFacade publicationFacade;
 
-    @Autowired
     public PublicationService(GenericDao<Publication> publicationGenericDao, GenericDao<Group> groupGenericDao) {
         this.publicationGenericDao = publicationGenericDao;
         this.groupGenericDao = groupGenericDao;
@@ -68,6 +68,15 @@ public class PublicationService implements IPublicationService {
             throw new PostNotFoundException("Publication with id: " + id + "not exist");
         }
 
+    }
+
+    @Override
+    public Publication repost(int publicationID,int groupID){
+        Publication publication = publicationGenericDao.find(publicationID);
+        Group group = groupGenericDao.find(groupID);
+        publication.getListGroup().add(group);
+        publicationGenericDao.update(publication);
+        return publication;
     }
 
 }

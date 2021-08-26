@@ -12,6 +12,8 @@ public class UserFacade {
         userDTO.setUsername(user.getUsername());
         userDTO.setBirthday(user.getBirthday());
         userDTO.setBio(user.getBio());
+        userDTO.setBirthday(user.getBirthday());
+        userDTO.setUserID(user.getId());
         return userDTO;
     }
 }

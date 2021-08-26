@@ -40,4 +40,11 @@ public class PublicationController implements IPublicationController {
         PublicationDTO publicationDTO = publicationService.findById(id);
         return new ResponseEntity<>(publicationDTO, HttpStatus.OK);
     }
+
+    @Override
+    @PutMapping("publication/{publicationID}/{groupID}")
+    public ResponseEntity<MessageResponse> repost(@PathVariable int publicationID, @PathVariable int groupID) {
+        Publication publication = publicationService.repost(publicationID, groupID);
+        return new ResponseEntity<>(new MessageResponse("Публикация успешно репостнута: " + publication.getId()), HttpStatus.OK);
+    }
 }

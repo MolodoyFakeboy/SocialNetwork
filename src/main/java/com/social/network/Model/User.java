@@ -71,6 +71,10 @@ public class User implements Serializable {
     @OneToMany(mappedBy = "user")
     private Set<Post>posts;
 
+    @OneToMany(mappedBy = "user")
+    private Set<Comment> comments;
+
+
     public User() {
 
     }
@@ -85,6 +89,7 @@ public class User implements Serializable {
         friends = new HashSet<>();
         chats = new HashSet<>();
         messages = new HashSet<>();
+        comments = new HashSet<>();
     }
 
     public int getId() {
@@ -181,6 +186,14 @@ public class User implements Serializable {
 
     public void setBio(String bio) {
         this.bio = bio;
+    }
+
+    public Set<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(Set<Comment> comments) {
+        this.comments = comments;
     }
 
     @Override

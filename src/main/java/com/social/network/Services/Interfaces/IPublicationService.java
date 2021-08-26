@@ -10,4 +10,6 @@ public interface IPublicationService {
     boolean deleatePublication(int postID);
 
     PublicationDTO findById(int id);
+
+    Publication repost(int publicationID,int groupID);
 }

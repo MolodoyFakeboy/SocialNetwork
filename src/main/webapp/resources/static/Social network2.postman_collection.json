@@ -97,6 +97,9 @@
 		},
 		{
 			"name": "Получить все чаты пользователя",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
 			"request": {
 				"auth": {
 					"type": "bearer",
@@ -110,15 +113,25 @@
 				},
 				"method": "GET",
 				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
 				"url": {
-					"raw": "http://localhost:8080/сhats",
+					"raw": "http://localhost:8080/user/chats",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
-						"сhats"
+						"user",
+						"chats"
 					]
 				}
 			},
@@ -197,6 +210,114 @@
 					"path": [
 						"publication",
 						"53"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Отписаться от группы",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJaYWhhciIsImV4cCI6MTYzMDAxMTYwMH0.5z1krIP6Ox4xxBwTAlHLU1om2K4xGT2YsoIZrv6POZ6UCH7sQFiPzLDP3AXuH0zP3i7m_4U9wf_XVEAjkfwBwg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"message\" : \"Комент через Постмен\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/groupUnSub/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"groupUnSub",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Отправить коментарий",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJaYWhhciIsImV4cCI6MTYzMDAxMTYwMH0.5z1krIP6Ox4xxBwTAlHLU1om2K4xGT2YsoIZrv6POZ6UCH7sQFiPzLDP3AXuH0zP3i7m_4U9wf_XVEAjkfwBwg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"message\" : \"Комент через Постмен\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/comment/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"comment",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Посмотреть комментарии под постом",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJaYWhhciIsImV4cCI6MTYzMDAxMTYwMH0.5z1krIP6Ox4xxBwTAlHLU1om2K4xGT2YsoIZrv6POZ6UCH7sQFiPzLDP3AXuH0zP3i7m_4U9wf_XVEAjkfwBwg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/comments/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"comments",
+						"1"
 					]
 				}
 			},

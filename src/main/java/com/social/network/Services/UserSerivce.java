@@ -100,10 +100,10 @@ public class UserSerivce implements IUserService {
     }
 
     @Override
-    public User setBio(int id,String bio){
-        User user = userGenericDao.find(id);
+    public User setBio(Principal principal, String bio) {
+        User user = findByName(principal.getName());
         if (user == null) {
-            throw new UserExistException("The user " + id + "not found");
+            throw new UserExistException("The user " + principal.getName() + "not found");
         } else {
             user.setBio(bio);
             userGenericDao.update(user);
@@ -112,7 +112,7 @@ public class UserSerivce implements IUserService {
     }
 
     @Override
-    public UserDTO findUserDtoByName(String name){
+    public UserDTO findUserDtoByName(String name) {
         User timeUser = null;
         try {
             EntityManager em = userGenericDao.getEntityManager();
@@ -135,6 +135,8 @@ public class UserSerivce implements IUserService {
             if (passwordEncoder.matches(loginRequest.getPassword(), user.getPassword())) {
                 return user;
             }
+        } else {
+            throw new UserExistException("Invalid username or password");
         }
         return null;
     }
@@ -241,7 +243,7 @@ public class UserSerivce implements IUserService {
     public UserDTO findById(int userID) {
         User user = userGenericDao.find(userID);
         if (user != null) {
-           UserDTO userDTO = userFacade.getUserProfile(user);
+            UserDTO userDTO = userFacade.getUserProfile(user);
             userDTO.setPosts((user.getPosts().stream().map(postFacade::postToPostDTO).collect(Collectors.toList())));
             return userDTO;
         } else {
@@ -255,7 +257,7 @@ public class UserSerivce implements IUserService {
     }
 
     @Override
-    public UserDTO openOwnPage(Principal principal){
+    public UserDTO openOwnPage(Principal principal) {
         User user = findByName(principal.getName());
         return userFacade.getUserProfile(user);
     }
@@ -279,18 +281,9 @@ public class UserSerivce implements IUserService {
     }
 
     @Override
-    public User updatePassword(int userID){
-        User user = userGenericDao.find(1);
-        String Password = "Test";
-        user.setPassword(passwordEncoder.encode(Password));
-        return user;
-    }
-
-    @Override
-    public List<Group> getListGroup(Principal principal){
+    public List<Group> getListGroup(Principal principal) {
         User user = findByName(principal.getName());
-        return user.getCommunities().stream().collect(Collectors.toList());
+        return new ArrayList<>(user.getCommunities());
     }
-
 
 }

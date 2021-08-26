@@ -8,6 +8,16 @@ public class PublicationDTO {
 
     private String info;
 
+    private int publicationID;
+
+    public int getPublicationID() {
+        return publicationID;
+    }
+
+    public void setPublicationID(int publicationID) {
+        this.publicationID = publicationID;
+    }
+
     public Timestamp getCreatedTime() {
         return createdTime;
     }

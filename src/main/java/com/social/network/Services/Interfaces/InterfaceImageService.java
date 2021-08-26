@@ -4,6 +4,7 @@ import com.social.network.Model.Image;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.security.Principal;
 import java.util.List;
 
 public interface InterfaceImageService {
@@ -13,4 +14,5 @@ public interface InterfaceImageService {
     Image findImageByID(int imageID);
 
     List<Image> getImageToPost(int postId);
+
 }

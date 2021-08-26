@@ -1,7 +1,1 @@
-[INFO ] 2021-08-23 00:29:36.501 [http-nio-8080-exec-8] PublicationService - Publication with id: 52was deleted
-[ERROR] 2021-08-23 02:06:55.829 [http-nio-8080-exec-6] UserSerivce - Cannot find User with this name
-[INFO ] 2021-08-23 02:06:56.027 [http-nio-8080-exec-6] UserSerivce - Saving User Zahar.Test@Gamil.com
-[ERROR] 2021-08-23 02:13:02.288 [http-nio-8080-exec-5] UserSerivce - Cannot find User with this name
-[INFO ] 2021-08-23 02:13:02.446 [http-nio-8080-exec-5] UserSerivce - Saving User Zahar.Test@Gamil.com
-[INFO ] 2021-08-23 02:40:32.856 [http-nio-8080-exec-2] ImageService - Chat was created with Zaharwdugdaleg
-[INFO ] 2021-08-23 02:57:23.339 [http-nio-8080-exec-2] PublicationService - Publication with id: 53was deleted
+[INFO ] 2021-08-26 01:25:08.690 [main] ImageService - Uploading image to User1

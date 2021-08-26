@@ -136,17 +136,17 @@ class UserSerivceTest {
     void getSubscribers(@Autowired IUserService userService) {
        int userID = 2;
        List<UserDTO> users = userService.getSubscribers(userID);
-       users.forEach(System.out::println);
         Assertions.assertNotNull(users);
+        users.forEach(System.out::println);
     }
 
     @Test
     void getFriends(@Autowired IUserService userService) {
-        int userID = 2;
+        int userID = 50;
         List<UserDTO> users = userService.getFriends(userID);
-        users.forEach(System.out::println);
 
         Assertions.assertNotNull(users);
+        users.forEach(System.out::println);
     }
 
     @Test

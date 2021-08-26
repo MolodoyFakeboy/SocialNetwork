@@ -48,31 +48,32 @@ public class UserController implements IUserController {
     }
 
     @Override
-    @PutMapping("userBio/{id}/{bio}")
-    public ResponseEntity<MessageResponse> setBio(@PathVariable int id, @PathVariable String bio) {
-        User user = userService.setBio(id, bio);
-        return new ResponseEntity<>(new MessageResponse("Статус пользователя " + user.getUsername() + "обновлен ") , HttpStatus.OK);
+    @PutMapping("userBio/{bio}")
+    public ResponseEntity<MessageResponse> setBio(Principal principal, @PathVariable String bio) {
+        User user = userService.setBio(principal, bio);
+        return new ResponseEntity<>(new MessageResponse("Статус пользователя " + user.getUsername() + " обновлен ") , HttpStatus.OK);
     }
 
     @Override
     @PutMapping("userPassword")
     public ResponseEntity<MessageResponse> changePassowrd(@RequestBody ChangePasswordRequest changePasswordRequest) {
         User user = userService.changePassowrd(changePasswordRequest);
-        return new ResponseEntity<>(new MessageResponse ("Пароль " + user.getUsername() + "успешно обновлен ") , HttpStatus.OK);
+        return new ResponseEntity<>(new MessageResponse ("Пароль " + user.getUsername() + " успешно обновлен ") , HttpStatus.OK);
     }
 
     @Override
     @PutMapping("userName/{userName}")
     public ResponseEntity<MessageResponse>changeUserName(Principal principal, @PathVariable String userName) {
         User user = userService.changeUserName(principal, userName);
-        return new ResponseEntity<>(new MessageResponse ("Логин " + user.getUsername() + "успешно обновлен ") , HttpStatus.OK);
+        return new ResponseEntity<>(new MessageResponse
+                ("Логин " + user.getUsername() + " успешно обновлен. Повторно авторизируйтесь") , HttpStatus.OK);
     }
 
     @Override
     @PutMapping("userEmail/{email}")
     public ResponseEntity<MessageResponse> changeEmail(Principal principal, @PathVariable String email) {
         User user = userService.changeEmail(principal, email);
-        return new ResponseEntity<>(new MessageResponse ("Почта " + user.getUsername() + "успешно обновлен ") , HttpStatus.OK);
+        return new ResponseEntity<>(new MessageResponse ("Почта " + user.getUsername() + " успешно обновлен ") , HttpStatus.OK);
     }
 
     @Override

@@ -23,7 +23,7 @@ public interface IUserService {
 
     User findByNamePassword(LoginRequest loginRequest);
 
-    User setBio(int id,String bio);
+    User setBio(Principal principal,String bio);
 
     User changePassowrd(ChangePasswordRequest changePasswordRequest);
 
@@ -46,8 +46,6 @@ public interface IUserService {
     List<UserDTO>findallUsers();
 
     User findByName(String name);
-
-    User updatePassword(int userID);
 
     List<Group> getListGroup(Principal principal);
 

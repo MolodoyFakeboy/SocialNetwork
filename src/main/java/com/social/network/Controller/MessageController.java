@@ -2,7 +2,6 @@ package com.social.network.Controller;
 
 import com.social.network.Controller.Interfaces.IMessageController;
 import com.social.network.Dto.MessageDTO;
-import com.social.network.Model.Message;
 import com.social.network.PayLoad.response.MessageResponse;
 import com.social.network.Services.Interfaces.IMessageService;
 import org.springframework.beans.factory.annotation.Autowired;

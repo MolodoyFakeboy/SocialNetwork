@@ -29,12 +29,11 @@ public class Publication implements Serializable {
     )
     private Set<Group> listGroup;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "publication_has_image",
-            joinColumns = {@JoinColumn(name = "Publication_idPublication")},
-            inverseJoinColumns = {@JoinColumn(name = "Image_idImage")}
-    )
+    @OneToMany(mappedBy = "publication")
     private Set<Image> images;
+
+    @OneToMany(mappedBy = "publication")
+    private Set<Comment> comments;
 
     public Publication(String info) {
         this.info = info;
@@ -45,6 +44,10 @@ public class Publication implements Serializable {
 
     public Publication() {
 
+    }
+
+    public Set<Comment> getComments() {
+        return comments;
     }
 
     public int getId() {

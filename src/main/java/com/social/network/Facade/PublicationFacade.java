@@ -11,6 +11,7 @@ public class PublicationFacade {
         PublicationDTO publicationDTO =  new PublicationDTO();
         publicationDTO.setCreatedTime(publication.getCreatedTime());
         publicationDTO.setInfo(publication.getInfo());
+        publicationDTO.setPublicationID(publication.getId());
         return publicationDTO;
     }
 }

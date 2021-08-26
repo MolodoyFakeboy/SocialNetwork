@@ -12,6 +12,7 @@ public class PostFacade {
         postDTO.setCreatedDate(post.getCreatedDate());
         postDTO.setTitle(post.getTitle());
         postDTO.setUsername(post.getUser().getUsername());
+        postDTO.setPostID(post.getIdPost());
         return postDTO;
     }
 }
