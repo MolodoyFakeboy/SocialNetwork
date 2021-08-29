@@ -1,7 +1,6 @@
 package com.social.network.Services;
 
 import com.social.network.Config.TestConfig;
-import com.social.network.Configs.Config;
 import com.social.network.Dao.UserDao;
 import com.social.network.Dto.UserDTO;
 import com.social.network.Facade.UserFacade;

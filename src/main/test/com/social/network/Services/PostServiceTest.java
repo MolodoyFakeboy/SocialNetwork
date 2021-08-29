@@ -2,7 +2,6 @@ package com.social.network.Services;
 
 import com.social.network.Config.TestConfig;
 import com.social.network.Dto.PostDTO;
-import com.social.network.Model.Post;
 import com.social.network.Services.Interfaces.IPostService;
 import com.social.network.TestModel.TestPrincipal;
 import org.junit.jupiter.api.Assertions;
@@ -39,7 +38,7 @@ class PostServiceTest {
     @Test
     void deleatePost() {
         TestPrincipal testPrincipal = new TestPrincipal();
-        int postID = 51; // Брать данные из бд
+        int postID = 50; // Брать данные из бд
         boolean result = postService.deleatePost(postID,testPrincipal);
 
         Assertions.assertTrue(result);

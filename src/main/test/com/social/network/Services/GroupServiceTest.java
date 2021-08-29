@@ -80,7 +80,7 @@ class GroupServiceTest {
     @Test
     void subcribeOnGroup(@Autowired IGroupService groupService) {
         TestPrincipal testPrincipal = new TestPrincipal();
-        int groupID = 54; // cмотреть в бд
+        int groupID = 1; // cмотреть в бд
         Group group = groupService.subcribeOnGroup(groupID,testPrincipal);
         int numberSubcriber = 2;
 

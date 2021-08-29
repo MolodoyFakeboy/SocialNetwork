@@ -1,13 +1,10 @@
 package com.social.network.Model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Date;
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -195,41 +192,5 @@ public class User implements Serializable {
     public void setComments(Set<Comment> comments) {
         this.comments = comments;
     }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        User user = (User) o;
-        if (id != user.id) return false;
-        if (username != null ? !username.equals(user.username) : user.username != null) return false;
-        if (password != null ? !password.equals(user.password) : user.password != null) return false;
-        if (email != null ? !email.equals(user.email) : user.email != null) return false;
-        if (!Objects.equals(birthday, user.birthday)) return false;
-
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = id;
-        result = 31 * result + (username != null ? username.hashCode() : 0);
-        result = 31 * result + (password != null ? password.hashCode() : 0);
-        result = 31 * result + (email != null ? email.hashCode() : 0);
-        result = 31 * result + (birthday != null ? birthday.hashCode() : 0);
-        return result;
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", email='" + email + '\'' +
-                '}';
-    }
-
 
 }

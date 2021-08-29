@@ -1,14 +1,12 @@
 package com.social.network.Services;
 
 import com.social.network.Config.TestConfig;
-import com.social.network.Configs.Config;
 import com.social.network.Dao.GroupDao;
 import com.social.network.Dao.PublicationDao;
 import com.social.network.Dto.PublicationDTO;
 import com.social.network.Facade.PublicationFacade;
 import com.social.network.Model.Group;
 import com.social.network.Model.Publication;
-import com.social.network.Services.Interfaces.IPublicationService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -44,7 +42,7 @@ class PublicationServiceTest {
     @BeforeEach
     public void setUp() {
         MockitoAnnotations.openMocks(this);
-        this.publicationService = new PublicationService(publicationDao,groupDao);
+        this.publicationService = new PublicationService(publicationDao, groupDao);
         publicationService.setPublicationFacade(publicationFacade);
         Mockito.when(groupDao.getEntityManager()).thenReturn(entityManager);
     }
@@ -54,13 +52,12 @@ class PublicationServiceTest {
     void createNewPublicationGroup() {
         PublicationDTO publication = new PublicationDTO();
         publication.setInfo("я покушал");
-        Group group = new Group("Orel","OrelNews");
+        Group group = new Group("Orel", "OrelNews");
         group.setIdGroup(1);
         Mockito.when(groupDao.find(group.getIdGroup())).thenReturn(group);
-        Publication publication1 = publicationService.createNewPublicationGroup(publication,group.getIdGroup());
+        Publication publication1 = publicationService.createNewPublicationGroup(publication, group.getIdGroup());
         Mockito.verify(publicationDao).add(publication1);
         Mockito.verify(publicationDao, Mockito.times(1)).add(publication1);
-
     }
 
 
@@ -81,6 +78,6 @@ class PublicationServiceTest {
         PublicationDTO publicationDTO = publicationService.findById(publication.getId());
         Mockito.verify(publicationDao).find(publication.getId());
 
-        Assertions.assertEquals(publication.getInfo(),publicationDTO.getInfo());
+        Assertions.assertEquals(publication.getInfo(), publicationDTO.getInfo());
     }
 }

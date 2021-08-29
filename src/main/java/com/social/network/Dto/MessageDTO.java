@@ -34,12 +34,4 @@ public class MessageDTO {
         this.username = username;
     }
 
-    @Override
-    public String toString() {
-        return "MessageDTO{" +
-                "sendText='" + sendText + '\'' +
-                ", sendTime=" + sendTime +
-                ", username='" + username + '\'' +
-                '}';
-    }
 }

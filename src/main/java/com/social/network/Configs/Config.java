@@ -9,8 +9,6 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
@@ -30,7 +28,6 @@ public class Config {
         return new PropertySourcesPlaceholderConfigurer();
     }
 
-
     private Properties jpaProperties() {
         Properties properties = new Properties();
         properties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect");
@@ -39,19 +36,16 @@ public class Config {
 
     @Bean
     public DataSource dataSource() {
-
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("com.mysql.jdbc.Driver");
-        dataSource.setUrl("jdbc:mysql://localhost:3306/network social");
+        dataSource.setUrl("jdbc:mysql://docketsetup_db-service_1:3306/network social");
         dataSource.setUsername("root");
         dataSource.setPassword("Virus1993_pro");
-
         return dataSource;
     }
 
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
-
         HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
         factory.setJpaVendorAdapter(vendorAdapter);

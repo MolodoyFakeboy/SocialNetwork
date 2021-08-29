@@ -13,28 +13,14 @@ public class CustomUserDetails  implements UserDetails {
 
     private String password;
 
-    private String email;
-
-    private int id;
-
     private  Collection<? extends GrantedAuthority> grantedAuthorities;
 
     public static CustomUserDetails fromUserEntityToCustomUserDetails(User user) {
         CustomUserDetails c = new CustomUserDetails();
-        c.id = user.getId();
         c.username = user.getUsername();
         c.password = user.getPassword();
-        c.email = user.getEmail();
         c.grantedAuthorities = Collections.singletonList(new SimpleGrantedAuthority(user.getRole().getName()));
         return c;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     @Override

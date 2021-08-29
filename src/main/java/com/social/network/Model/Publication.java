@@ -40,6 +40,7 @@ public class Publication implements Serializable {
         this.createdTime = new Timestamp(System.currentTimeMillis());
         listGroup= new HashSet<>();
         images = new HashSet<>();
+        comments = new HashSet<>();
     }
 
     public Publication() {

@@ -44,12 +44,4 @@ public class PostDTO {
         this.username = username;
     }
 
-    @Override
-    public String toString() {
-        return "PostDTO{" +
-                "createdDate=" + createdDate +
-                ", title='" + title + '\'' +
-                ", username='" + username + '\'' +
-                '}';
-    }
 }

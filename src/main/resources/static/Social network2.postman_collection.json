@@ -43,7 +43,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJaYWhhciIsImV4cCI6MTYyOTc1MjQwMH0.uCeUrKNkYeiajiW2bAfxOFCIp6ypv_MLMFneSdgMobE_feO2xahcJ883xQbOnFoDmknjtYxF-qUsBGk0jvO32A",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJaYWhhciIsImV4cCI6MTYzMDI4MTYwMH0.qQzlGl7yWELfshx-G_xnbRNRIZ2o5psEHm0FONZXhc_uBe3UqRKqS3Hu2z9n-C2nipphzvwsBqQBF7y10-dO6Q",
 							"type": "string"
 						}
 					]
@@ -73,7 +73,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJaYWhhciIsImV4cCI6MTYyOTc1MjQwMH0.uCeUrKNkYeiajiW2bAfxOFCIp6ypv_MLMFneSdgMobE_feO2xahcJ883xQbOnFoDmknjtYxF-qUsBGk0jvO32A",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJaYWhhciIsImV4cCI6MTYzMDI4MTYwMH0.qQzlGl7yWELfshx-G_xnbRNRIZ2o5psEHm0FONZXhc_uBe3UqRKqS3Hu2z9n-C2nipphzvwsBqQBF7y10-dO6Q",
 							"type": "string"
 						}
 					]
@@ -106,7 +106,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJaYWhhciIsImV4cCI6MTYyOTc1MjQwMH0.uCeUrKNkYeiajiW2bAfxOFCIp6ypv_MLMFneSdgMobE_feO2xahcJ883xQbOnFoDmknjtYxF-qUsBGk0jvO32A",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJaYWhhciIsImV4cCI6MTYzMDI4MTYwMH0.qQzlGl7yWELfshx-G_xnbRNRIZ2o5psEHm0FONZXhc_uBe3UqRKqS3Hu2z9n-C2nipphzvwsBqQBF7y10-dO6Q",
 							"type": "string"
 						}
 					]
@@ -145,7 +145,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJaYWhhciIsImV4cCI6MTYyOTc1MjQwMH0.uCeUrKNkYeiajiW2bAfxOFCIp6ypv_MLMFneSdgMobE_feO2xahcJ883xQbOnFoDmknjtYxF-qUsBGk0jvO32A",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJaYWhhciIsImV4cCI6MTYzMDI4MTYwMH0.qQzlGl7yWELfshx-G_xnbRNRIZ2o5psEHm0FONZXhc_uBe3UqRKqS3Hu2z9n-C2nipphzvwsBqQBF7y10-dO6Q",
 							"type": "string"
 						}
 					]
@@ -162,7 +162,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/publication/55",
+					"raw": "http://localhost:8080/publication/3",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -170,7 +170,7 @@
 					"port": "8080",
 					"path": [
 						"publication",
-						"55"
+						"3"
 					]
 				}
 			},
@@ -184,7 +184,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJaYWhhciIsImV4cCI6MTYyOTc1MjQwMH0.uCeUrKNkYeiajiW2bAfxOFCIp6ypv_MLMFneSdgMobE_feO2xahcJ883xQbOnFoDmknjtYxF-qUsBGk0jvO32A",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJaYWhhciIsImV4cCI6MTYzMDI4MTYwMH0.qQzlGl7yWELfshx-G_xnbRNRIZ2o5psEHm0FONZXhc_uBe3UqRKqS3Hu2z9n-C2nipphzvwsBqQBF7y10-dO6Q",
 							"type": "string"
 						}
 					]
@@ -193,7 +193,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"info\" : \"New post\"\r\n}",
+					"raw": "",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -201,7 +201,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/publication/53",
+					"raw": "http://localhost:8080/publication/50",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -209,7 +209,7 @@
 					"port": "8080",
 					"path": [
 						"publication",
-						"53"
+						"50"
 					]
 				}
 			},
@@ -223,7 +223,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJaYWhhciIsImV4cCI6MTYzMDAxMTYwMH0.5z1krIP6Ox4xxBwTAlHLU1om2K4xGT2YsoIZrv6POZ6UCH7sQFiPzLDP3AXuH0zP3i7m_4U9wf_XVEAjkfwBwg",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJaYWhhciIsImV4cCI6MTYzMDI4MTYwMH0.qQzlGl7yWELfshx-G_xnbRNRIZ2o5psEHm0FONZXhc_uBe3UqRKqS3Hu2z9n-C2nipphzvwsBqQBF7y10-dO6Q",
 							"type": "string"
 						}
 					]
@@ -232,7 +232,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"message\" : \"Комент через Постмен\"\r\n}",
+					"raw": "",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -262,7 +262,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJaYWhhciIsImV4cCI6MTYzMDAxMTYwMH0.5z1krIP6Ox4xxBwTAlHLU1om2K4xGT2YsoIZrv6POZ6UCH7sQFiPzLDP3AXuH0zP3i7m_4U9wf_XVEAjkfwBwg",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJaYWhhciIsImV4cCI6MTYzMDI4MTYwMH0.qQzlGl7yWELfshx-G_xnbRNRIZ2o5psEHm0FONZXhc_uBe3UqRKqS3Hu2z9n-C2nipphzvwsBqQBF7y10-dO6Q",
 							"type": "string"
 						}
 					]
@@ -301,7 +301,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJaYWhhciIsImV4cCI6MTYzMDAxMTYwMH0.5z1krIP6Ox4xxBwTAlHLU1om2K4xGT2YsoIZrv6POZ6UCH7sQFiPzLDP3AXuH0zP3i7m_4U9wf_XVEAjkfwBwg",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJaYWhhciIsImV4cCI6MTYzMDI4MTYwMH0.qQzlGl7yWELfshx-G_xnbRNRIZ2o5psEHm0FONZXhc_uBe3UqRKqS3Hu2z9n-C2nipphzvwsBqQBF7y10-dO6Q",
 							"type": "string"
 						}
 					]
@@ -320,6 +320,15 @@
 						"1"
 					]
 				}
+			},
+			"response": []
+		},
+		{
+			"name": "найти группу по имени",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": null
 			},
 			"response": []
 		}

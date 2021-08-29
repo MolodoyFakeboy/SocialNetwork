@@ -3,8 +3,6 @@ package com.social.network.Services;
 import com.social.network.Config.TestConfig;
 import com.social.network.Model.Image;
 import com.social.network.Services.Interfaces.InterfaceImageService;
-import com.social.network.TestModel.TestPrincipal;
-import com.social.network.exceptions.ImageNotFoundException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -30,16 +28,16 @@ class ImageServiceTest {
 
     @Test
     void setImagetoPublication() throws IOException {
-        FileInputStream inputFile = new FileInputStream( "D:/Project/src/main/webapp/resources/otzyvy.png");
+        FileInputStream inputFile = new FileInputStream("D:/Project/src/main/webapp/resources/otzyvy.png");
         MockMultipartFile mockMultipartFile = new MockMultipartFile("file", "otzyvy", "png", inputFile);
-        Image image = imageService.setImagetoPublication(mockMultipartFile,1);
+        Image image = imageService.setImagetoPublication(mockMultipartFile, 1);
 
         Assertions.assertNotNull(image.getPublication());
     }
 
     @Test
-    void getImageToPost(){
-        List<Image>images = imageService.getImageToPost(1);
+    void getImageToPost() {
+        List<Image> images = imageService.getImageToPost(1);
 
         Assertions.assertNotNull(images);
     }

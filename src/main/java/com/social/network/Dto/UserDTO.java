@@ -55,11 +55,4 @@ public class UserDTO {
         this.posts = posts;
     }
 
-    @Override
-    public String toString() {
-        return "UserDTO{" +
-                "username='" + username + '\'' +
-                ", bio='" + bio + '\'' +
-                ", birthday=" + birthday ;
-    }
 }

@@ -2,7 +2,6 @@ package com.social.network.Services.Interfaces;
 
 import com.social.network.Dto.UserDTO;
 import com.social.network.Model.Group;
-import com.social.network.Model.Post;
 import com.social.network.Model.Role;
 import com.social.network.Model.User;
 import com.social.network.PayLoad.ChangePasswordRequest.ChangePasswordRequest;
@@ -11,7 +10,6 @@ import com.social.network.PayLoad.SignUpRequest.SignupRequest;
 
 import java.security.Principal;
 import java.util.List;
-
 
 public interface IUserService {
 

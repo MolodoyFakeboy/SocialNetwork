@@ -113,18 +113,17 @@ public class UserSerivce implements IUserService {
 
     @Override
     public UserDTO findUserDtoByName(String name) {
-        User timeUser = null;
-        try {
-            EntityManager em = userGenericDao.getEntityManager();
-            CriteriaBuilder cb = em.getCriteriaBuilder();
-            CriteriaQuery<User> query = cb.createQuery(User.class);
-            Root<User> user = query.from(User.class);
-            Predicate userPredicate = cb.equal(user.get("username"), name);
-            query.select(user).where(userPredicate);
-            timeUser = em.createQuery(query).setMaxResults(1).getSingleResult();
-        } catch (Exception e) {
-            log.error("Cannot find User with this name");
+        EntityManager em = userGenericDao.getEntityManager();
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<User> query = cb.createQuery(User.class);
+        Root<User> user = query.from(User.class);
+        Predicate userPredicate = cb.equal(user.get("username"), name);
+        query.select(user).where(userPredicate);
+        User timeUser = em.createQuery(query).setMaxResults(1).getSingleResult();
+        if (timeUser == null) {
+            throw new UserExistException("Cannot find User with this name");
         }
+
         return userFacade.getUserProfile(timeUser);
     }
 

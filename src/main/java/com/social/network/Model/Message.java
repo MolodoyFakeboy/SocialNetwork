@@ -77,29 +77,4 @@ public class Message implements Serializable {
         this.chat = chat;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Message message = (Message) o;
-        if (idMessage != message.idMessage) return false;
-        if (sendText != null ? !sendText.equals(message.sendText) : message.sendText != null) return false;
-        if (sendTime != null ? !sendTime.equals(message.sendTime) : message.sendTime != null) return false;
-
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = idMessage;
-        result = 31 * result + (sendText != null ? sendText.hashCode() : 0);
-        result = 31 * result + (sendTime != null ? sendTime.hashCode() : 0);
-        return result;
-    }
-
-    @Override
-    public String toString() {
-        return getSendText() + getSendTime();
-    }
 }

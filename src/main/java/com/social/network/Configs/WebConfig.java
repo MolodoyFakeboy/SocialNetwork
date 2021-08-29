@@ -8,10 +8,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import org.springframework.web.servlet.view.InternalResourceViewResolver;
-import org.springframework.web.servlet.view.JstlView;
 
-import javax.persistence.Basic;
 
 @Configuration
 @EnableWebMvc
@@ -23,15 +20,6 @@ public class WebConfig implements WebMvcConfigurer {
         registry
                 .addResourceHandler("/resources/**")
                 .addResourceLocations("/resources/");
-    }
-
-    @Bean
-    public static InternalResourceViewResolver internalResourceViewResolver (){
-        InternalResourceViewResolver bean = new InternalResourceViewResolver();
-        bean.setViewClass(JstlView.class);
-        bean.setPrefix("/WEB-INF/view/");
-        bean.setSuffix(".jsp");
-        return bean;
     }
 
     @Bean

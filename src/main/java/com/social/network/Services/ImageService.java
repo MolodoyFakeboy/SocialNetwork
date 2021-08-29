@@ -45,7 +45,7 @@ public class ImageService implements InterfaceImageService {
         Image image = new Image();
         image.setPhoto(compressBytes(file.getBytes()));
         image.setName(file.getName());
-        publication.getImages().add(image);
+        image.setPublication(publication);
         log.info("Uploading image to Publication {}", publication.getId());
         imageDao.add(image);
         return image;

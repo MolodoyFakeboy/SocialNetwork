@@ -1,0 +1,33 @@
+version: '3.1'
+
+services:
+
+  db-service:
+    image: mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: Virus1993_pro
+      MYSQL_DATABASE: mydb
+      MYSQL_USER: user
+      MYSQL_USER_PASSWORD: user
+    volumes:
+      - ./initDB/FastCreate.sql:/docker-entrypoint-initdb.d/FastCreate.sql
+      - ./dbdata:/var/lib/mysql
+    ports:
+      - "3307:3306"
+
+
+  tomcat-service:
+    build: ./service-app
+    volumes:
+      - D:\zahar_studennikov\target\Project.war:/usr/local/tomcat/webapps/ROOT.war
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db-service
+
+
+
+
+
+

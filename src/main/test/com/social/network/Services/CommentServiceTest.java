@@ -14,8 +14,6 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = TestConfig.class)
 class CommentServiceTest {
@@ -41,7 +39,6 @@ class CommentServiceTest {
     @Test
     void openComments() {
         List<CommentDTO>commentDTOS = commentService.openComments(1);
-
 
         Assertions.assertTrue(commentDTOS.size()>10);
     }

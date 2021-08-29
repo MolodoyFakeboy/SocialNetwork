@@ -34,12 +34,5 @@ public class PublicationDTO {
         this.info = info;
     }
 
-    @Override
-    public String toString() {
-        return "PublicationDTO{" +
-                "createdTime=" + createdTime +
-                ", info='" + info + '\'' +
-                '}';
-    }
 }
 

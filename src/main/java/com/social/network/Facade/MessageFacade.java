@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class MessageFacade {
 
-    public MessageDTO messageToDto(Message message){
+    public MessageDTO messageToDto(Message message) {
         MessageDTO messageDTO = new MessageDTO();
         messageDTO.setSendText(message.getSendText());
         messageDTO.setSendTime(message.getSendTime());

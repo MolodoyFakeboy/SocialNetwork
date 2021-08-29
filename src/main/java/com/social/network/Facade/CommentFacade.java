@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class CommentFacade {
 
-    public CommentDTO commentDTO(Comment comment){
+    public CommentDTO commentDTO(Comment comment) {
         CommentDTO commentDTO = new CommentDTO();
         commentDTO.setMessage(comment.getMessage());
         commentDTO.setSendTime(comment.getDataCreate());
