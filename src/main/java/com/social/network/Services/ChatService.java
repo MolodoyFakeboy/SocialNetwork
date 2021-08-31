@@ -1,6 +1,7 @@
 package com.social.network.Services;
 
 import com.social.network.Dao.GenericDao;
+import com.social.network.Dao.IUserDao;
 import com.social.network.Dto.MessageDTO;
 import com.social.network.Facade.MessageFacade;
 import com.social.network.Model.Chat;
@@ -29,12 +30,12 @@ public class ChatService implements IChatSerivce {
 
     private GenericDao<Chat> chatDao;
 
-    private GenericDao<User> userDao;
+    private IUserDao userDao;
 
     private MessageFacade messageFacade;
 
     @Autowired
-    public ChatService(GenericDao<Chat> chatDao, GenericDao<User> userDao) {
+    public ChatService(GenericDao<Chat> chatDao, IUserDao userDao) {
         this.chatDao = chatDao;
         this.userDao = userDao;
         log = LogManager.getLogger(ImageService.class);
@@ -49,7 +50,7 @@ public class ChatService implements IChatSerivce {
     public Chat startNewChat(Principal principal, int userID) {
         Chat chat = null;
         try {
-            User user = findByPrincipal(principal.getName());
+            User user = userDao.findByName(principal.getName());
             User user2 = userDao.find(userID);
             chat = new Chat(user.getUsername() + " + " + user2.getUsername());
             user.getChats().add(chat);
@@ -62,27 +63,11 @@ public class ChatService implements IChatSerivce {
         return chat;
     }
 
-    private User findByPrincipal(String name) {
-        User timeUser = null;
-        try {
-            EntityManager em = chatDao.getEntityManager();
-            CriteriaBuilder cb = em.getCriteriaBuilder();
-            CriteriaQuery<User> query = cb.createQuery(User.class);
-            Root<User> user = query.from(User.class);
-            Predicate userPredicate = cb.equal(user.get("username"), name);
-            query.select(user).where(userPredicate);
-            timeUser = em.createQuery(query).setMaxResults(1).getSingleResult();
-        } catch (Exception e) {
-            log.error("Cannot find User with this name");
-        }
-        return timeUser;
-    }
-
     @Override
     public List<MessageDTO> getMessagesInChat(int chatId, Principal principal) {
         Chat chat = chatDao.find(chatId);
         if (chat != null) {
-            if (chat.getUsers().contains(findByPrincipal(principal.getName()))) {
+            if (chat.getUsers().contains(userDao.findByName(principal.getName()))) {
                 List<Message> messages = new ArrayList<>(chat.getMessages());
                 return messages.stream().map(messageFacade::messageToDto).
                         sorted(Comparator.comparing(MessageDTO::getSendTime))

@@ -3,13 +3,16 @@ package com.social.network.Dao;
 import com.social.network.Model.User;
 import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 import java.util.List;
 
 @Repository
-public class UserDao extends AbstractGenericDaoImpl<User> {
+public class UserDao extends AbstractGenericDaoImpl<User> implements IUserDao {
 
     public UserDao() {
         setType(User.class);
@@ -53,5 +56,16 @@ public class UserDao extends AbstractGenericDaoImpl<User> {
     @Override
     public EntityManager getEntityManager() {
         return super.getEntityManager();
+    }
+
+    @Override
+    public User findByName(String name) {
+        EntityManager em = getEntityManager();
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<User> query = cb.createQuery(User.class);
+        Root<User> user = query.from(User.class);
+        Predicate userPredicate = cb.equal(user.get("username"), name);
+        query.select(user).where(userPredicate);
+        return em.createQuery(query).setMaxResults(1).getSingleResult();
     }
 }

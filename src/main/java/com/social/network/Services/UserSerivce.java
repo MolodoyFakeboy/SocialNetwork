@@ -1,6 +1,7 @@
 package com.social.network.Services;
 
 import com.social.network.Dao.GenericDao;
+import com.social.network.Dao.IUserDao;
 import com.social.network.Dto.UserDTO;
 import com.social.network.Facade.PostFacade;
 import com.social.network.Facade.UserFacade;
@@ -31,7 +32,7 @@ public class UserSerivce implements IUserService {
 
     private Logger log;
 
-    private GenericDao<User> userGenericDao;
+    private IUserDao userDao;
 
     private PasswordEncoder passwordEncoder;
 
@@ -40,8 +41,8 @@ public class UserSerivce implements IUserService {
     private PostFacade postFacade;
 
     @Autowired
-    public UserSerivce(GenericDao<User> userGenericDao) {
-        this.userGenericDao = userGenericDao;
+    public UserSerivce(IUserDao userDao) {
+        this.userDao = userDao;
         log = LogManager.getLogger(UserSerivce.class);
     }
 
@@ -79,7 +80,7 @@ public class UserSerivce implements IUserService {
         }
         try {
             log.info("Saving User {}", user.getEmail());
-            userGenericDao.add(user);
+            userDao.add(user);
             return user;
         } catch (Exception e) {
             log.error("Error during registration. {}", e.getMessage());
@@ -90,12 +91,12 @@ public class UserSerivce implements IUserService {
 
     @Override
     public void setRole(int id, Role role) {
-        User user = userGenericDao.find(id);
+        User user = userDao.find(id);
         if (user == null) {
             throw new UserExistException("The user " + id + "not found");
         } else {
             user.setRole(role);
-            userGenericDao.update(user);
+            userDao.update(user);
         }
     }
 
@@ -106,24 +107,17 @@ public class UserSerivce implements IUserService {
             throw new UserExistException("The user " + principal.getName() + "not found");
         } else {
             user.setBio(bio);
-            userGenericDao.update(user);
+            userDao.update(user);
             return user;
         }
     }
 
     @Override
     public UserDTO findUserDtoByName(String name) {
-        EntityManager em = userGenericDao.getEntityManager();
-        CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<User> query = cb.createQuery(User.class);
-        Root<User> user = query.from(User.class);
-        Predicate userPredicate = cb.equal(user.get("username"), name);
-        query.select(user).where(userPredicate);
-        User timeUser = em.createQuery(query).setMaxResults(1).getSingleResult();
+        User timeUser = userDao.findByName(name);
         if (timeUser == null) {
             throw new UserExistException("Cannot find User with this name");
         }
-
         return userFacade.getUserProfile(timeUser);
     }
 
@@ -148,7 +142,7 @@ public class UserSerivce implements IUserService {
         User user = findByNamePassword(loginRequest);
         if (user != null) {
             user.setPassword(passwordEncoder.encode(changePasswordRequest.getPassword()));
-            userGenericDao.update(user);
+            userDao.update(user);
             return user;
         } else {
             throw new UserExistException("Invalid username or password");
@@ -161,7 +155,7 @@ public class UserSerivce implements IUserService {
         User timeUser = findByName(userName);
         if (timeUser == null) {
             user.setUsername(userName);
-            userGenericDao.update(user);
+            userDao.update(user);
             return user;
         } else {
             throw new UserExistException("User with this name already exists");
@@ -173,7 +167,7 @@ public class UserSerivce implements IUserService {
         User user = findByName(principal.getName());
         if (user != null) {
             user.setEmail(email);
-            userGenericDao.update(user);
+            userDao.update(user);
             return user;
         } else {
             throw new UserExistException("No user with such id");
@@ -183,19 +177,19 @@ public class UserSerivce implements IUserService {
     @Override
     public User addNewfriend(Principal principal, int friendID) {
         User user = findByName(principal.getName());
-        User friend = userGenericDao.find(friendID);
+        User friend = userDao.find(friendID);
         user.getFriends().add(friend);
-        userGenericDao.update(user);
+        userDao.update(user);
         return user;
     }
 
     @Override
     public User deleteFriend(Principal principal, int friendID) {
         User user = findByName(principal.getName());
-        User friend = userGenericDao.find(friendID);
+        User friend = userDao.find(friendID);
         if (user.getFriends().contains(friend)) {
             user.getFriends().remove(friend);
-            userGenericDao.update(user);
+            userDao.update(user);
             return friend;
         } else {
             throw new UserExistException("No user with such id");
@@ -204,9 +198,9 @@ public class UserSerivce implements IUserService {
 
     @Override
     public List<UserDTO> getSubscribers(int userID) {
-        User userTest = userGenericDao.find(userID);
+        User userTest = userDao.find(userID);
 
-        EntityManager em = userGenericDao.getEntityManager();
+        EntityManager em = userDao.getEntityManager();
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<User> query = cb.createQuery(User.class);
         Root<User> user = query.from(User.class);
@@ -222,9 +216,9 @@ public class UserSerivce implements IUserService {
 
     @Override
     public List<UserDTO> getFriends(int userID) {
-        User userTest = userGenericDao.find(userID);
+        User userTest = userDao.find(userID);
 
-        EntityManager em = userGenericDao.getEntityManager();
+        EntityManager em = userDao.getEntityManager();
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<User> query = cb.createQuery(User.class);
         Root<User> user = query.from(User.class);
@@ -240,7 +234,7 @@ public class UserSerivce implements IUserService {
 
     @Override
     public UserDTO findById(int userID) {
-        User user = userGenericDao.find(userID);
+        User user = userDao.find(userID);
         if (user != null) {
             UserDTO userDTO = userFacade.getUserProfile(user);
             userDTO.setPosts((user.getPosts().stream().map(postFacade::postToPostDTO).collect(Collectors.toList())));
@@ -252,7 +246,7 @@ public class UserSerivce implements IUserService {
 
     @Override
     public List<UserDTO> findallUsers() {
-        return userGenericDao.findAll().stream().map(userFacade::getUserProfile).collect(Collectors.toList());
+        return userDao.findAll().stream().map(userFacade::getUserProfile).collect(Collectors.toList());
     }
 
     @Override
@@ -266,13 +260,7 @@ public class UserSerivce implements IUserService {
     public User findByName(String name) {
         User timeUser = null;
         try {
-            EntityManager em = userGenericDao.getEntityManager();
-            CriteriaBuilder cb = em.getCriteriaBuilder();
-            CriteriaQuery<User> query = cb.createQuery(User.class);
-            Root<User> user = query.from(User.class);
-            Predicate userPredicate = cb.equal(user.get("username"), name);
-            query.select(user).where(userPredicate);
-            timeUser = em.createQuery(query).setMaxResults(1).getSingleResult();
+            timeUser = userDao.findByName(name);
         } catch (Exception e) {
             log.error("Cannot find User with this name");
         }

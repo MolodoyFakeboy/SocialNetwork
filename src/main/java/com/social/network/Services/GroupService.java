@@ -1,6 +1,7 @@
 package com.social.network.Services;
 
 import com.social.network.Dao.GenericDao;
+import com.social.network.Dao.IUserDao;
 import com.social.network.Dto.PublicationDTO;
 import com.social.network.Facade.PublicationFacade;
 import com.social.network.Model.Group;
@@ -27,14 +28,17 @@ public class GroupService implements IGroupService {
 
     private GenericDao<Group> groupGenericDao;
 
+    private IUserDao userDao;
+
     private final Logger log;
 
     private PublicationFacade publicationFacade;
 
     @Autowired
-    public GroupService(GenericDao<Group> groupGenericDao) {
+    public GroupService(GenericDao<Group> groupGenericDao, IUserDao userDao) {
         this.groupGenericDao = groupGenericDao;
-        log = LogManager.getLogger(GroupService.class);
+        this.userDao = userDao;
+        this.log = LogManager.getLogger(GroupService.class);
     }
 
     @Autowired
@@ -44,7 +48,7 @@ public class GroupService implements IGroupService {
 
     @Override
     public Group createNewGroup(Group group, Principal principal) {
-        User user = findByPrincipal(principal.getName());
+        User user = userDao.findByName(principal.getName());
         user.getCommunities().add(group);
         group.setSubscribers(1);
         groupGenericDao.add(group);
@@ -70,37 +74,25 @@ public class GroupService implements IGroupService {
     @Override
     public Group subcribeOnGroup(int groupID, Principal principal) {
         Group group = groupGenericDao.find(groupID);
-        User user = findByPrincipal(principal.getName());
-        user.getCommunities().add(group);
-        group.setSubscribers(group.getUsers().size() + 1);
-        groupGenericDao.update(group);
+        try {
+            User user = userDao.findByName(principal.getName());
+            user.getCommunities().add(group);
+            group.setSubscribers(group.getUsers().size() + 1);
+            groupGenericDao.update(group);
+        } catch (Exception e) {
+            log.error("Group error,you cant subscribe");
+        }
         return group;
     }
 
     @Override
     public String unsubscribeFromGroup(int groupID, Principal principal) {
         Group group = groupGenericDao.find(groupID);
-        User user = findByPrincipal(principal.getName());
+        User user = userDao.findByName(principal.getName());
         user.getCommunities().remove(group);
         group.setSubscribers(group.getUsers().size() - 1);
         groupGenericDao.update(group);
         return "Group removed from your list";
-    }
-
-    private User findByPrincipal(String name) {
-        User timeUser = null;
-        try {
-            EntityManager em = groupGenericDao.getEntityManager();
-            CriteriaBuilder cb = em.getCriteriaBuilder();
-            CriteriaQuery<User> query = cb.createQuery(User.class);
-            Root<User> user = query.from(User.class);
-            Predicate userPredicate = cb.equal(user.get("username"), name);
-            query.select(user).where(userPredicate);
-            timeUser = em.createQuery(query).setMaxResults(1).getSingleResult();
-        } catch (Exception e) {
-            log.error("Cannot find User with this name");
-        }
-        return timeUser;
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.social.network.Services;
 
 import com.social.network.Dao.GenericDao;
+import com.social.network.Dao.IUserDao;
 import com.social.network.Dto.PostDTO;
 import com.social.network.Facade.PostFacade;
 import com.social.network.Model.Post;
@@ -31,11 +32,14 @@ public class PostService implements IPostService {
 
     private GenericDao<Post> postGenericDao;
 
+    private IUserDao userDao;
+
     private PostFacade postFacade;
 
     @Autowired
-    public PostService(GenericDao<Post> postGenericDao) {
+    public PostService(GenericDao<Post> postGenericDao, IUserDao userDao) {
         this.postGenericDao = postGenericDao;
+        this.userDao = userDao;
         log = LogManager.getLogger(PostService.class);
     }
 
@@ -46,7 +50,7 @@ public class PostService implements IPostService {
 
     @Override
     public PostDTO createNewPostFromUser(PostDTO postFromRequest, Principal principal) {
-        User timeUser = findByPrincipal(principal.getName());
+        User timeUser = userDao.findByName(principal.getName());
         Post post = new Post(postFromRequest.getTitle());
         post.setUser(timeUser);
         postGenericDao.add(post);
@@ -57,7 +61,7 @@ public class PostService implements IPostService {
 
     @Override
     public boolean deleatePost(int postID,Principal principal) {
-        User user = findByPrincipal(principal.getName());
+        User user = userDao.findByName(principal.getName());
         Post post = postGenericDao.find(postID);
         if (post != null) {
             if(post.getUser().equals(user)){
@@ -83,7 +87,7 @@ public class PostService implements IPostService {
 
     @Override
     public List<PostDTO> openNews(Principal principal){
-        User user = findByPrincipal(principal.getName());
+        User user = userDao.findByName(principal.getName());
         List<User> users = getFriendsToOpenNews(user);
         Set<Post> posts = new HashSet<>();
         for (User us : users) {
@@ -104,22 +108,6 @@ public class PostService implements IPostService {
         List<User> users = em.createQuery(query).getResultList();
         users.removeIf(us -> !userTest.getFriends().contains(us));
         return users;
-    }
-
-    private User findByPrincipal(String name) {
-        User timeUser = null;
-        try {
-            EntityManager em = postGenericDao.getEntityManager();
-            CriteriaBuilder cb = em.getCriteriaBuilder();
-            CriteriaQuery<User> query = cb.createQuery(User.class);
-            Root<User> user = query.from(User.class);
-            Predicate userPredicate = cb.equal(user.get("username"), name);
-            query.select(user).where(userPredicate);
-            timeUser = em.createQuery(query).setMaxResults(1).getSingleResult();
-        } catch (Exception e) {
-            log.error("Cannot find User with this name");
-        }
-        return timeUser;
     }
 
 }

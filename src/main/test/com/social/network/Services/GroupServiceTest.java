@@ -2,9 +2,9 @@ package com.social.network.Services;
 
 import com.social.network.Config.TestConfig;
 import com.social.network.Dao.GroupDao;
+import com.social.network.Dao.UserDao;
 import com.social.network.Dto.PublicationDTO;
 import com.social.network.Model.Group;
-import com.social.network.Model.Publication;
 import com.social.network.Services.Interfaces.IGroupService;
 import com.social.network.TestModel.TestPrincipal;
 import org.junit.jupiter.api.Assertions;
@@ -20,8 +20,6 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -33,6 +31,9 @@ class GroupServiceTest {
     @Mock
     private GroupDao groupDao;
 
+    @Mock
+    private UserDao userDao;
+
     @PersistenceContext
     private EntityManager entityManager;
 
@@ -41,7 +42,7 @@ class GroupServiceTest {
     @BeforeEach
     public void setUp() {
         MockitoAnnotations.openMocks(this);
-        this.groupService = new GroupService(groupDao);
+        this.groupService = new GroupService(groupDao,userDao);
         Mockito.when(groupDao.getEntityManager()).thenReturn(entityManager);
     }
 

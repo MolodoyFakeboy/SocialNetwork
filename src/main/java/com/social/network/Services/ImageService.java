@@ -21,7 +21,6 @@ import java.util.zip.DataFormatException;
 import java.util.zip.Deflater;
 import java.util.zip.Inflater;
 
-
 @Service
 @Transactional
 public class ImageService implements InterfaceImageService {
@@ -43,9 +42,13 @@ public class ImageService implements InterfaceImageService {
     public Image setImagetoPublication(MultipartFile file, int postID) throws IOException {
         Publication publication = publicationDao.find(postID);
         Image image = new Image();
-        image.setPhoto(compressBytes(file.getBytes()));
-        image.setName(file.getName());
-        image.setPublication(publication);
+        try {
+            image.setPhoto(compressBytes(file.getBytes()));
+            image.setName(file.getName());
+            image.setPublication(publication);
+        } catch (IOException e) {
+            log.error(e.getMessage());
+        }
         log.info("Uploading image to Publication {}", publication.getId());
         imageDao.add(image);
         return image;
@@ -101,7 +104,7 @@ public class ImageService implements InterfaceImageService {
         return outputStream.toByteArray();
     }
 
-
+    //Расжатие фотки
     private byte[] decompressBytes(byte[] data) {
         Inflater inflater = new Inflater();
         inflater.setInput(data);

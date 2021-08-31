@@ -1,6 +1,7 @@
 package com.social.network.Services;
 
 import com.social.network.Dao.GenericDao;
+import com.social.network.Dao.IUserDao;
 import com.social.network.Dto.MessageDTO;
 import com.social.network.Model.Chat;
 import com.social.network.Model.Message;
@@ -12,11 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
 import java.security.Principal;
 
 @Transactional
@@ -29,37 +25,29 @@ public class MessageService implements IMessageService {
 
     private GenericDao<Chat> chatDao;
 
+    private IUserDao userDao;
+
     @Autowired
-    public MessageService(GenericDao<Message> messageGenericDao, GenericDao<Chat> chatDao) {
+    public MessageService(GenericDao<Message> messageGenericDao, GenericDao<Chat> chatDao, IUserDao userDao) {
         this.messageGenericDao = messageGenericDao;
         this.chatDao = chatDao;
+        this.userDao = userDao;
         log = LogManager.getLogger(MessageService.class);
     }
 
     @Override
     public Message writeMessageToUser(MessageDTO messageFromRequest, Principal principal, int chatID) {
-        User user = findByPrincipal(principal.getName());
+        User user = userDao.findByName(principal.getName());
         Chat chat = chatDao.find(chatID);
         Message message = new Message(messageFromRequest.getSendText());
-        message.setUser(user);
-        message.setChat(chat);
-        messageGenericDao.add(message);
+        try {
+            message.setUser(user);
+            message.setChat(chat);
+            messageGenericDao.add(message);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+        }
         return message;
     }
 
-    private User findByPrincipal(String name) {
-        User timeUser = null;
-        try {
-            EntityManager em = messageGenericDao.getEntityManager();
-            CriteriaBuilder cb = em.getCriteriaBuilder();
-            CriteriaQuery<User> query = cb.createQuery(User.class);
-            Root<User> user = query.from(User.class);
-            Predicate userPredicate = cb.equal(user.get("username"), name);
-            query.select(user).where(userPredicate);
-            timeUser = em.createQuery(query).setMaxResults(1).getSingleResult();
-        } catch (Exception e) {
-            log.error("Cannot find User with this name");
-        }
-        return timeUser;
-    }
 }
