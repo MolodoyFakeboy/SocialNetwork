@@ -1,0 +1,27 @@
+[INFO ] 2021-08-26 01:25:08.690 [main] ImageService - Uploading image to User1
+[ERROR] 2021-08-26 17:22:34.205 [main] UserSerivce - Cannot find User with this name
+[INFO ] 2021-08-26 17:22:34.342 [main] UserSerivce - Saving User ZaharTest@gmail.com
+[INFO ] 2021-08-26 17:22:37.563 [main] ImageService - Chat was created with ZaharTest
+[INFO ] 2021-08-26 17:22:43.512 [main] GroupService - ������ ������� ������� Orel
+[ERROR] 2021-08-26 17:22:46.812 [main] ImageService - Unable to locate Attribute  with the the given name [publications] on this ManagedType [com.social.network.model.Image]
+[ERROR] 2021-08-26 17:22:46.901 [main] MessageService - Cannot find User with this name
+[INFO ] 2021-08-26 17:22:54.405 [main] PostService - User Zaharcreate new post
+[INFO ] 2021-08-26 17:22:57.640 [main] PublicationService - Publication with id: 1was deleted
+[ERROR] 2021-08-26 17:23:04.176 [main] UserSerivce - Cannot find User with this name
+[ERROR] 2021-08-26 17:23:04.237 [main] UserSerivce - Cannot find User with this name
+[ERROR] 2021-08-26 17:23:06.525 [main] UserSerivce - Cannot find User with this name
+[ERROR] 2021-08-26 17:23:12.401 [main] UserSerivce - Cannot find User with this name
+[ERROR] 2021-08-26 17:23:12.450 [main] UserSerivce - Cannot find User with this name
+[INFO ] 2021-08-26 17:23:12.555 [main] UserSerivce - Saving User null
+[INFO ] 2021-08-26 17:26:40.039 [main] ImageService - Chat was created with ZaharTest
+[INFO ] 2021-08-26 17:26:46.066 [main] GroupService - ������ ������� ������� Orel
+[ERROR] 2021-08-26 17:26:49.347 [main] ImageService - Unable to locate Attribute  with the the given name [publications] on this ManagedType [com.social.network.model.Image]
+[ERROR] 2021-08-26 17:26:49.431 [main] MessageService - Cannot find User with this name
+[INFO ] 2021-08-26 17:26:56.847 [main] PostService - User Zaharcreate new post
+[INFO ] 2021-08-26 17:27:00.068 [main] PublicationService - Publication with id: 1was deleted
+[ERROR] 2021-08-26 17:27:06.568 [main] UserSerivce - Cannot find User with this name
+[ERROR] 2021-08-26 17:27:06.633 [main] UserSerivce - Cannot find User with this name
+[ERROR] 2021-08-26 17:27:08.822 [main] UserSerivce - Cannot find User with this name
+[ERROR] 2021-08-26 17:27:14.610 [main] UserSerivce - Cannot find User with this name
+[ERROR] 2021-08-26 17:27:14.650 [main] UserSerivce - Cannot find User with this name
+[INFO ] 2021-08-26 17:27:14.760 [main] UserSerivce - Saving User null

@@ -18,13 +18,13 @@
         </Console>
     </Appenders>
     <Loggers>
-        <Logger name="com.social.network.Model" level="debug" additivity="true">
+        <Logger name="com.social.network.model" level="debug" additivity="true">
             <appender-ref ref="fileLogger" level="debug" />
         </Logger>
-        <Logger name="com.social.network.Services" level="debug" additivity="true">
+        <Logger name="com.social.network.service" level="debug" additivity="true">
             <appender-ref ref="fileLogger" level="debug" />
         </Logger>
-        <Logger name="com.social.network.Dao" level="debug" additivity="true">
+        <Logger name="com.social.network.dao" level="debug" additivity="true">
             <appender-ref ref="fileLogger" level="debug" />
         </Logger>
         <Root level="debug" additivity="false">

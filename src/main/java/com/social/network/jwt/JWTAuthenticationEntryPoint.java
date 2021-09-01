@@ -1,7 +1,7 @@
 package com.social.network.jwt;
 
 import com.google.gson.Gson;
-import com.social.network.PayLoad.response.InvalidLoginResponse;
+import com.social.network.payLoad.response.InvalidLoginResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;

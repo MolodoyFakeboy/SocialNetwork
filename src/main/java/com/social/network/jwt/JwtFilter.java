@@ -1,11 +1,10 @@
 package com.social.network.jwt;
 
-import com.social.network.Model.CustomUserDetails;
-import com.social.network.Services.CustomUserDetailsService;
+import com.social.network.model.CustomUserDetails;
+import com.social.network.service.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Component;
 import org.springframework.web.filter.GenericFilterBean;
 
 import javax.servlet.FilterChain;
