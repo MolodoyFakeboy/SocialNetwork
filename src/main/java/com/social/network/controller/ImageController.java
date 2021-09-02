@@ -2,6 +2,7 @@ package com.social.network.controller;
 
 import com.social.network.controller.interfac.InterfaceImageController;
 import com.social.network.model.Image;
+import com.social.network.payLoad.response.MessageResponse;
 import com.social.network.service.interfac.InterfaceImageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -9,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -24,7 +24,7 @@ public class ImageController implements InterfaceImageController {
 
     @Override
     @PostMapping("image/{postID}")
-    public ResponseEntity<Image> setImagetoPublication(@RequestParam("file") MultipartFile file, @PathVariable int postID) throws IOException {
+    public ResponseEntity<Image> setImagetoPublication(@RequestParam("file") MultipartFile file, @PathVariable int postID) {
         Image image = imageService.setImagetoPublication(file, postID);
         return new ResponseEntity<>(image, HttpStatus.OK);
     }
@@ -43,4 +43,10 @@ public class ImageController implements InterfaceImageController {
         return new ResponseEntity<>(images,HttpStatus.OK);
     }
 
+    @Override
+    @DeleteMapping("images/{postID}")
+    public ResponseEntity<MessageResponse> deleteImageFromPost(@PathVariable int postID) {
+        imageService.deleteImageFromPost(postID);
+        return new ResponseEntity<>(new MessageResponse("Фото удалены"),HttpStatus.OK);
+    }
 }

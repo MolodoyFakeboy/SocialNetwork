@@ -72,6 +72,13 @@ public class ImageService implements InterfaceImageService {
         }
     }
 
+    @Override
+    public void deleteImageFromPost(int postID){
+        Publication publication = publicationDao.find(postID);
+        List<Image> images = new ArrayList<>(publication.getImages());
+        images.forEach(image -> imageDao.delete(image.getIdImage()));
+    }
+
     //cжатие фотки
     private byte[] compressBytes(byte[] data) {
         Deflater deflater = new Deflater();

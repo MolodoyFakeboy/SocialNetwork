@@ -46,7 +46,6 @@ public class PublicationService implements IPublicationService {
     public boolean deleatePublication(int postID) {
         Publication publication = publicationGenericDao.find(postID);
         if (publication != null) {
-            publication.getImages().clear();
             publicationGenericDao.delete(postID);
             log.info("Publication with id: " + postID + "was deleted");
             return true;

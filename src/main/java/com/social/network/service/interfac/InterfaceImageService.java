@@ -13,4 +13,6 @@ public interface InterfaceImageService {
 
     List<Image> getImageToPost(int postId);
 
+    void deleteImageFromPost(int postID);
+
 }
