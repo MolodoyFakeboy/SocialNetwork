@@ -243,7 +243,9 @@ public class UserSerivce implements IUserService {
     @Override
     public UserDTO openOwnPage(Principal principal) {
         User user = findByName(principal.getName());
-        return userMapper.userToUserDto(user);
+        UserDTO userDTO = userMapper.userToUserDto(user);
+        userDTO.setPostsFromUser((user.getPosts().stream().map(postMapper::postToPostDto).collect(Collectors.toList())));
+        return userDTO;
     }
 
 

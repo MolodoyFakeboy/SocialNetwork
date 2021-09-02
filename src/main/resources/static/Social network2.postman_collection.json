@@ -43,7 +43,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJaYWhhciIsImV4cCI6MTYzMDU0MDgwMH0.OEp7wwa6G7-Q625xdvKLQX9wfutTdzbaMwE2NMdYOjO-IiPURXhK2TsKKbt47dy69t8ujeCsnFVaxmyNc6zNGA",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJaYWhhciIsImV4cCI6MTYzMDYyNzIwMH0.ZIlwGN_JXKunw0w4rjoz9HRXNKfBPbMn2dzc6wMKQwxuh1weW8_zuBGUKLVqD_eJDRthYZCjxnkq1juzY-MAYA",
 							"type": "string"
 						}
 					]
@@ -51,7 +51,7 @@
 				"method": "POST",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/chat/17",
+					"raw": "http://localhost:8080/chat/51",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -59,7 +59,7 @@
 					"port": "8080",
 					"path": [
 						"chat",
-						"17"
+						"51"
 					]
 				}
 			},
@@ -106,7 +106,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJaYWhhciIsImV4cCI6MTYzMDU0MDgwMH0.OEp7wwa6G7-Q625xdvKLQX9wfutTdzbaMwE2NMdYOjO-IiPURXhK2TsKKbt47dy69t8ujeCsnFVaxmyNc6zNGA",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJaYWhhciIsImV4cCI6MTYzMDYyNzIwMH0.ZIlwGN_JXKunw0w4rjoz9HRXNKfBPbMn2dzc6wMKQwxuh1weW8_zuBGUKLVqD_eJDRthYZCjxnkq1juzY-MAYA",
 							"type": "string"
 						}
 					]
@@ -184,7 +184,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJaYWhhciIsImV4cCI6MTYzMDI4MTYwMH0.qQzlGl7yWELfshx-G_xnbRNRIZ2o5psEHm0FONZXhc_uBe3UqRKqS3Hu2z9n-C2nipphzvwsBqQBF7y10-dO6Q",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJaYWhhciIsImV4cCI6MTYzMDYyNzIwMH0.ZIlwGN_JXKunw0w4rjoz9HRXNKfBPbMn2dzc6wMKQwxuh1weW8_zuBGUKLVqD_eJDRthYZCjxnkq1juzY-MAYA",
 							"type": "string"
 						}
 					]
@@ -201,7 +201,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/publication/50",
+					"raw": "http://localhost:8080/publication/49",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -209,7 +209,7 @@
 					"port": "8080",
 					"path": [
 						"publication",
-						"50"
+						"49"
 					]
 				}
 			},
@@ -356,17 +356,26 @@
 		{
 			"name": "Сделать репост записи  к себе в группу",
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJaYWhhciIsImV4cCI6MTYzMDYyNzIwMH0.ZIlwGN_JXKunw0w4rjoz9HRXNKfBPbMn2dzc6wMKQwxuh1weW8_zuBGUKLVqD_eJDRthYZCjxnkq1juzY-MAYA",
+							"type": "string"
+						}
+					]
+				},
 				"method": "PUT",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/groups/publication/1/1",
+					"raw": "http://localhost:8080/publication/1/1",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
-						"groups",
 						"publication",
 						"1",
 						"1"
@@ -378,6 +387,16 @@
 		{
 			"name": "удалить фото с публикации",
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJaYWhhciIsImV4cCI6MTYzMDYyNzIwMH0.ZIlwGN_JXKunw0w4rjoz9HRXNKfBPbMn2dzc6wMKQwxuh1weW8_zuBGUKLVqD_eJDRthYZCjxnkq1juzY-MAYA",
+							"type": "string"
+						}
+					]
+				},
 				"method": "DELETE",
 				"header": [],
 				"url": {
@@ -390,6 +409,36 @@
 					"path": [
 						"images",
 						"49"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "найти группу по ID",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJaYWhhciIsImV4cCI6MTYzMDYyNzIwMH0.ZIlwGN_JXKunw0w4rjoz9HRXNKfBPbMn2dzc6wMKQwxuh1weW8_zuBGUKLVqD_eJDRthYZCjxnkq1juzY-MAYA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/group/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"group",
+						"1"
 					]
 				}
 			},
