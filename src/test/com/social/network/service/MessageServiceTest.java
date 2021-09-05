@@ -1,6 +1,6 @@
 package com.social.network.service;
 
-import com.social.network.Config.TestConfig;
+import com.social.network.config.TestConfig;
 import com.social.network.dao.ChatDao;
 import com.social.network.dao.MessageDao;
 import com.social.network.dao.UserDao;
@@ -8,7 +8,7 @@ import com.social.network.dto.MessageDTO;
 import com.social.network.model.Chat;
 import com.social.network.model.Message;
 import com.social.network.model.User;
-import com.social.network.TestModel.TestPrincipal;
+import com.social.network.testModel.TestPrincipal;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

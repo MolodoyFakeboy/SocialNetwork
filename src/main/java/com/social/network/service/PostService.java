@@ -51,8 +51,7 @@ public class PostService implements IPostService {
         post.setUser(timeUser);
         postGenericDao.add(post);
         log.info("User " + timeUser.getUsername() + "create new post");
-        PostDTO postDTO = postMapper.postToPostDto(post);
-        return postDTO;
+        return postMapper.postToPostDto(post);
     }
 
     @Override

@@ -1,6 +1,6 @@
 package com.social.network.service;
 
-import com.social.network.Config.TestConfig;
+import com.social.network.config.TestConfig;
 import com.social.network.model.Image;
 import com.social.network.service.interfac.InterfaceImageService;
 import org.junit.jupiter.api.Assertions;

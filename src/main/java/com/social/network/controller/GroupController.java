@@ -62,7 +62,6 @@ public class GroupController implements IGroupController {
     @GetMapping("groupPost/{groupID}")
     public ResponseEntity<List<PublicationDTO>> getAllPostInGroup(@PathVariable int groupID) {
         List<PublicationDTO> publications = groupService.getAllPostInGroup(groupID);
-
         return new ResponseEntity<>(publications, HttpStatus.OK);
     }
 

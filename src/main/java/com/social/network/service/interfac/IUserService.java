@@ -23,7 +23,7 @@ public interface IUserService {
 
     User setBio(Principal principal,String bio);
 
-    User changePassowrd(ChangePasswordRequest changePasswordRequest);
+    User changePassword(ChangePasswordRequest changePasswordRequest);
 
     User changeUserName(Principal principal, String userName);
 

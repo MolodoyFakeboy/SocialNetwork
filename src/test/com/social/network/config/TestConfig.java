@@ -1,4 +1,4 @@
-package com.social.network.Config;
+package com.social.network.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -52,7 +52,7 @@ public class TestConfig {
         HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
         factory.setJpaVendorAdapter(vendorAdapter);
-        factory.setPackagesToScan("com.social.network.Model");
+        factory.setPackagesToScan("com.social.network.model");
         factory.setDataSource(dataSource());
         factory.setJpaProperties(jpaProperties());
         return factory;

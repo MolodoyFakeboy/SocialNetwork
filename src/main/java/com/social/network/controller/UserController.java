@@ -56,8 +56,8 @@ public class UserController implements IUserController {
 
     @Override
     @PutMapping("userPassword")
-    public ResponseEntity<MessageResponse> changePassowrd(@RequestBody ChangePasswordRequest changePasswordRequest) {
-        User user = userService.changePassowrd(changePasswordRequest);
+    public ResponseEntity<MessageResponse> changePassword(@RequestBody ChangePasswordRequest changePasswordRequest) {
+        User user = userService.changePassword(changePasswordRequest);
         return new ResponseEntity<>(new MessageResponse ("Пароль " + user.getUsername() + " успешно обновлен ") , HttpStatus.OK);
     }
 

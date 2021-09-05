@@ -1,12 +1,12 @@
 package com.social.network.service;
 
-import com.social.network.Config.TestConfig;
+import com.social.network.config.TestConfig;
 import com.social.network.dao.GroupDao;
 import com.social.network.dao.UserDao;
 import com.social.network.dto.PublicationDTO;
 import com.social.network.model.Group;
 import com.social.network.service.interfac.IGroupService;
-import com.social.network.TestModel.TestPrincipal;
+import com.social.network.testModel.TestPrincipal;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

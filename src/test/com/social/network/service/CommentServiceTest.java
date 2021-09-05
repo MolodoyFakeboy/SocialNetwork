@@ -1,10 +1,10 @@
 package com.social.network.service;
 
-import com.social.network.Config.TestConfig;
+import com.social.network.config.TestConfig;
 import com.social.network.dto.CommentDTO;
 import com.social.network.model.Comment;
 import com.social.network.service.interfac.ICommentService;
-import com.social.network.TestModel.TestPrincipal;
+import com.social.network.testModel.TestPrincipal;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

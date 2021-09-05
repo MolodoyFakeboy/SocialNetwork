@@ -1,6 +1,6 @@
 <Configuration status="warn">
     <Properties>
-        <Property name="basePath">D:\\Project\\src\main\\java\\com\\social\\network\\Log</Property>
+        <Property name="basePath">D:\\zahar_studennikov\\src\main\\java\\com\\social\\network\\log</Property>
     </Properties>
 
     <Appenders>

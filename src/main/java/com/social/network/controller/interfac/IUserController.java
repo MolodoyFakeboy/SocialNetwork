@@ -18,7 +18,7 @@ public interface IUserController {
 
     ResponseEntity<MessageResponse> setBio(Principal principal,String bio);
 
-    ResponseEntity<MessageResponse> changePassowrd(ChangePasswordRequest changePasswordRequest);
+    ResponseEntity<MessageResponse> changePassword(ChangePasswordRequest changePasswordRequest);
 
     ResponseEntity<MessageResponse> changeUserName(Principal principal, String userName);
 

@@ -1,4 +1,4 @@
-package com.social.network.TestModel;
+package com.social.network.testModel;
 
 import java.security.Principal;
 

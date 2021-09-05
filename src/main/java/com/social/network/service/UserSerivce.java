@@ -105,11 +105,20 @@ public class UserSerivce implements IUserService {
 
     @Override
     public UserDTO findUserDtoByName(String name) {
-        User timeUser = userDao.findByName(name);
-        if (timeUser == null) {
-            throw new UserExistException("Cannot find User with this name");
-        }
+        User timeUser = findByName(name);
         return userMapper.userToUserDto(timeUser);
+    }
+
+    @Override
+    public UserDTO findById(int userID) {
+        User user = userDao.find(userID);
+        if (user != null) {
+            UserDTO userDTO = userMapper.userToUserDto(user);
+            userDTO.setPostsFromUser((user.getPosts().stream().map(postMapper::postToPostDto).collect(Collectors.toList())));
+            return userDTO;
+        } else {
+            throw new UserExistException("No user with such id");
+        }
     }
 
     @Override
@@ -126,7 +135,7 @@ public class UserSerivce implements IUserService {
     }
 
     @Override
-    public User changePassowrd(ChangePasswordRequest changePasswordRequest) {
+    public User changePassword(ChangePasswordRequest changePasswordRequest) {
         LoginRequest loginRequest = new LoginRequest();
         loginRequest.setUsername(changePasswordRequest.getUserName());
         loginRequest.setPassword(changePasswordRequest.getOldPassword());
@@ -163,6 +172,19 @@ public class UserSerivce implements IUserService {
         } else {
             throw new UserExistException("No user with such id");
         }
+    }
+
+    @Override
+    public UserDTO openOwnPage(Principal principal) {
+        User user = findByName(principal.getName());
+        UserDTO userDTO = userMapper.userToUserDto(user);
+        userDTO.setPostsFromUser((user.getPosts().stream().map(postMapper::postToPostDto).collect(Collectors.toList())));
+        return userDTO;
+    }
+
+    @Override
+    public List<UserDTO> findallUsers() {
+        return userDao.findAll().stream().map(userMapper::userToUserDto).collect(Collectors.toList());
     }
 
     @Override
@@ -221,31 +243,6 @@ public class UserSerivce implements IUserService {
         users.removeIf(us -> !userTest.getFriends().contains(us));
 
         return users.stream().map(userMapper::userToUserDto).collect(Collectors.toList());
-    }
-
-    @Override
-    public UserDTO findById(int userID) {
-        User user = userDao.find(userID);
-        if (user != null) {
-            UserDTO userDTO = userMapper.userToUserDto(user);
-            userDTO.setPostsFromUser((user.getPosts().stream().map(postMapper::postToPostDto).collect(Collectors.toList())));
-            return userDTO;
-        } else {
-            throw new UserExistException("No user with such id");
-        }
-    }
-
-    @Override
-    public List<UserDTO> findallUsers() {
-        return userDao.findAll().stream().map(userMapper::userToUserDto).collect(Collectors.toList());
-    }
-
-    @Override
-    public UserDTO openOwnPage(Principal principal) {
-        User user = findByName(principal.getName());
-        UserDTO userDTO = userMapper.userToUserDto(user);
-        userDTO.setPostsFromUser((user.getPosts().stream().map(postMapper::postToPostDto).collect(Collectors.toList())));
-        return userDTO;
     }
 
 

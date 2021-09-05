@@ -1,7 +1,7 @@
 package com.social.network.service;
 
-import com.social.network.Config.TestConfig;
-import com.social.network.TestModel.TestPrincipal;
+import com.social.network.config.TestConfig;
+import com.social.network.testModel.TestPrincipal;
 import com.social.network.dao.UserDao;
 import com.social.network.dto.UserDTO;
 import com.social.network.model.User;
@@ -88,7 +88,7 @@ class UserSerivceTest {
         changePasswordRequest.setOldPassword("cDeqwt2Ygd");
         changePasswordRequest.setUserName("mamontov.ur");
         changePasswordRequest.setPassword("Skamer228");
-        User user = userService.changePassowrd(changePasswordRequest);
+        User user = userService.changePassword(changePasswordRequest);
         Mockito.verify(userDao).update(user);
         Mockito.verify(userDao, Mockito.times(1)).update(user);
 

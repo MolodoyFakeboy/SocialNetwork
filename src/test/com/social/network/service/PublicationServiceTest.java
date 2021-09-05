@@ -1,6 +1,6 @@
 package com.social.network.service;
 
-import com.social.network.Config.TestConfig;
+import com.social.network.config.TestConfig;
 import com.social.network.dao.GroupDao;
 import com.social.network.dao.PublicationDao;
 import com.social.network.dto.PublicationDTO;
