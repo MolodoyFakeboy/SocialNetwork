@@ -1,21 +1,21 @@
-SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+ET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 
 -- -----------------------------------------------------
--- Schema Network Social
+-- Schema NetworkSocial
 -- -----------------------------------------------------
 
 -- -----------------------------------------------------
--- Schema Network Social
+-- Schema NetworkSocial
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `Network Social` DEFAULT CHARACTER SET utf8 ;
-USE `Network Social` ;
+CREATE SCHEMA IF NOT EXISTS `NetworkSocial` DEFAULT CHARACTER SET utf8 ;
+USE `NetworkSocial` ;
 
 -- -----------------------------------------------------
--- Table `Network Social`.`Role`
+-- Table `NetworkSocial`.`Role`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `Network Social`.`Role` (
+CREATE TABLE IF NOT EXISTS `NetworkSocial`.`Role` (
   `idRole` INT NOT NULL AUTO_INCREMENT,
   `Name` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`idRole`))
@@ -23,9 +23,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `Network Social`.`User`
+-- Table `NetworkSocial`.`User`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `Network Social`.`User` (
+CREATE TABLE IF NOT EXISTS `NetworkSocial`.`User` (
   `idUser` INT NOT NULL AUTO_INCREMENT,
   `username` VARCHAR(100) NOT NULL,
   `password` VARCHAR(100) NOT NULL,
@@ -37,16 +37,16 @@ CREATE TABLE IF NOT EXISTS `Network Social`.`User` (
   INDEX `fk_User_Role1_idx` (`Role_idRole` ASC) VISIBLE,
   CONSTRAINT `fk_User_Role1`
     FOREIGN KEY (`Role_idRole`)
-    REFERENCES `Network Social`.`Role` (`idRole`)
+    REFERENCES `NetworkSocial`.`Role` (`idRole`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `Network Social`.`Post`
+-- Table `NetworkSocial`.`Post`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `Network Social`.`Post` (
+CREATE TABLE IF NOT EXISTS `NetworkSocial`.`Post` (
   `idPost` INT NOT NULL AUTO_INCREMENT,
   `createdDate` DATETIME NOT NULL,
   `title` TEXT NOT NULL,
@@ -55,16 +55,16 @@ CREATE TABLE IF NOT EXISTS `Network Social`.`Post` (
   INDEX `fk_Post_User1_idx` (`User_idUser` ASC) VISIBLE,
   CONSTRAINT `fk_Post_User1`
     FOREIGN KEY (`User_idUser`)
-    REFERENCES `Network Social`.`User` (`idUser`)
+    REFERENCES `NetworkSocial`.`User` (`idUser`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `Network Social`.`Publication`
+-- Table `NetworkSocial`.`Publication`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `Network Social`.`Publication` (
+CREATE TABLE IF NOT EXISTS `NetworkSocial`.`Publication` (
   `idPublication` INT NOT NULL AUTO_INCREMENT,
   `createTime` DATETIME NOT NULL,
   `Information` TEXT NOT NULL,
@@ -73,9 +73,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `Network Social`.`Image`
+-- Table `NetworkSocial`.`Image`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `Network Social`.`Image` (
+CREATE TABLE IF NOT EXISTS `NetworkSocial`.`Image` (
   `idImage` INT NOT NULL AUTO_INCREMENT,
   `Name` VARCHAR(45) NOT NULL,
   `Photo` BLOB NOT NULL,
@@ -84,16 +84,16 @@ CREATE TABLE IF NOT EXISTS `Network Social`.`Image` (
   INDEX `fk_Image_Publication1_idx` (`Publication_idPublication` ASC) VISIBLE,
   CONSTRAINT `fk_Image_Publication1`
     FOREIGN KEY (`Publication_idPublication`)
-    REFERENCES `Network Social`.`Publication` (`idPublication`)
+    REFERENCES `NetworkSocial`.`Publication` (`idPublication`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `Network Social`.`Friends`
+-- Table `NetworkSocial`.`Friends`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `Network Social`.`Friends` (
+CREATE TABLE IF NOT EXISTS `NetworkSocial`.`Friends` (
   `User_idUser` INT NOT NULL,
   `User_idFrend` INT NOT NULL,
   PRIMARY KEY (`User_idUser`, `User_idFrend`),
@@ -101,21 +101,21 @@ CREATE TABLE IF NOT EXISTS `Network Social`.`Friends` (
   INDEX `fk_User_has_User_User1_idx` (`User_idUser` ASC) VISIBLE,
   CONSTRAINT `fk_User_has_User_User1`
     FOREIGN KEY (`User_idUser`)
-    REFERENCES `Network Social`.`User` (`idUser`)
+    REFERENCES `NetworkSocial`.`User` (`idUser`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_User_has_User_User2`
     FOREIGN KEY (`User_idFrend`)
-    REFERENCES `Network Social`.`User` (`idUser`)
+    REFERENCES `NetworkSocial`.`User` (`idUser`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `Network Social`.`Public`
+-- Table `NetworkSocial`.`Public`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `Network Social`.`Public` (
+CREATE TABLE IF NOT EXISTS `NetworkSocial`.`Public` (
   `publicID` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
   `description` TEXT NULL,
@@ -125,9 +125,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `Network Social`.`Chat`
+-- Table `NetworkSocial`.`Chat`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `Network Social`.`Chat` (
+CREATE TABLE IF NOT EXISTS `NetworkSocial`.`Chat` (
   `idChat` INT NOT NULL AUTO_INCREMENT,
   `Name` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`idChat`))
@@ -135,9 +135,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `Network Social`.`Message`
+-- Table `NetworkSocial`.`Message`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `Network Social`.`Message` (
+CREATE TABLE IF NOT EXISTS `NetworkSocial`.`Message` (
   `idMessage` INT NOT NULL AUTO_INCREMENT,
   `SendText` TEXT NOT NULL,
   `SendTime` TIMESTAMP NOT NULL,
@@ -148,21 +148,21 @@ CREATE TABLE IF NOT EXISTS `Network Social`.`Message` (
   INDEX `fk_Message_User1_idx` (`User_idUser` ASC) VISIBLE,
   CONSTRAINT `fk_Message_Chat1`
     FOREIGN KEY (`Chat_idChat`)
-    REFERENCES `Network Social`.`Chat` (`idChat`)
+    REFERENCES `NetworkSocial`.`Chat` (`idChat`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Message_User1`
     FOREIGN KEY (`User_idUser`)
-    REFERENCES `Network Social`.`User` (`idUser`)
+    REFERENCES `NetworkSocial`.`User` (`idUser`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `Network Social`.`User_has_Chat`
+-- Table `NetworkSocial`.`User_has_Chat`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `Network Social`.`User_has_Chat` (
+CREATE TABLE IF NOT EXISTS `NetworkSocial`.`User_has_Chat` (
   `User_idUser` INT NOT NULL,
   `Chat_idChat` INT NOT NULL,
   PRIMARY KEY (`User_idUser`, `Chat_idChat`),
@@ -170,21 +170,21 @@ CREATE TABLE IF NOT EXISTS `Network Social`.`User_has_Chat` (
   INDEX `fk_User_has_Chat_User1_idx` (`User_idUser` ASC) VISIBLE,
   CONSTRAINT `fk_User_has_Chat_User1`
     FOREIGN KEY (`User_idUser`)
-    REFERENCES `Network Social`.`User` (`idUser`)
+    REFERENCES `NetworkSocial`.`User` (`idUser`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_User_has_Chat_Chat1`
     FOREIGN KEY (`Chat_idChat`)
-    REFERENCES `Network Social`.`Chat` (`idChat`)
+    REFERENCES `NetworkSocial`.`Chat` (`idChat`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `Network Social`.`Group_has_Publication`
+-- Table `NetworkSocial`.`Group_has_Publication`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `Network Social`.`Group_has_Publication` (
+CREATE TABLE IF NOT EXISTS `NetworkSocial`.`Group_has_Publication` (
   `Group_idGroup` INT NOT NULL,
   `Publication_idPublication` INT NOT NULL,
   PRIMARY KEY (`Group_idGroup`, `Publication_idPublication`),
@@ -192,21 +192,21 @@ CREATE TABLE IF NOT EXISTS `Network Social`.`Group_has_Publication` (
   INDEX `fk_Group_has_Publication_Group1_idx` (`Group_idGroup` ASC) VISIBLE,
   CONSTRAINT `fk_Group_has_Publication_Group1`
     FOREIGN KEY (`Group_idGroup`)
-    REFERENCES `Network Social`.`Public` (`publicID`)
+    REFERENCES `NetworkSocial`.`Public` (`publicID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Group_has_Publication_Publication1`
     FOREIGN KEY (`Publication_idPublication`)
-    REFERENCES `Network Social`.`Publication` (`idPublication`)
+    REFERENCES `NetworkSocial`.`Publication` (`idPublication`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `Network Social`.`User_has_Public`
+-- Table `NetworkSocial`.`User_has_Public`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `Network Social`.`User_has_Public` (
+CREATE TABLE IF NOT EXISTS `NetworkSocial`.`User_has_Public` (
   `User_idUser` INT NOT NULL,
   `Public_publicID` INT NOT NULL,
   PRIMARY KEY (`User_idUser`, `Public_publicID`),
@@ -214,21 +214,21 @@ CREATE TABLE IF NOT EXISTS `Network Social`.`User_has_Public` (
   INDEX `fk_User_has_Public_User1_idx` (`User_idUser` ASC) VISIBLE,
   CONSTRAINT `fk_User_has_Public_User1`
     FOREIGN KEY (`User_idUser`)
-    REFERENCES `Network Social`.`User` (`idUser`)
+    REFERENCES `NetworkSocial`.`User` (`idUser`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_User_has_Public_Public1`
     FOREIGN KEY (`Public_publicID`)
-    REFERENCES `Network Social`.`Public` (`publicID`)
+    REFERENCES `NetworkSocial`.`Public` (`publicID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `Network Social`.`Comment`
+-- Table `NetworkSocial`.`Comment`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `Network Social`.`Comment` (
+CREATE TABLE IF NOT EXISTS `NetworkSocial`.`Comment` (
   `idComment` INT NOT NULL AUTO_INCREMENT,
   `Message` TEXT NOT NULL,
   `createTime` DATETIME NOT NULL,
@@ -239,12 +239,12 @@ CREATE TABLE IF NOT EXISTS `Network Social`.`Comment` (
   INDEX `fk_Comment_Publication1_idx` (`Publication_idPublication` ASC) VISIBLE,
   CONSTRAINT `fk_Comment_User1`
     FOREIGN KEY (`User_idUser`)
-    REFERENCES `Network Social`.`User` (`idUser`)
+    REFERENCES `NetworkSocial`.`User` (`idUser`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Comment_Publication1`
     FOREIGN KEY (`Publication_idPublication`)
-    REFERENCES `Network Social`.`Publication` (`idPublication`)
+    REFERENCES `NetworkSocial`.`Publication` (`idPublication`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -308,7 +308,7 @@ insert into User (idUser, username, password, email, birthday, Role_idRole) valu
 insert into User (idUser, username, password, email, birthday, Role_idRole) values (49, 'Modesty', 'wIOwetcG5jE', 'msiemens1c@ox.ac.uk', '1998-04-13', 1);
 insert into User (idUser, username, password, email, birthday, Role_idRole) values (50, 'Test', '$2a$12$FgwGz6ELQqwZIfteXtLpReyQvLj.ZE4t1eoMZuc549iHDo9Wl.z.6', 'smorgen1d@dedecms.com', '2000-04-24', 2);
 
-insert into chat (idChat, Name) values (1, 'User 1 + User 50');
+insert into Сhat (idChat, Name) values (1, 'User 1 + User 50');
 
 insert into User_has_Chat (User_idUser, Chat_idChat) values (1, 1);
 insert into User_has_Chat (User_idUser, Chat_idChat) values (50, 1);
