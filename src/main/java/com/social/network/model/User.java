@@ -42,20 +42,20 @@ public class User implements Serializable {
     private Role role;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "user_has_public",
+    @JoinTable(name = "User_has_Public",
             joinColumns = {@JoinColumn(name = "User_idUser")},
             inverseJoinColumns = {@JoinColumn(name = "Public_publicID")}
     )
     private Set<Group>communities;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "friends",
+    @JoinTable(name = "Friends",
             joinColumns = @JoinColumn(name = "User_idUser", referencedColumnName = "idUser", nullable = false),
             inverseJoinColumns = @JoinColumn(name = "User_idFrend", referencedColumnName = "idUser", nullable = false))
     private Set<User>friends;
 
     @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "user_has_chat",
+    @JoinTable(name = "User_has_Chat",
             joinColumns = {@JoinColumn(name = "User_idUser")},
             inverseJoinColumns = {@JoinColumn(name = "Chat_idChat")}
     )

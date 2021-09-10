@@ -8,7 +8,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "public")
+@Table(name = "Public")
 public class Group implements Serializable {
 
     @Id

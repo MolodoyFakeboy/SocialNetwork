@@ -4,7 +4,6 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name= "role", schema = "network social")
 public class Role implements Serializable {
 
     @Id

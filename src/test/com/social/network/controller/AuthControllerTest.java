@@ -69,8 +69,7 @@ class AuthControllerTest {
     public static String asJsonString(final Object obj) {
         ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
         try {
-            String json = ow.writeValueAsString(obj);
-            return json;
+            return ow.writeValueAsString(obj);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

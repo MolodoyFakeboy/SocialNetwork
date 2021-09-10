@@ -23,7 +23,7 @@ public class Publication implements Serializable {
     private String info;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "group_has_publication",
+    @JoinTable(name = "Group_has_Publication",
             joinColumns = {@JoinColumn(name = "Publication_idPublication")},
             inverseJoinColumns = {@JoinColumn(name = "Group_idGroup")}
     )
