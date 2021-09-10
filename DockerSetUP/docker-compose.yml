@@ -20,7 +20,7 @@ services:
   tomcat-service:
     build: ./service-app
     volumes:
-      - D:\zahar_studennikov\target\zahar_studennikov.war:/usr/local/tomcat/webapps/ROOT.war
+      - E:\zahar_studennikov\target\zahar_studennikov.war:/usr/local/tomcat/webapps/ROOT.war
     ports:
       - "8080:8080"
     depends_on:

@@ -37,7 +37,7 @@ public class Config {
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("com.mysql.jdbc.Driver");
-        dataSource.setUrl("jdbc:mysql://localhost:3306/NetworkSocial");
+        dataSource.setUrl("jdbc:mysql://dockersetup_db-service_1:3306/NetworkSocial");
         dataSource.setUsername("root");
         dataSource.setPassword("Virus1993_pro");
         return dataSource;

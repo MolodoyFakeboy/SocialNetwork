@@ -1,4 +1,4 @@
-ET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 
@@ -308,7 +308,7 @@ insert into User (idUser, username, password, email, birthday, Role_idRole) valu
 insert into User (idUser, username, password, email, birthday, Role_idRole) values (49, 'Modesty', 'wIOwetcG5jE', 'msiemens1c@ox.ac.uk', '1998-04-13', 1);
 insert into User (idUser, username, password, email, birthday, Role_idRole) values (50, 'Test', '$2a$12$FgwGz6ELQqwZIfteXtLpReyQvLj.ZE4t1eoMZuc549iHDo9Wl.z.6', 'smorgen1d@dedecms.com', '2000-04-24', 2);
 
-insert into Сhat (idChat, Name) values (1, 'User 1 + User 50');
+insert into chat (idChat, Name) values (1, 'User 1 + User 50');
 
 insert into User_has_Chat (User_idUser, Chat_idChat) values (1, 1);
 insert into User_has_Chat (User_idUser, Chat_idChat) values (50, 1);
